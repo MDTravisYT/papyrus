@@ -1,0 +1,23 @@
+Operating system: Microsoft Windows NT 6.2.9200.0
+Opening INI file "C:\Users\MineC\Downloads\papyrus\SonPLN.ini"...
+Game type is S1.
+Loading Title...
+Plane mappings file "MAP/TITLE.MAP" not found.
+Loading palette file "PAL/TITLE.PAL"...
+Source: 0 Destination: 0 Length: 32
+Loading 8x8 tiles from file "ART/FONT.UNC", using compression Uncompressed...
+System.AggregateException: One or more errors occurred. ---> System.IO.FileNotFoundException: Palette file could not be loaded! Have you set up your disassembly properly?
+   at SonicRetro.SonLVL.SonPLN.MainForm.LoadLevelPalette() in E:\Programs\SonLVL\SonPLN\MainForm.cs:line 440
+   at System.Threading.Tasks.Task.InnerInvoke()
+   at System.Threading.Tasks.Task.Execute()
+   --- End of inner exception stack trace ---
+   at System.Threading.Tasks.Task.FastWaitAll(Task[] tasks)
+   at System.Threading.Tasks.Parallel.Invoke(ParallelOptions parallelOptions, Action[] actions)
+   at System.Threading.Tasks.Parallel.Invoke(Action[] actions)
+   at SonicRetro.SonLVL.SonPLN.MainForm.backgroundLevelLoader_DoWork(Object sender, DoWorkEventArgs e) in E:\Programs\SonLVL\SonPLN\MainForm.cs:line 321
+---> (Inner Exception #0) System.IO.FileNotFoundException: Palette file could not be loaded! Have you set up your disassembly properly?
+File name: 'PAL/TITLE.PAL'
+   at SonicRetro.SonLVL.SonPLN.MainForm.LoadLevelPalette() in E:\Programs\SonLVL\SonPLN\MainForm.cs:line 440
+   at System.Threading.Tasks.Task.InnerInvoke()
+   at System.Threading.Tasks.Task.Execute()<---
+
