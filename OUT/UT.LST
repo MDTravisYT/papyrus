@@ -1933,188 +1933,183 @@
 00000AF2                            OBJNULL:
 00000AF2 4E75                       		RTS
 00000AF2 4E75                       		RTS
-00000AF4                            		
-00000AF4                            		INCLUDE		"SRC/GAMEMODE/LOGO.ASM"
-00000AF4                            LOGO:
-00000AF4 4EB9 0000 069C             		JSR		CLEARSCREEN
-00000AFA 23FC 4000 0000 00C0 0004   		move.l	#VRAMWRITE,	(VDPCTRL)
-00000B04 41F9 0000 0000             		LEA		LOGOART,	A0
-00000B0A 43F9 00C0 0000             		LEA		VDPDATA,	A1
-00000B10 303C 061F                  		MOVE.W	#$61F,		D0
-00000B14                            	@LOADGFX:
-00000B14 3298                       		MOVE.W	(A0)+,	(A1)
-00000B16 51C8 FFFC                  		DBF		D0,	@LOADGFX
-00000B1A                            		
-00000B1A 43F9 0000 0000 203C 661C+  	COPYTILEMAP		LOGOMAP,	$A61C,	11,	3
-00000B30 43F9 0000 0000 203C 461C+  	COPYTILEMAP		LOGOMAPB,	$861C,	11,	3
-00000B46                            	
-00000B46 103C 0000                  		move.b	#bgm_GHZ,d0
-00000B4A 6100 FC0A                  		bsr.w	PlaySound
-00000B4E                            	
-00000B4E 7000                       		MOVEQ	#0,	D0
-00000B50                            	;	BSR.W	PALLOAD
-00000B50 31FC 0070 F632             		MOVE.W	#112,	(PALCYCCURRENT).W
-00000B56 33FC 0000 00FF F662        		MOVE.W	#0,	$FFF662
-00000B5E 33FC 0000 00FF F660        		MOVE.W	#0,	$FFF660
-00000B66 33FC 0104 FFFF F614        		MOVE.W	#260,	TIMER
-00000B6E 3038 F60C                  		MOVE.W	(VDPBUFFER).W,	D0
-00000B72 0000 0040                  		ORI.B	#%1000000,	D0
-00000B76 33C0 00C0 0004             		MOVE.W	D0,	(VDPCTRL).L
-00000B7C                            		
-00000B7C                            	@LOOP:
-00000B7C 11FC 0001 F62A             		MOVE.B	#1,	(VBLANKCMD).W
-00000B82 4EB9 0000 074A             		JSR		VSYNC
-00000B88 6100 0000                  		BSR.W	_LOGO_PALCYC
-00000B8C 4A79 FFFF F614             		TST.W	TIMER
-00000B92 6700                       		BEQ.S	@EXIT
-00000B94 0239 0080 FFFF F605        		ANDI.B	#%10000000,	JOYPADPRESS
-00000B9C 67DE                       		BEQ.S	@LOOP
-00000B9E                            	@EXIT:
-00000B9E                            	;	JSR		PALFADEOUT
-00000B9E 13FC 0004 FFFF F600        		MOVE.B	#1*4,	GAMEMODE
-00000BA6 4E75                       		RTS
-00000BA8                            		
-00000BA8                            _LOGO_PALCYC:
-00000BA8 5379 FFFF F634             		SUBQ.W	#1,	PALCYCTIMER
-00000BAE 6A00                       		BPL.S	@EXIT
-00000BB0 33FC 0003 FFFF F634        		MOVE.W	#3,	PALCYCTIMER
-00000BB8 3039 FFFF F632             		MOVE.W	PALCYCCURRENT,	D0
-00000BBE 6B00                       		BMI.S	@EXIT
-00000BC0 5579 FFFF F632             		SUBQ.W	#2,	PALCYCCURRENT
-00000BC6 41F9 0000 0000             		LEA		LOGO_CYC,	A0
-00000BCC 43F8 FB04                  		LEA		((PALETTE+$04)).W,	A1
-00000BD0 D0C0                       		ADDA.W	D0,	A0
-00000BD2 22D8                       		MOVE.L	(A0)+,(A1)+
-00000BD4 22D8                       		MOVE.L	(A0)+,(A1)+
-00000BD6 22D8                       		MOVE.L	(A0)+,(A1)+
-00000BD8 22D8                       		MOVE.L	(A0)+,(A1)+
-00000BDA 22D8                       		MOVE.L	(A0)+,(A1)+
-00000BDC 22D8                       		MOVE.L	(A0)+,(A1)+
-00000BDE 41F9 0000 0000             		LEA		LOGO_CYCB,	A0
-00000BE4 43F8 FB24                  		LEA		((PALETTE+$24)).W,	A1
-00000BE8 D0C0                       		ADDA.W	D0,	A0
-00000BEA 22D8                       		MOVE.L	(A0)+,(A1)+
-00000BEC 22D8                       		MOVE.L	(A0)+,(A1)+
-00000BEE 22D8                       		MOVE.L	(A0)+,(A1)+
-00000BF0 22D8                       		MOVE.L	(A0)+,(A1)+
-00000BF2 22D8                       		MOVE.L	(A0)+,(A1)+
-00000BF4 22D8                       		MOVE.L	(A0)+,(A1)+
-00000BF6                            	@EXIT:
-00000BF6 4E75                       		RTS
-00000BF8                            		
-00000BF8                            LOGOART:	INCBIN		"ART/LOGO.UNC"
-00001818                            LOGOMAP:	INCBIN		"MAP/LOGO.MAP"
-00001878                            LOGOMAPB:	INCBIN		"MAP/LOGOB.MAP"
-000018D8                            LOGO_CYC:
-000018D8 0000                       		DC.W $000
-000018DA 0000                       		DC.W $000
-000018DC 0000                       		DC.W $000
-000018DE 0000                       		DC.W $000
-000018E0 0000                       		DC.W $000
-000018E2 0000                       		DC.W $000
-000018E4 0000                       		DC.W $000
-000018E6 0000                       		DC.W $000
-000018E8 0000                       		DC.W $000
-000018EA 0000                       		DC.W $000
-000018EC 0000                       		DC.W $000
-000018EE 0200                       		DC.W $200
-000018F0 0400                       		DC.W $400
-000018F2 0600                       		DC.W $600
-000018F4 0800                       		DC.W $800
-000018F6 0A00                       		DC.W $A00
-000018F8 0C00                       		DC.W $C00
-000018FA 0E00                       		DC.W $E00
-000018FC 0E20                       		DC.W $E20
-000018FE 0E40                       		DC.W $E40
-00001900 0E60                       		DC.W $E60
-00001902 0E80                       		DC.W $E80
-00001904 0EA0                       		DC.W $EA0
-00001906 0EC0                       		DC.W $EC0
-00001908 0EA0                       		DC.W $EA0
-0000190A 0E80                       		DC.W $E80
-0000190C 0E60                       		DC.W $E60
-0000190E 0E40                       		DC.W $E40
-00001910 0E20                       		DC.W $E20
-00001912 0E00                       		DC.W $E00
-00001914 0C00                       		DC.W $C00
-00001916 0A00                       		DC.W $A00
-00001918 0800                       		DC.W $800
-0000191A 0600                       		DC.W $600
-0000191C 0800                       		DC.W $800
-0000191E 0A00                       		DC.W $A00
-00001920 0C00                       		DC.W $C00
-00001922 0E00                       		DC.W $E00
-00001924 0E20                       		DC.W $E20
-00001926 0E40                       		DC.W $E40
-00001928 0E60                       		DC.W $E60
-0000192A 0E80                       		DC.W $E80
-0000192C 0EA0                       		DC.W $EA0
-0000192E 0EC0                       		DC.W $EC0
-00001930 0EA0                       		DC.W $EA0
-00001932 0E80                       		DC.W $E80
-00001934 0E60                       		DC.W $E60
-00001936 0E40                       		DC.W $E40
-00001938 0E20                       		DC.W $E20
-0000193A 0E00                       		DC.W $E00
-0000193C 0C00                       		DC.W $C00
-0000193E 0A00                       		DC.W $A00
-00001940 0800                       		DC.W $800
-00001942 0600                       		DC.W $600
-00001944 0400                       		DC.W $400
-00001946 0200                       		DC.W $200
-00001948 0000                       		DC.W $000
-0000194A 0000                       		DC.W $000
-0000194C 0000                       		DC.W $000
-0000194E 0000                       		DC.W $000
-00001950 0000                       		DC.W $000
-00001952 0000                       		DC.W $000
-00001954 0000                       		DC.W $000
-00001956 0000                       		DC.W $000
-00001958 0000                       		DC.W $000
-0000195A 0000                       		DC.W $000
-0000195C 0000                       		DC.W $000
-0000195E                            LOGO_CYCB:
-0000195E 0000                       		DC.W $000
-00001960 0000                       		DC.W $000
-00001962 0000                       		DC.W $000
-00001964 0000                       		DC.W $000
-00001966 0000                       		DC.W $000
-00001968 0000                       		DC.W $000
-0000196A 0000                       		DC.W $000
-0000196C 0000                       		DC.W $000
-0000196E 0000                       		DC.W $000
-00001970 0000                       		DC.W $000
-00001972 0000                       		DC.W $000
+00000AF4                            		INCLUDE		"SRC/SUB/OBJECTFALL.ASM"
+00000AF4                            OBJECTFALL:
+00000AF4 2428 0008                  		MOVE.L  OBJ.X(A0),D2
+00000AF8 2628 000C                  		MOVE.L  OBJ.Y(A0),D3
+00000AFC 3028 0010                  		MOVE.W  OBJ.XSPEED(A0),D0
+00000B00 48C0                       		EXT.L   D0
+00000B02 E180                       		ASL.L   #8,D0
+00000B04 D480                       		ADD.L   D0,D2
+00000B06 3028 0012                  		MOVE.W  OBJ.YSPEED(A0),D0
+00000B0A 0640 0038                  		ADDI.W  #$38,D0
+00000B0E 3140 0012                  		MOVE.W  D0,OBJ.YSPEED(A0)
+00000B12 48C0                       		EXT.L   D0
+00000B14 E180                       		ASL.L   #8,D0
+00000B16 D680                       		ADD.L   D0,D3
+00000B18 2142 0008                  		MOVE.L  D2,OBJ.X(A0)
+00000B1C 2143 000C                  		MOVE.L  D3,OBJ.Y(A0)
+00000B20 4E75                       		RTS
+00000B20 4E75                       		RTS
+00000B22                            		
+00000B22                            		INCLUDE		"SRC/GAMEMODE/LOGO.ASM"
+00000B22                            LOGO:
+00000B22 4EB9 0000 069C             		JSR		CLEARSCREEN
+00000B28 23FC 4000 0000 00C0 0004   		move.l	#VRAMWRITE,	(VDPCTRL)
+00000B32 41F9 0000 0000             		LEA		LOGOART,	A0
+00000B38 43F9 00C0 0000             		LEA		VDPDATA,	A1
+00000B3E 303C 061F                  		MOVE.W	#$61F,		D0
+00000B42                            	@LOADGFX:
+00000B42 3298                       		MOVE.W	(A0)+,	(A1)
+00000B44 51C8 FFFC                  		DBF		D0,	@LOADGFX
+00000B48                            		
+00000B48 43F9 0000 0000 203C 661C+  	COPYTILEMAP		LOGOMAP,	$A61C,	11,	3
+00000B5E 43F9 0000 0000 203C 461C+  	COPYTILEMAP		LOGOMAPB,	$861C,	11,	3
+00000B74                            	
+00000B74 103C 0000                  		move.b	#bgm_GHZ,d0
+00000B78 6100 FBDC                  		bsr.w	PlaySound
+00000B7C                            	
+00000B7C 7000                       		MOVEQ	#0,	D0
+00000B7E                            	;	BSR.W	PALLOAD
+00000B7E 31FC 0070 F632             		MOVE.W	#112,	(PALCYCCURRENT).W
+00000B84 33FC 0000 00FF F662        		MOVE.W	#0,	$FFF662
+00000B8C 33FC 0000 00FF F660        		MOVE.W	#0,	$FFF660
+00000B94 33FC 0104 FFFF F614        		MOVE.W	#260,	TIMER
+00000B9C 3038 F60C                  		MOVE.W	(VDPBUFFER).W,	D0
+00000BA0 0000 0040                  		ORI.B	#%1000000,	D0
+00000BA4 33C0 00C0 0004             		MOVE.W	D0,	(VDPCTRL).L
+00000BAA                            		
+00000BAA                            	@LOOP:
+00000BAA 11FC 0001 F62A             		MOVE.B	#1,	(VBLANKCMD).W
+00000BB0 4EB9 0000 074A             		JSR		VSYNC
+00000BB6 6100 0000                  		BSR.W	_LOGO_PALCYC
+00000BBA 4A79 FFFF F614             		TST.W	TIMER
+00000BC0 6700                       		BEQ.S	@EXIT
+00000BC2 0239 0080 FFFF F605        		ANDI.B	#%10000000,	JOYPADPRESS
+00000BCA 67DE                       		BEQ.S	@LOOP
+00000BCC                            	@EXIT:
+00000BCC                            	;	JSR		PALFADEOUT
+00000BCC 13FC 0004 FFFF F600        		MOVE.B	#1*4,	GAMEMODE
+00000BD4 4E75                       		RTS
+00000BD6                            		
+00000BD6                            _LOGO_PALCYC:
+00000BD6 5379 FFFF F634             		SUBQ.W	#1,	PALCYCTIMER
+00000BDC 6A00                       		BPL.S	@EXIT
+00000BDE 33FC 0003 FFFF F634        		MOVE.W	#3,	PALCYCTIMER
+00000BE6 3039 FFFF F632             		MOVE.W	PALCYCCURRENT,	D0
+00000BEC 6B00                       		BMI.S	@EXIT
+00000BEE 5579 FFFF F632             		SUBQ.W	#2,	PALCYCCURRENT
+00000BF4 41F9 0000 0000             		LEA		LOGO_CYC,	A0
+00000BFA 43F8 FB04                  		LEA		((PALETTE+$04)).W,	A1
+00000BFE D0C0                       		ADDA.W	D0,	A0
+00000C00 22D8                       		MOVE.L	(A0)+,(A1)+
+00000C02 22D8                       		MOVE.L	(A0)+,(A1)+
+00000C04 22D8                       		MOVE.L	(A0)+,(A1)+
+00000C06 22D8                       		MOVE.L	(A0)+,(A1)+
+00000C08 22D8                       		MOVE.L	(A0)+,(A1)+
+00000C0A 22D8                       		MOVE.L	(A0)+,(A1)+
+00000C0C 41F9 0000 0000             		LEA		LOGO_CYCB,	A0
+00000C12 43F8 FB24                  		LEA		((PALETTE+$24)).W,	A1
+00000C16 D0C0                       		ADDA.W	D0,	A0
+00000C18 22D8                       		MOVE.L	(A0)+,(A1)+
+00000C1A 22D8                       		MOVE.L	(A0)+,(A1)+
+00000C1C 22D8                       		MOVE.L	(A0)+,(A1)+
+00000C1E 22D8                       		MOVE.L	(A0)+,(A1)+
+00000C20 22D8                       		MOVE.L	(A0)+,(A1)+
+00000C22 22D8                       		MOVE.L	(A0)+,(A1)+
+00000C24                            	@EXIT:
+00000C24 4E75                       		RTS
+00000C26                            		
+00000C26                            LOGOART:	INCBIN		"ART/LOGO.UNC"
+00001846                            LOGOMAP:	INCBIN		"MAP/LOGO.MAP"
+000018A6                            LOGOMAPB:	INCBIN		"MAP/LOGOB.MAP"
+00001906                            LOGO_CYC:
+00001906 0000                       		DC.W $000
+00001908 0000                       		DC.W $000
+0000190A 0000                       		DC.W $000
+0000190C 0000                       		DC.W $000
+0000190E 0000                       		DC.W $000
+00001910 0000                       		DC.W $000
+00001912 0000                       		DC.W $000
+00001914 0000                       		DC.W $000
+00001916 0000                       		DC.W $000
+00001918 0000                       		DC.W $000
+0000191A 0000                       		DC.W $000
+0000191C 0200                       		DC.W $200
+0000191E 0400                       		DC.W $400
+00001920 0600                       		DC.W $600
+00001922 0800                       		DC.W $800
+00001924 0A00                       		DC.W $A00
+00001926 0C00                       		DC.W $C00
+00001928 0E00                       		DC.W $E00
+0000192A 0E20                       		DC.W $E20
+0000192C 0E40                       		DC.W $E40
+0000192E 0E60                       		DC.W $E60
+00001930 0E80                       		DC.W $E80
+00001932 0EA0                       		DC.W $EA0
+00001934 0EC0                       		DC.W $EC0
+00001936 0EA0                       		DC.W $EA0
+00001938 0E80                       		DC.W $E80
+0000193A 0E60                       		DC.W $E60
+0000193C 0E40                       		DC.W $E40
+0000193E 0E20                       		DC.W $E20
+00001940 0E00                       		DC.W $E00
+00001942 0C00                       		DC.W $C00
+00001944 0A00                       		DC.W $A00
+00001946 0800                       		DC.W $800
+00001948 0600                       		DC.W $600
+0000194A 0800                       		DC.W $800
+0000194C 0A00                       		DC.W $A00
+0000194E 0C00                       		DC.W $C00
+00001950 0E00                       		DC.W $E00
+00001952 0E20                       		DC.W $E20
+00001954 0E40                       		DC.W $E40
+00001956 0E60                       		DC.W $E60
+00001958 0E80                       		DC.W $E80
+0000195A 0EA0                       		DC.W $EA0
+0000195C 0EC0                       		DC.W $EC0
+0000195E 0EA0                       		DC.W $EA0
+00001960 0E80                       		DC.W $E80
+00001962 0E60                       		DC.W $E60
+00001964 0E40                       		DC.W $E40
+00001966 0E20                       		DC.W $E20
+00001968 0E00                       		DC.W $E00
+0000196A 0C00                       		DC.W $C00
+0000196C 0A00                       		DC.W $A00
+0000196E 0800                       		DC.W $800
+00001970 0600                       		DC.W $600
+00001972 0400                       		DC.W $400
 00001974 0200                       		DC.W $200
-00001976 0422                       		DC.W $422
-00001978 0644                       		DC.W $644
-0000197A 0866                       		DC.W $866
-0000197C 0A88                       		DC.W $A88
-0000197E 0CAA                       		DC.W $CAA
-00001980 0ECC                       		DC.W $ECC
-00001982 0EEE                       		DC.W $EEE
-00001984 0EEE                       		DC.W $EEE
-00001986 0EEE                       		DC.W $EEE
-00001988 0EEE                       		DC.W $EEE
-0000198A 0EEE                       		DC.W $EEE
-0000198C 0EEE                       		DC.W $EEE
-0000198E 0EEE                       		DC.W $EEE
-00001990 0EEE                       		DC.W $EEE
-00001992 0EEE                       		DC.W $EEE
-00001994 0EEE                       		DC.W $EEE
-00001996 0EEE                       		DC.W $EEE
-00001998 0EEE                       		DC.W $EEE
-0000199A 0EEE                       		DC.W $EEE
-0000199C 0EEE                       		DC.W $EEE
-0000199E 0EEE                       		DC.W $EEE
-000019A0 0EEE                       		DC.W $EEE
-000019A2 0EEE                       		DC.W $EEE
-000019A4 0EEE                       		DC.W $EEE
-000019A6 0EEE                       		DC.W $EEE
-000019A8 0EEE                       		DC.W $EEE
-000019AA 0EEE                       		DC.W $EEE
-000019AC 0EEE                       		DC.W $EEE
-000019AE 0EEE                       		DC.W $EEE
+00001976 0000                       		DC.W $000
+00001978 0000                       		DC.W $000
+0000197A 0000                       		DC.W $000
+0000197C 0000                       		DC.W $000
+0000197E 0000                       		DC.W $000
+00001980 0000                       		DC.W $000
+00001982 0000                       		DC.W $000
+00001984 0000                       		DC.W $000
+00001986 0000                       		DC.W $000
+00001988 0000                       		DC.W $000
+0000198A 0000                       		DC.W $000
+0000198C                            LOGO_CYCB:
+0000198C 0000                       		DC.W $000
+0000198E 0000                       		DC.W $000
+00001990 0000                       		DC.W $000
+00001992 0000                       		DC.W $000
+00001994 0000                       		DC.W $000
+00001996 0000                       		DC.W $000
+00001998 0000                       		DC.W $000
+0000199A 0000                       		DC.W $000
+0000199C 0000                       		DC.W $000
+0000199E 0000                       		DC.W $000
+000019A0 0000                       		DC.W $000
+000019A2 0200                       		DC.W $200
+000019A4 0422                       		DC.W $422
+000019A6 0644                       		DC.W $644
+000019A8 0866                       		DC.W $866
+000019AA 0A88                       		DC.W $A88
+000019AC 0CAA                       		DC.W $CAA
+000019AE 0ECC                       		DC.W $ECC
 000019B0 0EEE                       		DC.W $EEE
 000019B2 0EEE                       		DC.W $EEE
 000019B4 0EEE                       		DC.W $EEE
@@ -2123,130 +2118,176 @@
 000019BA 0EEE                       		DC.W $EEE
 000019BC 0EEE                       		DC.W $EEE
 000019BE 0EEE                       		DC.W $EEE
-000019C0 0ECC                       		DC.W $ECC
-000019C2 0CAA                       		DC.W $CAA
-000019C4 0A88                       		DC.W $A88
-000019C6 0866                       		DC.W $866
-000019C8 0644                       		DC.W $644
-000019CA 0422                       		DC.W $422
-000019CC 0200                       		DC.W $200
-000019CE 0000                       		DC.W $000
-000019D0 0000                       		DC.W $000
-000019D2 0000                       		DC.W $000
-000019D4 0000                       		DC.W $000
-000019D6 0000                       		DC.W $000
-000019D8 0000                       		DC.W $000
-000019DA 0000                       		DC.W $000
-000019DC 0000                       		DC.W $000
-000019DE 0000                       		DC.W $000
-000019E0 0000                       		DC.W $000
-000019E2 0000                       		DC.W $000
-000019E2 0000                       		DC.W $000
-000019E4                            		INCLUDE		"SRC/GAMEMODE/MAIN.ASM"
-000019E4                            MAIN:
-000019E4 4EB9 0000 069C             		JSR		CLEARSCREEN
-000019EA                            		
-000019EA 23FC 4000 0000 00C0 0004   		move.l	#VRAMWRITE,	(VDPCTRL)
-000019F4 41F9 0000 0000             		LEA		BATTLEART,		A0
-000019FA 43F9 00C0 0000             		LEA		VDPDATA,	A1
-00001A00 303C 17FF                  		MOVE.W	#$17FF,		D0
-00001A04                            	@LOADGFX:
-00001A04 3298                       		MOVE.W	(A0)+,	(A1)
-00001A06 51C8 FFFC                  		DBF		D0,	@LOADGFX
-00001A0A                            		
-00001A0A 41F9 0000 0000             		LEA		BATTLEPAL,	A0
-00001A10 43F9 FFFF FB80             		LEA		PALFADEBUFFER,	A1
-00001A16 103C 0010                  		MOVE.B	#16,	D0
-00001A1A                            	@PALLOOP:
-00001A1A 22D8                       		MOVE.L	(A0)+,	(A1)+
-00001A1C 51C8 FFFC                  		DBF		D0,	@PALLOOP
-00001A20                            		
-00001A20 43F9 0000 0000 203C 4084+  	COPYTILEMAP		BATTLEMAP,	$8084,	35,	25
-00001A36                            	
-00001A36 13FC 0001 FFFF D000        		MOVE.B	#$01,	(OBJSLOT00)
-00001A3E 41F9 FFFF D000             		LEA		(OBJSLOT00),	A0
-00001A44 317C 00A0 0008             		MOVE.W	#160,	OBJ.X(A0)
-00001A4A 317C 0070 000C             		MOVE.W	#112,	OBJ.Y(A0)
-00001A50                            		
-00001A50 4EB9 0000 075E             		JSR		PALFADEIN
-00001A56                            	@loop:
-00001A56 11FC 0001 F62A             		MOVE.B	#1,	(VBLANKCMD).W
-00001A5C 4EB9 0000 074A             		jsr		VSYNC
-00001A62 4EB9 0000 0A8E             		JSR		RUNOBJECTS
-00001A68 4EB9 0000 0850             		JSR		PROCESSSPRITES
-00001A6E 60E6                       		bra.s	@loop
-00001A70 4E75                       		rts
-00001A72                            		
-00001A72                            BATTLEPAL:	INCBIN		"PAL/BATTLE.PAL"
-00001AF2                            BATTLEMAP:	INCBIN		"MAP/BATTLE.MAP"
-00002242                            BATTLEART:	INCBIN		"ART/BATTLE.UNC"
-00002242                            BATTLEART:	INCBIN		"ART/BATTLE.UNC"
-00003662                            		
-00003662                            		INCLUDE		"SRC/OBJ/SOUL.ASM"
-00003662                            SOUL:
-00003662 7000                       		MOVEQ	#0,	D0
-00003664 1028 0024                  		MOVE.B	OBJ.ACTION(A0),	D0
-00003668 323B 0000                  		MOVE.W	@INDEX(PC,D0.W),	D1
-0000366C 4EFB 1000                  		JMP		@INDEX(PC,D1.W)
-00003670                            		
-00003670                            	@INDEX:
-00003670 0000                       		DC.W	@init-@INDEX
-00003672 0000                       		DC.W	@do-@INDEX
-00003674                            	;	DC.W	@delete-@INDEX
-00003674                            	;	DC.W	@delete-@INDEX
-00003674                            		
-00003674                            	@init:
-00003674 5428 0024                  		ADDQ.B	#2,			OBJ.ACTION(A0)
-00003678 117C 0012 0016             		MOVE.B	#$12,		OBJ.YRAD(A0)
-0000367E 117C 0009 0017             		MOVE.B	#9,			OBJ.XRAD(A0)
-00003684 217C 0000 0000 0004        		MOVE.L	#MAP_SOUL,	OBJ.MAP(A0)
-0000368C 317C 0001 0002             		MOVE.W	#$1,		OBJ.TILE(A0)
-00003692 117C 0004 0001             		MOVE.B	#4,			OBJ.RENDERFLAGS(A0)
-00003698 117C 0002 0019             		MOVE.B	#2,			OBJ.PRIORITY(A0)
-0000369E                            
-0000369E                            	@do:
-0000369E 7000                       		MOVEQ	#0,	D0
-000036A0 7200                       		MOVEQ	#0,	D1
-000036A2 1039 FFFF F604             		MOVE.B	JOYPAD,	D0
-000036A8                            	@uptst:
-000036A8 0800 0000                  		btst	#bitUp,D0
-000036AC 6700                       		beq.s	@downtst
-000036AE 0441 0001                  		subi.w	#1,D1
-000036B2                            	@downtst:
-000036B2 0800 0001                  		btst	#bitDn,D0
-000036B6 6700                       		beq.s	@lefttst
-000036B8 0641 0001                  		addi.w	#1,D1
-000036BC                            	@lefttst:
-000036BC E199                       		rol.l	#8,d1
-000036BE E199                       		rol.l	#8,d1
-000036C0 0800 0002                  		btst	#bitL,D0
-000036C4 6700                       		beq.s	@righttst
-000036C6 0441 0001                  		subi.w	#1,D1
-000036CA                            	@righttst:
-000036CA 0800 0003                  		btst	#bitR,D0
-000036CE 6700                       		beq.s	@apply
-000036D0 0641 0001                  		addi.w	#1,D1
-000036D4                            	@apply:
-000036D4 D368 0008                  		add.w	D1,OBJ.X(A0)
-000036D8 E199                       		rol.l	#8,d1
-000036DA E199                       		rol.l	#8,d1
-000036DC D368 000C                  		add.w	D1,OBJ.Y(A0)
-000036E0 4EB9 0000 0A70             		JSR		_OBJECTDISPLAY
-000036E6 4E75                       		RTS
-000036E8                            		
-000036E8                            MAP_SOUL:
-000036E8                            		INCBIN	"SRC/OBJ/SOUL.MAP"
-000036E8                            		INCBIN	"SRC/OBJ/SOUL.MAP"
-000036F0                            		INCLUDE		"SRC/OBJ/INTEGRITY.ASM"
-000036F0                            INTEGRITY:
-000036F0 4E75                       		RTS
-000036F0 4E75                       		RTS
-000036F2                            		INCLUDE		"SRC/OBJ/MENU HANDLE.ASM"
-000036F2                            MENU_HANDLE:
-000036F2 4E75                       		RTS
-000036F2 4E75                       		RTS
-000036F4                            		
-000036F4                            	ALIGN	$2000
+000019C0 0EEE                       		DC.W $EEE
+000019C2 0EEE                       		DC.W $EEE
+000019C4 0EEE                       		DC.W $EEE
+000019C6 0EEE                       		DC.W $EEE
+000019C8 0EEE                       		DC.W $EEE
+000019CA 0EEE                       		DC.W $EEE
+000019CC 0EEE                       		DC.W $EEE
+000019CE 0EEE                       		DC.W $EEE
+000019D0 0EEE                       		DC.W $EEE
+000019D2 0EEE                       		DC.W $EEE
+000019D4 0EEE                       		DC.W $EEE
+000019D6 0EEE                       		DC.W $EEE
+000019D8 0EEE                       		DC.W $EEE
+000019DA 0EEE                       		DC.W $EEE
+000019DC 0EEE                       		DC.W $EEE
+000019DE 0EEE                       		DC.W $EEE
+000019E0 0EEE                       		DC.W $EEE
+000019E2 0EEE                       		DC.W $EEE
+000019E4 0EEE                       		DC.W $EEE
+000019E6 0EEE                       		DC.W $EEE
+000019E8 0EEE                       		DC.W $EEE
+000019EA 0EEE                       		DC.W $EEE
+000019EC 0EEE                       		DC.W $EEE
+000019EE 0ECC                       		DC.W $ECC
+000019F0 0CAA                       		DC.W $CAA
+000019F2 0A88                       		DC.W $A88
+000019F4 0866                       		DC.W $866
+000019F6 0644                       		DC.W $644
+000019F8 0422                       		DC.W $422
+000019FA 0200                       		DC.W $200
+000019FC 0000                       		DC.W $000
+000019FE 0000                       		DC.W $000
+00001A00 0000                       		DC.W $000
+00001A02 0000                       		DC.W $000
+00001A04 0000                       		DC.W $000
+00001A06 0000                       		DC.W $000
+00001A08 0000                       		DC.W $000
+00001A0A 0000                       		DC.W $000
+00001A0C 0000                       		DC.W $000
+00001A0E 0000                       		DC.W $000
+00001A10 0000                       		DC.W $000
+00001A10 0000                       		DC.W $000
+00001A12                            		INCLUDE		"SRC/GAMEMODE/MAIN.ASM"
+00001A12                            MAIN:
+00001A12 4EB9 0000 069C             		JSR		CLEARSCREEN
+00001A18                            		
+00001A18 23FC 4000 0000 00C0 0004   		move.l	#VRAMWRITE,	(VDPCTRL)
+00001A22 41F9 0000 0000             		LEA		BATTLEART,		A0
+00001A28 43F9 00C0 0000             		LEA		VDPDATA,	A1
+00001A2E 303C 17FF                  		MOVE.W	#$17FF,		D0
+00001A32                            	@LOADGFX:
+00001A32 3298                       		MOVE.W	(A0)+,	(A1)
+00001A34 51C8 FFFC                  		DBF		D0,	@LOADGFX
+00001A38                            		
+00001A38 41F9 0000 0000             		LEA		BATTLEPAL,	A0
+00001A3E 43F9 FFFF FB80             		LEA		PALFADEBUFFER,	A1
+00001A44 103C 0010                  		MOVE.B	#16,	D0
+00001A48                            	@PALLOOP:
+00001A48 22D8                       		MOVE.L	(A0)+,	(A1)+
+00001A4A 51C8 FFFC                  		DBF		D0,	@PALLOOP
+00001A4E                            		
+00001A4E 43F9 0000 0000 203C 4084+  	COPYTILEMAP		BATTLEMAP,	$8084,	35,	25
+00001A64                            	
+00001A64 13FC 0002 FFFF D000        		MOVE.B	#$02,	(OBJSLOT00)
+00001A6C 41F9 FFFF D000             		LEA		(OBJSLOT00),	A0
+00001A72 317C 00A0 0008             		MOVE.W	#160,	OBJ.X(A0)
+00001A78 317C 0070 000C             		MOVE.W	#112,	OBJ.Y(A0)
+00001A7E                            		
+00001A7E 4EB9 0000 075E             		JSR		PALFADEIN
+00001A84                            	@loop:
+00001A84 11FC 0001 F62A             		MOVE.B	#1,	(VBLANKCMD).W
+00001A8A 4EB9 0000 074A             		jsr		VSYNC
+00001A90 4EB9 0000 0A8E             		JSR		RUNOBJECTS
+00001A96 4EB9 0000 0850             		JSR		PROCESSSPRITES
+00001A9C 60E6                       		bra.s	@loop
+00001A9E 4E75                       		rts
+00001AA0                            		
+00001AA0                            BATTLEPAL:	INCBIN		"PAL/BATTLE.PAL"
+00001B20                            BATTLEMAP:	INCBIN		"MAP/BATTLE.MAP"
+00002270                            BATTLEART:	INCBIN		"ART/BATTLE.UNC"
+00002270                            BATTLEART:	INCBIN		"ART/BATTLE.UNC"
+00003690                            		
+00003690                            		INCLUDE		"SRC/OBJ/SOUL.ASM"
+00003690                            SOUL:
+00003690 7000                       		MOVEQ	#0,	D0
+00003692 1028 0024                  		MOVE.B	OBJ.ACTION(A0),	D0
+00003696 323B 0000                  		MOVE.W	@INDEX(PC,D0.W),	D1
+0000369A 4EFB 1000                  		JMP		@INDEX(PC,D1.W)
+0000369E                            		
+0000369E                            	@INDEX:
+0000369E 0000                       		DC.W	@init-@INDEX
+000036A0 0000                       		DC.W	@do-@INDEX
+000036A2                            	;	DC.W	@delete-@INDEX
+000036A2                            	;	DC.W	@delete-@INDEX
+000036A2                            		
+000036A2                            	@init:
+000036A2 5428 0024                  		ADDQ.B	#2,			OBJ.ACTION(A0)
+000036A6 117C 0012 0016             		MOVE.B	#$12,		OBJ.YRAD(A0)
+000036AC 117C 0009 0017             		MOVE.B	#9,			OBJ.XRAD(A0)
+000036B2 217C 0000 0000 0004        		MOVE.L	#MAP_SOUL,	OBJ.MAP(A0)
+000036BA 317C 0001 0002             		MOVE.W	#$1,		OBJ.TILE(A0)
+000036C0 117C 0004 0001             		MOVE.B	#4,			OBJ.RENDERFLAGS(A0)
+000036C6 117C 0002 0019             		MOVE.B	#2,			OBJ.PRIORITY(A0)
+000036CC                            
+000036CC                            	@do:
+000036CC 7000                       		MOVEQ	#0,	D0
+000036CE 7200                       		MOVEQ	#0,	D1
+000036D0 1039 FFFF F604             		MOVE.B	JOYPAD,	D0
+000036D6                            	@uptst:
+000036D6 0800 0000                  		btst	#bitUp,D0
+000036DA 6700                       		beq.s	@downtst
+000036DC 0441 0001                  		subi.w	#1,D1
+000036E0                            	@downtst:
+000036E0 0800 0001                  		btst	#bitDn,D0
+000036E4 6700                       		beq.s	@lefttst
+000036E6 0641 0001                  		addi.w	#1,D1
+000036EA                            	@lefttst:
+000036EA E199                       		rol.l	#8,d1
+000036EC E199                       		rol.l	#8,d1
+000036EE 0800 0002                  		btst	#bitL,D0
+000036F2 6700                       		beq.s	@righttst
+000036F4 0441 0001                  		subi.w	#1,D1
+000036F8                            	@righttst:
+000036F8 0800 0003                  		btst	#bitR,D0
+000036FC 6700                       		beq.s	@apply
+000036FE 0641 0001                  		addi.w	#1,D1
+00003702                            	@apply:
+00003702 D368 0008                  		add.w	D1,OBJ.X(A0)
+00003706 E199                       		rol.l	#8,d1
+00003708 E199                       		rol.l	#8,d1
+0000370A D368 000C                  		add.w	D1,OBJ.Y(A0)
+0000370E 4EB9 0000 0A70             		JSR		_OBJECTDISPLAY
+00003714 4E75                       		RTS
+00003716                            		
+00003716                            MAP_SOUL:
+00003716                            		INCBIN	"SRC/OBJ/SOUL.MAP"
+00003716                            		INCBIN	"SRC/OBJ/SOUL.MAP"
+0000371E                            		INCLUDE		"SRC/OBJ/INTEGRITY.ASM"
+0000371E                            INTEGRITY:
+0000371E 7000                       		MOVEQ	#0,	D0
+00003720 1028 0024                  		MOVE.B	OBJ.ACTION(A0),	D0
+00003724 323B 0000                  		MOVE.W	@INDEX(PC,D0.W),	D1
+00003728 4EFB 1000                  		JMP		@INDEX(PC,D1.W)
+0000372C                            		
+0000372C                            	@INDEX:
+0000372C 0000                       		DC.W	@init-@INDEX
+0000372E 0000                       		DC.W	@fall-@INDEX
+00003730                            	;	DC.W	@delete-@INDEX
+00003730                            	;	DC.W	@delete-@INDEX
+00003730                            		
+00003730                            	@init:
+00003730 5428 0024                  		ADDQ.B	#2,			OBJ.ACTION(A0)
+00003734 117C 0012 0016             		MOVE.B	#$12,		OBJ.YRAD(A0)
+0000373A 117C 0009 0017             		MOVE.B	#9,			OBJ.XRAD(A0)
+00003740 217C 0000 3716 0004        		MOVE.L	#MAP_SOUL,	OBJ.MAP(A0)
+00003748 317C 2001 0002             		MOVE.W	#$2001,		OBJ.TILE(A0)
+0000374E 117C 0004 0001             		MOVE.B	#4,			OBJ.RENDERFLAGS(A0)
+00003754 117C 0002 0019             		MOVE.B	#2,			OBJ.PRIORITY(A0)
+0000375A                            		
+0000375A                            	@fall:
+0000375A 4EB9 0000 0AF4             		JSR		OBJECTFALL
+00003760 4EB9 0000 0A70             		JSR		_OBJECTDISPLAY
+00003766 4E75                       		RTS
+00003766 4E75                       		RTS
+00003768                            		INCLUDE		"SRC/OBJ/MENU HANDLE.ASM"
+00003768                            MENU_HANDLE:
+00003768 4E75                       		RTS
+00003768 4E75                       		RTS
+0000376A                            		
+0000376A                            	ALIGN	$2000
 00004000                            		include	"SOUND/driver.asm"
 00004000                            ; ---------------------------------------------------------------------------
 00004000                            ; Modified SMPS 68k Type 1b sound driver
