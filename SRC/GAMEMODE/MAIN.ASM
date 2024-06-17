@@ -17,12 +17,19 @@ MAIN:
 		DBF		D0,	@PALLOOP
 		
 	COPYTILEMAP		BATTLEMAP,	$8084,	35,	25
+	
+		MOVE.B	#$01,	(OBJSLOT00)
+		LEA		(OBJSLOT00),	A0
+		MOVE.W	#160,	OBJ.X(A0)
+		MOVE.W	#112,	OBJ.Y(A0)
 		
 		JSR		PALFADEIN
-	.loop:
+	@loop:
 		MOVE.B	#1,	(VBLANKCMD).W
 		jsr		VSYNC
-		bra.s	.loop
+		JSR		RUNOBJECTS
+		JSR		PROCESSSPRITES
+		bra.s	@loop
 		rts
 		
 BATTLEPAL:	INCBIN		"PAL/BATTLE.PAL"

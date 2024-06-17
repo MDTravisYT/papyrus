@@ -438,7 +438,40 @@
 00000000 =C0000000                  CRAMWRITE       =	$C0000000
 00000000 =C0000080                  CRAMDMA         =	$C0000080
 00000000                            
+00000000 =FFFFAC00                  SPRITES			=	$FFFFAC00
 00000000 =FFFFCC00                  HSCROLLTABLE	=	$FFFFCC00
+00000000 =FFFFD000                  OBJSLOT00		=	$FFFFD000
+00000000 =FFFFD040                  OBJSLOT01		=	$FFFFD040
+00000000 =FFFFD080                  OBJSLOT02		=	$FFFFD080
+00000000 =FFFFD0C0                  OBJSLOT03		=	$FFFFD0C0
+00000000 =FFFFD100                  OBJSLOT04		=	$FFFFD100
+00000000 =FFFFD140                  OBJSLOT05		=	$FFFFD140
+00000000 =FFFFD180                  OBJSLOT06		=	$FFFFD180
+00000000 =FFFFD1C0                  OBJSLOT07		=	$FFFFD1C0
+00000000 =FFFFD200                  OBJSLOT08		=	$FFFFD200
+00000000 =FFFFD240                  OBJSLOT09		=	$FFFFD240
+00000000 =FFFFD280                  OBJSLOT0A		=	$FFFFD280
+00000000 =FFFFD2C0                  OBJSLOT0B		=	$FFFFD2C0
+00000000 =FFFFD300                  OBJSLOT0C		=	$FFFFD300
+00000000 =FFFFD340                  OBJSLOT0D		=	$FFFFD340
+00000000 =FFFFD380                  OBJSLOT0E		=	$FFFFD380
+00000000 =FFFFD3C0                  OBJSLOT0F		=	$FFFFD3C0
+00000000 =FFFFD400                  OBJSLOT10		=	$FFFFD400
+00000000 =FFFFD440                  OBJSLOT11		=	$FFFFD440
+00000000 =FFFFD480                  OBJSLOT12		=	$FFFFD480
+00000000 =FFFFD4C0                  OBJSLOT13		=	$FFFFD4C0
+00000000 =FFFFD500                  OBJSLOT14		=	$FFFFD500
+00000000 =FFFFD540                  OBJSLOT15		=	$FFFFD540
+00000000 =FFFFD580                  OBJSLOT16		=	$FFFFD580
+00000000 =FFFFD5C0                  OBJSLOT17		=	$FFFFD5C0
+00000000 =FFFFD600                  OBJSLOT18		=	$FFFFD600
+00000000 =FFFFD640                  OBJSLOT19		=	$FFFFD640
+00000000 =FFFFD680                  OBJSLOT1A		=	$FFFFD680
+00000000 =FFFFD6C0                  OBJSLOT1B		=	$FFFFD6C0
+00000000 =FFFFD700                  OBJSLOT1C		=	$FFFFD700
+00000000 =FFFFD740                  OBJSLOT1D		=	$FFFFD740
+00000000 =FFFFD780                  OBJSLOT1E		=	$FFFFD780
+00000000 =FFFFD7C0                  OBJSLOT1F		=	$FFFFD7C0
 00000000 =FFFFF600                  GAMEMODE		=	$FFFFF600
 00000000 =FFFFF604                  JOYPAD			=	$FFFFF604
 00000000 =FFFFF605                  JOYPADPRESS		=	$FFFFF605
@@ -450,7 +483,16 @@
 00000000 =FFFFF61A                  VDP_SCREENPOSX	=	$FFFFF61A
 00000000 =FFFFF626                  PALFADEARGS		=	$FFFFF626
 00000000 =FFFFF627                  PALFADESIZE		=	$FFFFF627
+00000000 =FFFFF62C                  SPRITECOUNT		=	$FFFFF62C
 00000000 =FFFFF632                  PALCYCCURRENT	=	$FFFFF632
+00000000 =FFFFF700                  SCROLL_FGPOSX	=	$FFFFF700
+00000000 =FFFFF704                  SCROLL_FGPOSY	=	$FFFFF704
+00000000 =FFFFF708                  SCROLL_BGPOSX	=	$FFFFF708
+00000000 =FFFFF710                  SCROLL_BG2POSX	=	$FFFFF710
+00000000 =FFFFF718                  SCROLL_BG3POSX	=	$FFFFF718
+00000000 =FFFFF756                  SCROLL_BG1FLAGS	=	$FFFFF756
+00000000 =FFFFF754                  SCROLL_FGFLAGS	=	$FFFFF754
+00000000 =FFFFF758                  SCROLL_BG2FLAGS	=	$FFFFF758
 00000000 =FFFFF634                  PALCYCTIMER		=	$FFFFF634
 00000000 =FFFFF62A                  VBLANKCMD		=	$FFFFF62A
 00000000 =FFFFF644                  VDPBUFFER2		=	$FFFFF644
@@ -461,7 +503,62 @@
 00000000 =FFFFFE0C                  VBLANKCOUNTER	=	$FFFFFE0C
 00000000 =FFFFF009                  SOUNDPOKE		= 	$FFFFF009
 00000000 =FFFFFFF8                  HARDWAREVERSION	=	$FFFFFFF8
-00000000 =FFFFFFF8                  HARDWAREVERSION	=	$FFFFFFF8
+00000000                            
+00000000 =00000000                  OBJ.ID          =	$00
+00000000 =00000001                  OBJ.RENDERFLAGS =	$01
+00000000 =00000002                  OBJ.TILE        =	$02
+00000000 =00000004                  OBJ.MAP         =	$04
+00000000 =00000008                  OBJ.X           =	$08
+00000000 =0000000A                  OBJ.YSCR        =	$0A
+00000000 =0000000C                  OBJ.Y           =	$0C
+00000000 =0000000E                  OBJ.YSUB        =	$0E
+00000000 =00000010                  OBJ.XSPEED      =	$10
+00000000 =00000012                  OBJ.YSPEED      =	$12
+00000000 =00000014                  OBJ.INERTIA     =	$14
+00000000 =00000016                  OBJ.YRAD        =	$16
+00000000 =00000017                  OBJ.XRAD        =	$17
+00000000 =00000018                  OBJ.XDISP       =	$18
+00000000 =00000019                  OBJ.PRIORITY    =	$19
+00000000 =0000001A                  OBJ.FRAME       =	$1A
+00000000 =0000001B                  OBJ.ANIMFRAME   =	$1B
+00000000 =0000001C                  OBJ.ANIM        =	$1C
+00000000 =0000001D                  OBJ.ANIMPREVIOUS=	$1D
+00000000 =0000001E                  OBJ.FRAMETIMER  =	$1E
+00000000 =0000001F                  OBJ.USER_1F     =	$1F
+00000000 =00000020                  OBJ.COLLISION   =	$20
+00000000 =00000021                  OBJ.COLPROP     =	$21
+00000000 =00000022                  OBJ.STATUS      =	$22
+00000000 =00000023                  OBJ.RESPAWN     =	$23
+00000000 =00000024                  OBJ.ACTION      =	$24
+00000000 =00000025                  OBJ.SUBACTION   =	$25
+00000000 =00000026                  OBJ.ANGLE       =	$26
+00000000 =00000027                  OBJ.FIELD_27    =	$27
+00000000 =00000028                  OBJ.ARGUMENT    =	$28
+00000000 =00000029                  OBJ.FIELD_29    =	$29
+00000000 =0000002A                  OBJ.FIELD_2A    =	$2A
+00000000 =0000002B                  OBJ.FIELD_2B    =	$2B
+00000000 =0000002C                  OBJ.FIELD_2C    =	$2C
+00000000 =0000002D                  OBJ.FIELD_2D    =	$2D
+00000000 =0000002E                  OBJ.FIELD_2E    =	$2E
+00000000 =0000002F                  OBJ.FIELD_2F    =	$2F
+00000000 =00000030                  OBJ.FIELD_30    =	$30
+00000000 =00000031                  OBJ.FIELD_31    =	$31
+00000000 =00000032                  OBJ.FIELD_32    =	$32
+00000000 =00000033                  OBJ.FIELD_33    =	$33
+00000000 =00000034                  OBJ.FIELD_34    =	$34
+00000000 =00000035                  OBJ.FIELD_35    =	$35
+00000000 =00000036                  OBJ.FIELD_36    =	$36
+00000000 =00000037                  OBJ.FIELD_37    =	$37
+00000000 =00000038                  OBJ.FIELD_38    =	$38
+00000000 =00000039                  OBJ.FIELD_39    =	$39
+00000000 =0000003A                  OBJ.FIELD_3A    =	$3A
+00000000 =0000003B                  OBJ.FIELD_3B    =	$3B
+00000000 =0000003C                  OBJ.FIELD_3C    =	$3C
+00000000 =0000003D                  OBJ.FIELD_3D    =	$3D
+00000000 =0000003E                  OBJ.FIELD_3E    =	$3E
+00000000 =0000003F                  OBJ.FIELD_3F    =	$3F
+00000000 =00000040                  OBJ.SIZE        =	$40
+00000000 =00000040                  OBJ.SIZE        =	$40
 00000000                            		include		"SOUND/SOUNDRAM.I"
 00000000                            ; Sound driver constants
 00000000 =00000000                  TrackPlaybackControl:	equ 0		; All tracks
@@ -1479,249 +1576,678 @@
 0000083E 4E75                       		RTS
 00000840                            ; END OF FUNCTION PALFADEOUT
 00000840                            ; END OF FUNCTION PALFADEOUT
-00000840                            		
-00000840                            		INCLUDE		"SRC/GAMEMODE/LOGO.ASM"
-00000840                            LOGO:
-00000840 4EB9 0000 069C             		JSR		CLEARSCREEN
-00000846 23FC 4000 0000 00C0 0004   		move.l	#VRAMWRITE,	(VDPCTRL)
-00000850 41F9 0000 0000             		LEA		LOGOART,	A0
-00000856 43F9 00C0 0000             		LEA		VDPDATA,	A1
-0000085C 303C 061F                  		MOVE.W	#$61F,		D0
-00000860                            	@LOADGFX:
-00000860 3298                       		MOVE.W	(A0)+,	(A1)
-00000862 51C8 FFFC                  		DBF		D0,	@LOADGFX
-00000866                            		
-00000866 43F9 0000 0000 203C 661C+  	COPYTILEMAP		LOGOMAP,	$A61C,	11,	3
-0000087C 43F9 0000 0000 203C 461C+  	COPYTILEMAP		LOGOMAPB,	$861C,	11,	3
-00000892                            	
-00000892 103C 0000                  		move.b	#bgm_GHZ,d0
-00000896 6100 FEBE                  		bsr.w	PlaySound
-0000089A                            	
-0000089A 7000                       		MOVEQ	#0,	D0
-0000089C                            	;	BSR.W	PALLOAD
-0000089C 31FC 0070 F632             		MOVE.W	#112,	(PALCYCCURRENT).W
-000008A2 33FC 0000 00FF F662        		MOVE.W	#0,	$FFF662
-000008AA 33FC 0000 00FF F660        		MOVE.W	#0,	$FFF660
-000008B2 33FC 0104 FFFF F614        		MOVE.W	#260,	TIMER
-000008BA 3038 F60C                  		MOVE.W	(VDPBUFFER).W,	D0
-000008BE 0000 0040                  		ORI.B	#%1000000,	D0
-000008C2 33C0 00C0 0004             		MOVE.W	D0,	(VDPCTRL).L
-000008C8                            		
-000008C8                            	@LOOP:
-000008C8 11FC 0001 F62A             		MOVE.B	#1,	(VBLANKCMD).W
-000008CE 4EB9 0000 074A             		JSR		VSYNC
-000008D4 6100 0000                  		BSR.W	_LOGO_PALCYC
-000008D8 4A79 FFFF F614             		TST.W	TIMER
-000008DE 6700                       		BEQ.S	@EXIT
-000008E0 0239 0080 FFFF F605        		ANDI.B	#%10000000,	JOYPADPRESS
-000008E8 67DE                       		BEQ.S	@LOOP
-000008EA                            	@EXIT:
-000008EA                            	;	JSR		PALFADEOUT
-000008EA 13FC 0004 FFFF F600        		MOVE.B	#1*4,	GAMEMODE
-000008F2 4E75                       		RTS
-000008F4                            		
-000008F4                            _LOGO_PALCYC:
-000008F4 5379 FFFF F634             		SUBQ.W	#1,	PALCYCTIMER
-000008FA 6A00                       		BPL.S	@EXIT
-000008FC 33FC 0003 FFFF F634        		MOVE.W	#3,	PALCYCTIMER
-00000904 3039 FFFF F632             		MOVE.W	PALCYCCURRENT,	D0
-0000090A 6B00                       		BMI.S	@EXIT
-0000090C 5579 FFFF F632             		SUBQ.W	#2,	PALCYCCURRENT
-00000912 41F9 0000 0000             		LEA		LOGO_CYC,	A0
-00000918 43F8 FB04                  		LEA		((PALETTE+$04)).W,	A1
-0000091C D0C0                       		ADDA.W	D0,	A0
-0000091E 22D8                       		MOVE.L	(A0)+,(A1)+
-00000920 22D8                       		MOVE.L	(A0)+,(A1)+
-00000922 22D8                       		MOVE.L	(A0)+,(A1)+
-00000924 22D8                       		MOVE.L	(A0)+,(A1)+
-00000926 22D8                       		MOVE.L	(A0)+,(A1)+
-00000928 22D8                       		MOVE.L	(A0)+,(A1)+
-0000092A 41F9 0000 0000             		LEA		LOGO_CYCB,	A0
-00000930 43F8 FB24                  		LEA		((PALETTE+$24)).W,	A1
-00000934 D0C0                       		ADDA.W	D0,	A0
-00000936 22D8                       		MOVE.L	(A0)+,(A1)+
-00000938 22D8                       		MOVE.L	(A0)+,(A1)+
-0000093A 22D8                       		MOVE.L	(A0)+,(A1)+
-0000093C 22D8                       		MOVE.L	(A0)+,(A1)+
-0000093E 22D8                       		MOVE.L	(A0)+,(A1)+
-00000940 22D8                       		MOVE.L	(A0)+,(A1)+
-00000942                            	@EXIT:
-00000942 4E75                       		RTS
-00000944                            		
-00000944                            LOGOART:	INCBIN		"ART/LOGO.UNC"
-00001564                            LOGOMAP:	INCBIN		"MAP/LOGO.MAP"
-000015C4                            LOGOMAPB:	INCBIN		"MAP/LOGOB.MAP"
-00001624                            LOGO_CYC:
-00001624 0000                       		DC.W $000
-00001626 0000                       		DC.W $000
-00001628 0000                       		DC.W $000
-0000162A 0000                       		DC.W $000
-0000162C 0000                       		DC.W $000
-0000162E 0000                       		DC.W $000
-00001630 0000                       		DC.W $000
-00001632 0000                       		DC.W $000
-00001634 0000                       		DC.W $000
-00001636 0000                       		DC.W $000
-00001638 0000                       		DC.W $000
-0000163A 0200                       		DC.W $200
-0000163C 0400                       		DC.W $400
-0000163E 0600                       		DC.W $600
-00001640 0800                       		DC.W $800
-00001642 0A00                       		DC.W $A00
-00001644 0C00                       		DC.W $C00
-00001646 0E00                       		DC.W $E00
-00001648 0E20                       		DC.W $E20
-0000164A 0E40                       		DC.W $E40
-0000164C 0E60                       		DC.W $E60
-0000164E 0E80                       		DC.W $E80
-00001650 0EA0                       		DC.W $EA0
-00001652 0EC0                       		DC.W $EC0
-00001654 0EA0                       		DC.W $EA0
-00001656 0E80                       		DC.W $E80
-00001658 0E60                       		DC.W $E60
-0000165A 0E40                       		DC.W $E40
-0000165C 0E20                       		DC.W $E20
-0000165E 0E00                       		DC.W $E00
-00001660 0C00                       		DC.W $C00
-00001662 0A00                       		DC.W $A00
-00001664 0800                       		DC.W $800
-00001666 0600                       		DC.W $600
-00001668 0800                       		DC.W $800
-0000166A 0A00                       		DC.W $A00
-0000166C 0C00                       		DC.W $C00
-0000166E 0E00                       		DC.W $E00
-00001670 0E20                       		DC.W $E20
-00001672 0E40                       		DC.W $E40
-00001674 0E60                       		DC.W $E60
-00001676 0E80                       		DC.W $E80
-00001678 0EA0                       		DC.W $EA0
-0000167A 0EC0                       		DC.W $EC0
-0000167C 0EA0                       		DC.W $EA0
-0000167E 0E80                       		DC.W $E80
-00001680 0E60                       		DC.W $E60
-00001682 0E40                       		DC.W $E40
-00001684 0E20                       		DC.W $E20
-00001686 0E00                       		DC.W $E00
-00001688 0C00                       		DC.W $C00
-0000168A 0A00                       		DC.W $A00
-0000168C 0800                       		DC.W $800
-0000168E 0600                       		DC.W $600
-00001690 0400                       		DC.W $400
-00001692 0200                       		DC.W $200
-00001694 0000                       		DC.W $000
-00001696 0000                       		DC.W $000
-00001698 0000                       		DC.W $000
-0000169A 0000                       		DC.W $000
-0000169C 0000                       		DC.W $000
-0000169E 0000                       		DC.W $000
-000016A0 0000                       		DC.W $000
-000016A2 0000                       		DC.W $000
-000016A4 0000                       		DC.W $000
-000016A6 0000                       		DC.W $000
-000016A8 0000                       		DC.W $000
-000016AA                            LOGO_CYCB:
-000016AA 0000                       		DC.W $000
-000016AC 0000                       		DC.W $000
-000016AE 0000                       		DC.W $000
-000016B0 0000                       		DC.W $000
-000016B2 0000                       		DC.W $000
-000016B4 0000                       		DC.W $000
-000016B6 0000                       		DC.W $000
-000016B8 0000                       		DC.W $000
-000016BA 0000                       		DC.W $000
-000016BC 0000                       		DC.W $000
-000016BE 0000                       		DC.W $000
-000016C0 0200                       		DC.W $200
-000016C2 0422                       		DC.W $422
-000016C4 0644                       		DC.W $644
-000016C6 0866                       		DC.W $866
-000016C8 0A88                       		DC.W $A88
-000016CA 0CAA                       		DC.W $CAA
-000016CC 0ECC                       		DC.W $ECC
-000016CE 0EEE                       		DC.W $EEE
-000016D0 0EEE                       		DC.W $EEE
-000016D2 0EEE                       		DC.W $EEE
-000016D4 0EEE                       		DC.W $EEE
-000016D6 0EEE                       		DC.W $EEE
-000016D8 0EEE                       		DC.W $EEE
-000016DA 0EEE                       		DC.W $EEE
-000016DC 0EEE                       		DC.W $EEE
-000016DE 0EEE                       		DC.W $EEE
-000016E0 0EEE                       		DC.W $EEE
-000016E2 0EEE                       		DC.W $EEE
-000016E4 0EEE                       		DC.W $EEE
-000016E6 0EEE                       		DC.W $EEE
-000016E8 0EEE                       		DC.W $EEE
-000016EA 0EEE                       		DC.W $EEE
-000016EC 0EEE                       		DC.W $EEE
-000016EE 0EEE                       		DC.W $EEE
-000016F0 0EEE                       		DC.W $EEE
-000016F2 0EEE                       		DC.W $EEE
-000016F4 0EEE                       		DC.W $EEE
-000016F6 0EEE                       		DC.W $EEE
-000016F8 0EEE                       		DC.W $EEE
-000016FA 0EEE                       		DC.W $EEE
-000016FC 0EEE                       		DC.W $EEE
-000016FE 0EEE                       		DC.W $EEE
-00001700 0EEE                       		DC.W $EEE
-00001702 0EEE                       		DC.W $EEE
-00001704 0EEE                       		DC.W $EEE
-00001706 0EEE                       		DC.W $EEE
-00001708 0EEE                       		DC.W $EEE
-0000170A 0EEE                       		DC.W $EEE
-0000170C 0ECC                       		DC.W $ECC
-0000170E 0CAA                       		DC.W $CAA
-00001710 0A88                       		DC.W $A88
-00001712 0866                       		DC.W $866
-00001714 0644                       		DC.W $644
-00001716 0422                       		DC.W $422
-00001718 0200                       		DC.W $200
-0000171A 0000                       		DC.W $000
-0000171C 0000                       		DC.W $000
-0000171E 0000                       		DC.W $000
-00001720 0000                       		DC.W $000
-00001722 0000                       		DC.W $000
-00001724 0000                       		DC.W $000
-00001726 0000                       		DC.W $000
-00001728 0000                       		DC.W $000
-0000172A 0000                       		DC.W $000
-0000172C 0000                       		DC.W $000
-0000172E 0000                       		DC.W $000
-0000172E 0000                       		DC.W $000
-00001730                            		INCLUDE		"SRC/GAMEMODE/MAIN.ASM"
-00001730                            MAIN:
-00001730 4EB9 0000 069C             		JSR		CLEARSCREEN
-00001736                            		
-00001736 23FC 4000 0000 00C0 0004   		move.l	#VRAMWRITE,	(VDPCTRL)
-00001740 41F9 0000 0000             		LEA		BATTLEART,		A0
-00001746 43F9 00C0 0000             		LEA		VDPDATA,	A1
-0000174C 303C 17FF                  		MOVE.W	#$17FF,		D0
-00001750                            	@LOADGFX:
-00001750 3298                       		MOVE.W	(A0)+,	(A1)
-00001752 51C8 FFFC                  		DBF		D0,	@LOADGFX
-00001756                            		
-00001756 41F9 0000 0000             		LEA		BATTLEPAL,	A0
-0000175C 43F9 FFFF FB80             		LEA		PALFADEBUFFER,	A1
-00001762 103C 0010                  		MOVE.B	#16,	D0
-00001766                            	@PALLOOP:
-00001766 22D8                       		MOVE.L	(A0)+,	(A1)+
-00001768 51C8 FFFC                  		DBF		D0,	@PALLOOP
-0000176C                            		
-0000176C 43F9 0000 0000 203C 4084+  	COPYTILEMAP		BATTLEMAP,	$8084,	35,	25
-00001782                            		
-00001782 4EB9 0000 075E             		JSR		PALFADEIN
-00001788                            	.loop:
-00001788 11FC 0001 F62A             		MOVE.B	#1,	(VBLANKCMD).W
-0000178E 4EB9 0000 074A             		jsr		VSYNC
-00001794 60F2                       		bra.s	.loop
-00001796 4E75                       		rts
-00001798                            		
-00001798                            BATTLEPAL:	INCBIN		"PAL/BATTLE.PAL"
-00001818                            BATTLEMAP:	INCBIN		"MAP/BATTLE.MAP"
-00001F68                            BATTLEART:	INCBIN		"ART/BATTLE.UNC"
-00001F68                            BATTLEART:	INCBIN		"ART/BATTLE.UNC"
-00003368                            		
-00003368                            	ALIGN	$2000
+00000840                            		INCLUDE		"SRC/SUB/PROCESSSPRITES.ASM"
+00000840                            DWORD_8796:
+00000840 0000 0000                  		DC.L	0
+00000844 FFFF F700                  		DC.L	SCROLL_FGPOSX
+00000848 FFFF F704                  		DC.L	SCROLL_FGPOSY
+0000084C FFFF F718                  		DC.L	SCROLL_BG3POSX
+00000850                            
+00000850                            PROCESSSPRITES:
+00000850 45F8 F800                                  LEA     (SPRITETABLE).W,A2
+00000854 7A00                                       MOVEQ   #0,D5
+00000856 49F8 AC00                                  LEA     (SPRITES).W,A4
+0000085A 7E07                                       MOVEQ   #7,D7
+0000085C                            
+0000085C                            @PRIORITY:                             ; ...
+0000085C 4A54                                       TST.W   (A4)
+0000085E 6700 0000                                  BEQ.W   @NEXTPRIORITYLEVEL
+00000862 7C02                                       MOVEQ   #2,D6
+00000864                            
+00000864                            @OBJECT:                               ; ...
+00000864 3074 6000                                  MOVEA.W (A4,D6.W),A0
+00000868 4A10                                       TST.B   (A0)
+0000086A 6700 0000                                  BEQ.W   @SKIPOBJECT
+0000086E 08A8 0007 0001                             BCLR    #7,OBJ.RENDERFLAGS(A0)
+00000874 1028 0001                                  MOVE.B  OBJ.RENDERFLAGS(A0),D0
+00000878 1800                                       MOVE.B  D0,D4
+0000087A 0240 000C                                  ANDI.W  #%1100,D0
+0000087E 6700                                       BEQ.S   @DRAWFIXED
+00000880 227B 00BE                                  MOVEA.L DWORD_8796(PC,D0.W),A1
+00000884 7000                                       MOVEQ   #0,D0
+00000886 1028 0018                                  MOVE.B  OBJ.XDISP(A0),D0
+0000088A 3628 0008                                  MOVE.W  OBJ.X(A0),D3
+0000088E 9651                                       SUB.W   (A1),D3
+00000890 3203                                       MOVE.W  D3,D1
+00000892 D240                                       ADD.W   D0,D1
+00000894 6B00 0000                                  BMI.W   @SKIPOBJECT
+00000898 3203                                       MOVE.W  D3,D1
+0000089A 9240                                       SUB.W   D0,D1
+0000089C 0C41 0140                                  CMPI.W  #$140,D1
+000008A0 6C00                                       BGE.S   @SKIPOBJECT
+000008A2 0643 0080                                  ADDI.W  #$80,D3
+000008A6 0804 0004                                  BTST    #4,D4
+000008AA 6700                                       BEQ.S   @ASSUMEHEIGHT
+000008AC 7000                                       MOVEQ   #0,D0
+000008AE 1028 0016                                  MOVE.B  OBJ.YRAD(A0),D0
+000008B2 3428 000C                                  MOVE.W  OBJ.Y(A0),D2
+000008B6 9469 0004                                  SUB.W   OBJ.MAP(A1),D2
+000008BA 3202                                       MOVE.W  D2,D1
+000008BC D240                                       ADD.W   D0,D1
+000008BE 6B00                                       BMI.S   @SKIPOBJECT
+000008C0 3202                                       MOVE.W  D2,D1
+000008C2 9240                                       SUB.W   D0,D1
+000008C4 0C41 00E0                                  CMPI.W  #$E0,D1
+000008C8 6C00                                       BGE.S   @SKIPOBJECT
+000008CA 0642 0080                                  ADDI.W  #$80,D2
+000008CE 6000                                       BRA.S   @DRAWOBJECT
+000008D0                            ; ---------------------------------------------------------------------------
+000008D0                            
+000008D0                            @DRAWFIXED:                            ; ...
+000008D0 3428 000A                                  MOVE.W  OBJ.YSCR(A0),D2
+000008D4 3628 0008                                  MOVE.W  OBJ.X(A0),D3
+000008D8 6000                                       BRA.S   @DRAWOBJECT
+000008DA                            ; ---------------------------------------------------------------------------
+000008DA                            
+000008DA                            @ASSUMEHEIGHT:                         ; ...
+000008DA 3428 000C                                  MOVE.W  OBJ.Y(A0),D2
+000008DE 9469 0004                                  SUB.W   OBJ.MAP(A1),D2
+000008E2 0642 0080                                  ADDI.W  #128,D2
+000008E6 0C42 0060                                  CMPI.W  #96,D2
+000008EA 6500                                       BCS.S   @SKIPOBJECT
+000008EC 0C42 0180                                  CMPI.W  #384,D2
+000008F0 6400                                       BCC.S   @SKIPOBJECT
+000008F2                            
+000008F2                            @DRAWOBJECT:                           ; ...
+000008F2 2268 0004                                  MOVEA.L OBJ.MAP(A0),A1
+000008F6 7200                                       MOVEQ   #0,D1
+000008F8 0804 0005                                  BTST    #5,D4
+000008FC 6600                                       BNE.S   @STATICMAP
+000008FE 1228 001A                                  MOVE.B  OBJ.FRAME(A0),D1
+00000902 D201                                       ADD.B   D1,D1
+00000904 D2F1 1000                                  ADDA.W  (A1,D1.W),A1
+00000908 1219                                       MOVE.B  (A1)+,D1
+0000090A 5301                                       SUBQ.B  #1,D1
+0000090C 6B00                                       BMI.S   @SETVISIBLE
+0000090E                            
+0000090E                            @STATICMAP:                            ; ...
+0000090E 6100 0000                                  BSR.W   BUILDSPRITETOBUFFER
+00000912                            
+00000912                            @SETVISIBLE:                           ; ...
+00000912 08E8 0007 0001                             BSET    #7,OBJ.RENDERFLAGS(A0)
+00000918                            
+00000918                            @SKIPOBJECT:                           ; ...
+00000918 5446                                       ADDQ.W  #2,D6
+0000091A 5554                                       SUBQ.W  #2,(A4)
+0000091C 6600 FF46                                  BNE.W   @OBJECT
+00000920                            
+00000920                            @NEXTPRIORITYLEVEL:                    ; ...
+00000920 49EC 0080                                  LEA     $80(A4),A4
+00000924 51CF FF36                                  DBF     D7,@PRIORITY
+00000928 11C5 F62C                                  MOVE.B  D5,(SPRITECOUNT).W
+0000092C 0C05 0050                                  CMPI.B  #80,D5
+00000930 6700                                       BEQ.S   @LIMITREACHED
+00000932 24BC 0000 0000                             MOVE.L  #0,(A2)
+00000938 4E75                                       RTS
+0000093A                            ; ---------------------------------------------------------------------------
+0000093A                            
+0000093A                            @LIMITREACHED:                         ; ...
+0000093A 157C 0000 FFFB                             MOVE.B  #0,-5(A2)
+00000940 4E75                                       RTS
+00000942                            ; END OF FUNCTION PROCESSSPRITES
+00000942                            
+00000942                            BUILDSPRITETOBUFFER:                    ; ...
+00000942 3668 0002                                  MOVEA.W OBJ.TILE(A0),A3
+00000946 0804 0000                                  BTST    #0,D4
+0000094A 6600                                       BNE.S   _BUILDSPRITEXFLIP
+0000094C 0804 0001                                  BTST    #1,D4
+00000950 6600 0000                                  BNE.W   _BUILDSPRITEYFLIP
+00000954                            ; END OF FUNCTION BUILDSPRITETOBUFFER
+00000954                            
+00000954                            
+00000954                            ; =============== S U B R O U T I N E =======================================
+00000954                            
+00000954                            
+00000954                            _BUILDSPRITE:                           ; ...
+00000954 0C05 0050                                  CMPI.B  #80,D5
+00000958 6700                                       BEQ.S   @LIMITREACHED
+0000095A 1019                                       MOVE.B  (A1)+,D0
+0000095C 4880                                       EXT.W   D0
+0000095E D042                                       ADD.W   D2,D0
+00000960 34C0                                       MOVE.W  D0,(A2)+
+00000962 14D9                                       MOVE.B  (A1)+,(A2)+
+00000964 5205                                       ADDQ.B  #1,D5
+00000966 14C5                                       MOVE.B  D5,(A2)+
+00000968 1019                                       MOVE.B  (A1)+,D0
+0000096A E148                                       LSL.W   #8,D0
+0000096C 1019                                       MOVE.B  (A1)+,D0
+0000096E D04B                                       ADD.W   A3,D0
+00000970 34C0                                       MOVE.W  D0,(A2)+
+00000972 1019                                       MOVE.B  (A1)+,D0
+00000974 4880                                       EXT.W   D0
+00000976 D043                                       ADD.W   D3,D0
+00000978 0240 01FF                                  ANDI.W  #$1FF,D0
+0000097C 6600                                       BNE.S   @WRITEX
+0000097E 5240                                       ADDQ.W  #1,D0
+00000980                            
+00000980                            @WRITEX:                               ; ...
+00000980 34C0                                       MOVE.W  D0,(A2)+
+00000982 51C9 FFD0                                  DBF     D1,_BUILDSPRITE
+00000986                            
+00000986                            @LIMITREACHED:                         ; ...
+00000986 4E75                                       RTS
+00000988                            ; END OF FUNCTION _BUILDSPRITE
+00000988                            
+00000988                            _BUILDSPRITEXFLIP:                      ; ...
+00000988 0804 0001                                  BTST    #1,D4
+0000098C 6600 0000                                  BNE.W   _BUILDSPRITEXYFLIPPED
+00000990                            
+00000990                            @LOOP:                                 ; ...
+00000990 0C05 0050                                  CMPI.B  #$50,D5 ; 'P'
+00000994 6700                                       BEQ.S   @LIMITREACHED
+00000996 1019                                       MOVE.B  (A1)+,D0
+00000998 4880                                       EXT.W   D0
+0000099A D042                                       ADD.W   D2,D0
+0000099C 34C0                                       MOVE.W  D0,(A2)+
+0000099E 1819                                       MOVE.B  (A1)+,D4
+000009A0 14C4                                       MOVE.B  D4,(A2)+
+000009A2 5205                                       ADDQ.B  #1,D5
+000009A4 14C5                                       MOVE.B  D5,(A2)+
+000009A6 1019                                       MOVE.B  (A1)+,D0
+000009A8 E148                                       LSL.W   #8,D0
+000009AA 1019                                       MOVE.B  (A1)+,D0
+000009AC D04B                                       ADD.W   A3,D0
+000009AE 0A40 0800                                  EORI.W  #$800,D0
+000009B2 34C0                                       MOVE.W  D0,(A2)+
+000009B4 1019                                       MOVE.B  (A1)+,D0
+000009B6 4880                                       EXT.W   D0
+000009B8 4440                                       NEG.W   D0
+000009BA D804                                       ADD.B   D4,D4
+000009BC 0244 0018                                  ANDI.W  #$18,D4
+000009C0 5044                                       ADDQ.W  #8,D4
+000009C2 9044                                       SUB.W   D4,D0
+000009C4 D043                                       ADD.W   D3,D0
+000009C6 0240 01FF                                  ANDI.W  #$1FF,D0
+000009CA 6600                                       BNE.S   @WRITEX
+000009CC 5240                                       ADDQ.W  #1,D0
+000009CE                            
+000009CE                            @WRITEX:                               ; ...
+000009CE 34C0                                       MOVE.W  D0,(A2)+
+000009D0 51C9 FFBE                                  DBF     D1,@LOOP
+000009D4                            
+000009D4                            @LIMITREACHED:                         ; ...
+000009D4 4E75                                       RTS
+000009D6                            ; END OF FUNCTION _BUILDSPRITEXFLIP
+000009D6                            
+000009D6                            
+000009D6                            ; =============== S U B R O U T I N E =======================================
+000009D6                            
+000009D6                            
+000009D6                            _BUILDSPRITEYFLIP:                      ; ...
+000009D6 0C05 0050                                  CMPI.B  #$50,D5 ; 'P'
+000009DA 6700                                       BEQ.S   @LIMITREACHED
+000009DC 1019                                       MOVE.B  (A1)+,D0
+000009DE 1811                                       MOVE.B  (A1),D4
+000009E0 4880                                       EXT.W   D0
+000009E2 4440                                       NEG.W   D0
+000009E4 E70C                                       LSL.B   #3,D4
+000009E6 0244 0018                                  ANDI.W  #$18,D4
+000009EA 5044                                       ADDQ.W  #8,D4
+000009EC 9044                                       SUB.W   D4,D0
+000009EE D042                                       ADD.W   D2,D0
+000009F0 34C0                                       MOVE.W  D0,(A2)+
+000009F2 14D9                                       MOVE.B  (A1)+,(A2)+
+000009F4 5205                                       ADDQ.B  #1,D5
+000009F6 14C5                                       MOVE.B  D5,(A2)+
+000009F8 1019                                       MOVE.B  (A1)+,D0
+000009FA E148                                       LSL.W   #8,D0
+000009FC 1019                                       MOVE.B  (A1)+,D0
+000009FE D04B                                       ADD.W   A3,D0
+00000A00 0A40 1000                                  EORI.W  #$1000,D0
+00000A04 34C0                                       MOVE.W  D0,(A2)+
+00000A06 1019                                       MOVE.B  (A1)+,D0
+00000A08 4880                                       EXT.W   D0
+00000A0A D043                                       ADD.W   D3,D0
+00000A0C 0240 01FF                                  ANDI.W  #$1FF,D0
+00000A10 6600                                       BNE.S   @WRITEX
+00000A12 5240                                       ADDQ.W  #1,D0
+00000A14                            
+00000A14                            @WRITEX:                               ; ...
+00000A14 34C0                                       MOVE.W  D0,(A2)+
+00000A16 51C9 FFBE                                  DBF     D1,_BUILDSPRITEYFLIP
+00000A1A                            
+00000A1A                            @LIMITREACHED:                         ; ...
+00000A1A 4E75                                       RTS
+00000A1C                            ; END OF FUNCTION _BUILDSPRITEYFLIP
+00000A1C                            
+00000A1C                            
+00000A1C                            ; =============== S U B R O U T I N E =======================================
+00000A1C                            
+00000A1C                            
+00000A1C                            _BUILDSPRITEXYFLIPPED:                  ; ...
+00000A1C 0C05 0050                                  CMPI.B  #$50,D5 ; 'P'
+00000A20 6700                                       BEQ.S   @LIMITREACHED
+00000A22 1019                                       MOVE.B  (A1)+,D0
+00000A24 1811                                       MOVE.B  (A1),D4
+00000A26 4880                                       EXT.W   D0
+00000A28 4440                                       NEG.W   D0
+00000A2A E70C                                       LSL.B   #3,D4
+00000A2C 0244 0018                                  ANDI.W  #$18,D4
+00000A30 5044                                       ADDQ.W  #8,D4
+00000A32 9044                                       SUB.W   D4,D0
+00000A34 D042                                       ADD.W   D2,D0
+00000A36 34C0                                       MOVE.W  D0,(A2)+
+00000A38 1819                                       MOVE.B  (A1)+,D4
+00000A3A 14C4                                       MOVE.B  D4,(A2)+
+00000A3C 5205                                       ADDQ.B  #1,D5
+00000A3E 14C5                                       MOVE.B  D5,(A2)+
+00000A40 1019                                       MOVE.B  (A1)+,D0
+00000A42 E148                                       LSL.W   #8,D0
+00000A44 1019                                       MOVE.B  (A1)+,D0
+00000A46 D04B                                       ADD.W   A3,D0
+00000A48 0A40 1800                                  EORI.W  #$1800,D0
+00000A4C 34C0                                       MOVE.W  D0,(A2)+
+00000A4E 1019                                       MOVE.B  (A1)+,D0
+00000A50 4880                                       EXT.W   D0
+00000A52 4440                                       NEG.W   D0
+00000A54 D804                                       ADD.B   D4,D4
+00000A56 0244 0018                                  ANDI.W  #$18,D4
+00000A5A 5044                                       ADDQ.W  #8,D4
+00000A5C 9044                                       SUB.W   D4,D0
+00000A5E D043                                       ADD.W   D3,D0
+00000A60 0240 01FF                                  ANDI.W  #$1FF,D0
+00000A64 6600                                       BNE.S   @WRITEX
+00000A66 5240                                       ADDQ.W  #1,D0
+00000A68                            
+00000A68                            @WRITEX:                               ; ...
+00000A68 34C0                                       MOVE.W  D0,(A2)+
+00000A6A 51C9 FFB0                                  DBF     D1,_BUILDSPRITEXYFLIPPED
+00000A6E                            
+00000A6E                            @LIMITREACHED:                         ; ...
+00000A6E 4E75                                       RTS
+00000A70                            ; END OF FUNCTION _BUILDSPRITEXYFLIPPED
+00000A70                            
+00000A70                            _OBJECTDISPLAY:                         ; ...
+00000A70 43F8 AC00                                  LEA     (SPRITES).W,A1
+00000A74 1028 0019                                  MOVE.B  OBJ.PRIORITY(A0),D0
+00000A78 0240 0007                                  ANDI.W  #7,D0
+00000A7C EF48                                       LSL.W   #7,D0
+00000A7E D2C0                                       ADDA.W  D0,A1
+00000A80 0C51 007E                                  CMPI.W  #$7E,(A1) ; '~'
+00000A84 6400                                       BCC.S   @EXIT
+00000A86 5451                                       ADDQ.W  #2,(A1)
+00000A88 D2D1                                       ADDA.W  (A1),A1
+00000A8A 3288                                       MOVE.W  A0,(A1)
+00000A8C                            
+00000A8C                            @EXIT:                                 ; ...
+00000A8C 4E75                                       RTS
+00000A8C 4E75                                       RTS
+00000A8E                            		INCLUDE		"SRC/SUB/RUNOBJECTS.ASM"
+00000A8E                            RUNOBJECTS:                             ; ...
+00000A8E 41F8 D000                                  LEA     (OBJSLOT00).W,A0
+00000A92 7E7F                                       MOVEQ   #$80-1,D7
+00000A94 7000                                       MOVEQ   #0,D0
+00000A96                            
+00000A96                            @PROCESSOBJLOOP:                       ; ...
+00000A96 1028 0000                                  MOVE.B  OBJ.ID(A0),D0
+00000A9A 6700                                       BEQ.S   @EMPTYSLOT
+00000A9C D040                                       ADD.W   D0,D0
+00000A9E D040                                       ADD.W   D0,D0
+00000AA0 227B 0000                                  MOVEA.L OBJECTINDEX-4(PC,D0.W),A1 ; NO ZERO OFFSET - START AT 1
+00000AA4 4E91                                       JSR     (A1)
+00000AA6 7000                                       MOVEQ   #0,D0
+00000AA8                            
+00000AA8                            @EMPTYSLOT:                            ; ...
+00000AA8 41E8 0040                                  LEA     OBJ.SIZE(A0),A0
+00000AAC 51CF FFE8                                  DBF     D7,@PROCESSOBJLOOP
+00000AB0 4E75                                       RTS
+00000AB2                            ; ---------------------------------------------------------------------------
+00000AB2                            
+00000AB2                            ; END OF FUNCTION RUNOBJECTS
+00000AB2                            
+00000AB2                            OBJECTINDEX:
+00000AB2 0000 0000                  		DC.L	SOUL	;	01
+00000AB6 0000 0000                  		DC.L	OBJNULL  ;	02
+00000ABA 0000 0000                  		DC.L	OBJNULL  ;	03
+00000ABE 0000 0000                  		DC.L	OBJNULL  ;	04
+00000AC2 0000 0000                  		DC.L	OBJNULL  ;	05
+00000AC6 0000 0000                  		DC.L	OBJNULL  ;	06
+00000ACA 0000 0000                  		DC.L	OBJNULL  ;	07
+00000ACE 0000 0000                  		DC.L	OBJNULL  ;	08
+00000AD2 0000 0000                  		DC.L	OBJNULL  ;	09
+00000AD6 0000 0000                  		DC.L	OBJNULL  ;	0A
+00000ADA 0000 0000                  		DC.L	OBJNULL  ;	0B
+00000ADE 0000 0000                  		DC.L	OBJNULL  ;	0C
+00000AE2 0000 0000                  		DC.L	OBJNULL  ;	0D
+00000AE6 0000 0000                  		DC.L	OBJNULL  ;	0E
+00000AEA 0000 0000                  		DC.L	OBJNULL  ;	0F
+00000AEE 0000 0000                  		DC.L	OBJNULL  ;	10
+00000AF2                            		
+00000AF2                            OBJNULL:
+00000AF2 4E75                       		RTS
+00000AF2 4E75                       		RTS
+00000AF4                            		
+00000AF4                            		INCLUDE		"SRC/GAMEMODE/LOGO.ASM"
+00000AF4                            LOGO:
+00000AF4 4EB9 0000 069C             		JSR		CLEARSCREEN
+00000AFA 23FC 4000 0000 00C0 0004   		move.l	#VRAMWRITE,	(VDPCTRL)
+00000B04 41F9 0000 0000             		LEA		LOGOART,	A0
+00000B0A 43F9 00C0 0000             		LEA		VDPDATA,	A1
+00000B10 303C 061F                  		MOVE.W	#$61F,		D0
+00000B14                            	@LOADGFX:
+00000B14 3298                       		MOVE.W	(A0)+,	(A1)
+00000B16 51C8 FFFC                  		DBF		D0,	@LOADGFX
+00000B1A                            		
+00000B1A 43F9 0000 0000 203C 661C+  	COPYTILEMAP		LOGOMAP,	$A61C,	11,	3
+00000B30 43F9 0000 0000 203C 461C+  	COPYTILEMAP		LOGOMAPB,	$861C,	11,	3
+00000B46                            	
+00000B46 103C 0000                  		move.b	#bgm_GHZ,d0
+00000B4A 6100 FC0A                  		bsr.w	PlaySound
+00000B4E                            	
+00000B4E 7000                       		MOVEQ	#0,	D0
+00000B50                            	;	BSR.W	PALLOAD
+00000B50 31FC 0070 F632             		MOVE.W	#112,	(PALCYCCURRENT).W
+00000B56 33FC 0000 00FF F662        		MOVE.W	#0,	$FFF662
+00000B5E 33FC 0000 00FF F660        		MOVE.W	#0,	$FFF660
+00000B66 33FC 0104 FFFF F614        		MOVE.W	#260,	TIMER
+00000B6E 3038 F60C                  		MOVE.W	(VDPBUFFER).W,	D0
+00000B72 0000 0040                  		ORI.B	#%1000000,	D0
+00000B76 33C0 00C0 0004             		MOVE.W	D0,	(VDPCTRL).L
+00000B7C                            		
+00000B7C                            	@LOOP:
+00000B7C 11FC 0001 F62A             		MOVE.B	#1,	(VBLANKCMD).W
+00000B82 4EB9 0000 074A             		JSR		VSYNC
+00000B88 6100 0000                  		BSR.W	_LOGO_PALCYC
+00000B8C 4A79 FFFF F614             		TST.W	TIMER
+00000B92 6700                       		BEQ.S	@EXIT
+00000B94 0239 0080 FFFF F605        		ANDI.B	#%10000000,	JOYPADPRESS
+00000B9C 67DE                       		BEQ.S	@LOOP
+00000B9E                            	@EXIT:
+00000B9E                            	;	JSR		PALFADEOUT
+00000B9E 13FC 0004 FFFF F600        		MOVE.B	#1*4,	GAMEMODE
+00000BA6 4E75                       		RTS
+00000BA8                            		
+00000BA8                            _LOGO_PALCYC:
+00000BA8 5379 FFFF F634             		SUBQ.W	#1,	PALCYCTIMER
+00000BAE 6A00                       		BPL.S	@EXIT
+00000BB0 33FC 0003 FFFF F634        		MOVE.W	#3,	PALCYCTIMER
+00000BB8 3039 FFFF F632             		MOVE.W	PALCYCCURRENT,	D0
+00000BBE 6B00                       		BMI.S	@EXIT
+00000BC0 5579 FFFF F632             		SUBQ.W	#2,	PALCYCCURRENT
+00000BC6 41F9 0000 0000             		LEA		LOGO_CYC,	A0
+00000BCC 43F8 FB04                  		LEA		((PALETTE+$04)).W,	A1
+00000BD0 D0C0                       		ADDA.W	D0,	A0
+00000BD2 22D8                       		MOVE.L	(A0)+,(A1)+
+00000BD4 22D8                       		MOVE.L	(A0)+,(A1)+
+00000BD6 22D8                       		MOVE.L	(A0)+,(A1)+
+00000BD8 22D8                       		MOVE.L	(A0)+,(A1)+
+00000BDA 22D8                       		MOVE.L	(A0)+,(A1)+
+00000BDC 22D8                       		MOVE.L	(A0)+,(A1)+
+00000BDE 41F9 0000 0000             		LEA		LOGO_CYCB,	A0
+00000BE4 43F8 FB24                  		LEA		((PALETTE+$24)).W,	A1
+00000BE8 D0C0                       		ADDA.W	D0,	A0
+00000BEA 22D8                       		MOVE.L	(A0)+,(A1)+
+00000BEC 22D8                       		MOVE.L	(A0)+,(A1)+
+00000BEE 22D8                       		MOVE.L	(A0)+,(A1)+
+00000BF0 22D8                       		MOVE.L	(A0)+,(A1)+
+00000BF2 22D8                       		MOVE.L	(A0)+,(A1)+
+00000BF4 22D8                       		MOVE.L	(A0)+,(A1)+
+00000BF6                            	@EXIT:
+00000BF6 4E75                       		RTS
+00000BF8                            		
+00000BF8                            LOGOART:	INCBIN		"ART/LOGO.UNC"
+00001818                            LOGOMAP:	INCBIN		"MAP/LOGO.MAP"
+00001878                            LOGOMAPB:	INCBIN		"MAP/LOGOB.MAP"
+000018D8                            LOGO_CYC:
+000018D8 0000                       		DC.W $000
+000018DA 0000                       		DC.W $000
+000018DC 0000                       		DC.W $000
+000018DE 0000                       		DC.W $000
+000018E0 0000                       		DC.W $000
+000018E2 0000                       		DC.W $000
+000018E4 0000                       		DC.W $000
+000018E6 0000                       		DC.W $000
+000018E8 0000                       		DC.W $000
+000018EA 0000                       		DC.W $000
+000018EC 0000                       		DC.W $000
+000018EE 0200                       		DC.W $200
+000018F0 0400                       		DC.W $400
+000018F2 0600                       		DC.W $600
+000018F4 0800                       		DC.W $800
+000018F6 0A00                       		DC.W $A00
+000018F8 0C00                       		DC.W $C00
+000018FA 0E00                       		DC.W $E00
+000018FC 0E20                       		DC.W $E20
+000018FE 0E40                       		DC.W $E40
+00001900 0E60                       		DC.W $E60
+00001902 0E80                       		DC.W $E80
+00001904 0EA0                       		DC.W $EA0
+00001906 0EC0                       		DC.W $EC0
+00001908 0EA0                       		DC.W $EA0
+0000190A 0E80                       		DC.W $E80
+0000190C 0E60                       		DC.W $E60
+0000190E 0E40                       		DC.W $E40
+00001910 0E20                       		DC.W $E20
+00001912 0E00                       		DC.W $E00
+00001914 0C00                       		DC.W $C00
+00001916 0A00                       		DC.W $A00
+00001918 0800                       		DC.W $800
+0000191A 0600                       		DC.W $600
+0000191C 0800                       		DC.W $800
+0000191E 0A00                       		DC.W $A00
+00001920 0C00                       		DC.W $C00
+00001922 0E00                       		DC.W $E00
+00001924 0E20                       		DC.W $E20
+00001926 0E40                       		DC.W $E40
+00001928 0E60                       		DC.W $E60
+0000192A 0E80                       		DC.W $E80
+0000192C 0EA0                       		DC.W $EA0
+0000192E 0EC0                       		DC.W $EC0
+00001930 0EA0                       		DC.W $EA0
+00001932 0E80                       		DC.W $E80
+00001934 0E60                       		DC.W $E60
+00001936 0E40                       		DC.W $E40
+00001938 0E20                       		DC.W $E20
+0000193A 0E00                       		DC.W $E00
+0000193C 0C00                       		DC.W $C00
+0000193E 0A00                       		DC.W $A00
+00001940 0800                       		DC.W $800
+00001942 0600                       		DC.W $600
+00001944 0400                       		DC.W $400
+00001946 0200                       		DC.W $200
+00001948 0000                       		DC.W $000
+0000194A 0000                       		DC.W $000
+0000194C 0000                       		DC.W $000
+0000194E 0000                       		DC.W $000
+00001950 0000                       		DC.W $000
+00001952 0000                       		DC.W $000
+00001954 0000                       		DC.W $000
+00001956 0000                       		DC.W $000
+00001958 0000                       		DC.W $000
+0000195A 0000                       		DC.W $000
+0000195C 0000                       		DC.W $000
+0000195E                            LOGO_CYCB:
+0000195E 0000                       		DC.W $000
+00001960 0000                       		DC.W $000
+00001962 0000                       		DC.W $000
+00001964 0000                       		DC.W $000
+00001966 0000                       		DC.W $000
+00001968 0000                       		DC.W $000
+0000196A 0000                       		DC.W $000
+0000196C 0000                       		DC.W $000
+0000196E 0000                       		DC.W $000
+00001970 0000                       		DC.W $000
+00001972 0000                       		DC.W $000
+00001974 0200                       		DC.W $200
+00001976 0422                       		DC.W $422
+00001978 0644                       		DC.W $644
+0000197A 0866                       		DC.W $866
+0000197C 0A88                       		DC.W $A88
+0000197E 0CAA                       		DC.W $CAA
+00001980 0ECC                       		DC.W $ECC
+00001982 0EEE                       		DC.W $EEE
+00001984 0EEE                       		DC.W $EEE
+00001986 0EEE                       		DC.W $EEE
+00001988 0EEE                       		DC.W $EEE
+0000198A 0EEE                       		DC.W $EEE
+0000198C 0EEE                       		DC.W $EEE
+0000198E 0EEE                       		DC.W $EEE
+00001990 0EEE                       		DC.W $EEE
+00001992 0EEE                       		DC.W $EEE
+00001994 0EEE                       		DC.W $EEE
+00001996 0EEE                       		DC.W $EEE
+00001998 0EEE                       		DC.W $EEE
+0000199A 0EEE                       		DC.W $EEE
+0000199C 0EEE                       		DC.W $EEE
+0000199E 0EEE                       		DC.W $EEE
+000019A0 0EEE                       		DC.W $EEE
+000019A2 0EEE                       		DC.W $EEE
+000019A4 0EEE                       		DC.W $EEE
+000019A6 0EEE                       		DC.W $EEE
+000019A8 0EEE                       		DC.W $EEE
+000019AA 0EEE                       		DC.W $EEE
+000019AC 0EEE                       		DC.W $EEE
+000019AE 0EEE                       		DC.W $EEE
+000019B0 0EEE                       		DC.W $EEE
+000019B2 0EEE                       		DC.W $EEE
+000019B4 0EEE                       		DC.W $EEE
+000019B6 0EEE                       		DC.W $EEE
+000019B8 0EEE                       		DC.W $EEE
+000019BA 0EEE                       		DC.W $EEE
+000019BC 0EEE                       		DC.W $EEE
+000019BE 0EEE                       		DC.W $EEE
+000019C0 0ECC                       		DC.W $ECC
+000019C2 0CAA                       		DC.W $CAA
+000019C4 0A88                       		DC.W $A88
+000019C6 0866                       		DC.W $866
+000019C8 0644                       		DC.W $644
+000019CA 0422                       		DC.W $422
+000019CC 0200                       		DC.W $200
+000019CE 0000                       		DC.W $000
+000019D0 0000                       		DC.W $000
+000019D2 0000                       		DC.W $000
+000019D4 0000                       		DC.W $000
+000019D6 0000                       		DC.W $000
+000019D8 0000                       		DC.W $000
+000019DA 0000                       		DC.W $000
+000019DC 0000                       		DC.W $000
+000019DE 0000                       		DC.W $000
+000019E0 0000                       		DC.W $000
+000019E2 0000                       		DC.W $000
+000019E2 0000                       		DC.W $000
+000019E4                            		INCLUDE		"SRC/GAMEMODE/MAIN.ASM"
+000019E4                            MAIN:
+000019E4 4EB9 0000 069C             		JSR		CLEARSCREEN
+000019EA                            		
+000019EA 23FC 4000 0000 00C0 0004   		move.l	#VRAMWRITE,	(VDPCTRL)
+000019F4 41F9 0000 0000             		LEA		BATTLEART,		A0
+000019FA 43F9 00C0 0000             		LEA		VDPDATA,	A1
+00001A00 303C 17FF                  		MOVE.W	#$17FF,		D0
+00001A04                            	@LOADGFX:
+00001A04 3298                       		MOVE.W	(A0)+,	(A1)
+00001A06 51C8 FFFC                  		DBF		D0,	@LOADGFX
+00001A0A                            		
+00001A0A 41F9 0000 0000             		LEA		BATTLEPAL,	A0
+00001A10 43F9 FFFF FB80             		LEA		PALFADEBUFFER,	A1
+00001A16 103C 0010                  		MOVE.B	#16,	D0
+00001A1A                            	@PALLOOP:
+00001A1A 22D8                       		MOVE.L	(A0)+,	(A1)+
+00001A1C 51C8 FFFC                  		DBF		D0,	@PALLOOP
+00001A20                            		
+00001A20 43F9 0000 0000 203C 4084+  	COPYTILEMAP		BATTLEMAP,	$8084,	35,	25
+00001A36                            	
+00001A36 13FC 0001 FFFF D000        		MOVE.B	#$01,	(OBJSLOT00)
+00001A3E 41F9 FFFF D000             		LEA		(OBJSLOT00),	A0
+00001A44 317C 00A0 0008             		MOVE.W	#160,	OBJ.X(A0)
+00001A4A 317C 0070 000C             		MOVE.W	#112,	OBJ.Y(A0)
+00001A50                            		
+00001A50 4EB9 0000 075E             		JSR		PALFADEIN
+00001A56                            	@loop:
+00001A56 11FC 0001 F62A             		MOVE.B	#1,	(VBLANKCMD).W
+00001A5C 4EB9 0000 074A             		jsr		VSYNC
+00001A62 4EB9 0000 0A8E             		JSR		RUNOBJECTS
+00001A68 4EB9 0000 0850             		JSR		PROCESSSPRITES
+00001A6E 60E6                       		bra.s	@loop
+00001A70 4E75                       		rts
+00001A72                            		
+00001A72                            BATTLEPAL:	INCBIN		"PAL/BATTLE.PAL"
+00001AF2                            BATTLEMAP:	INCBIN		"MAP/BATTLE.MAP"
+00002242                            BATTLEART:	INCBIN		"ART/BATTLE.UNC"
+00002242                            BATTLEART:	INCBIN		"ART/BATTLE.UNC"
+00003642                            		
+00003642                            		INCLUDE		"SRC/OBJ/SOUL.ASM"
+00003642                            SOUL:
+00003642 7000                       		MOVEQ	#0,	D0
+00003644 1028 0024                  		MOVE.B	OBJ.ACTION(A0),	D0
+00003648 323B 0000                  		MOVE.W	@INDEX(PC,D0.W),	D1
+0000364C 4EFB 1000                  		JMP		@INDEX(PC,D1.W)
+00003650                            		
+00003650                            	@INDEX:
+00003650 0000                       		DC.W	PLAY02_INIT-@INDEX
+00003652 0000                       		DC.W	PLAY02_DO-@INDEX
+00003654 0000                       		DC.W	PLAY02_DELETE-@INDEX
+00003656 0000                       		DC.W	PLAY02_DELETE-@INDEX
+00003658                            		
+00003658                            PLAY02_INIT:
+00003658 5428 0024                  		ADDQ.B	#2,	OBJ.ACTION(A0)
+0000365C 117C 0012 0016             		MOVE.B	#$12,	OBJ.YRAD(A0)
+00003662 117C 0009 0017             		MOVE.B	#9,	OBJ.XRAD(A0)
+00003668 217C 0000 0000 0004        		MOVE.L	#MAP_SOUL,	OBJ.MAP(A0)
+00003670 317C 0000 0002             		MOVE.W	#$0,	OBJ.TILE(A0)
+00003676 117C 0004 0001             		MOVE.B	#4,	OBJ.RENDERFLAGS(A0)
+0000367C 117C 0002 0019             		MOVE.B	#2,	OBJ.PRIORITY(A0)
+00003682                            
+00003682                            PLAY02_DO:
+00003682 6100 0000                  		BSR.W	@JOYPADCTRL
+00003686 4EF9 0000 0A70             		JMP		_OBJECTDISPLAY
+0000368C                            		
+0000368C                            	@JOYPADCTRL:
+0000368C 1838 F604                  		MOVE.B	(JOYPAD).W,	D4
+00003690 3428 000C                  		MOVE.W	OBJ.Y(A0),	D2
+00003694 3628 0008                  		MOVE.W	OBJ.X(A0),	D3
+00003698 7201                       		MOVEQ	#1,	D1
+0000369A 0804 0000                  		BTST	#0,	D4
+0000369E 6700                       		BEQ.S   LOC_11226
+000036A0 9441                       		SUB.W   D1,D2
+000036A2                            
+000036A2                            LOC_11226:		              ; ...
+000036A2 0804 0001                  		BTST    #1,D4
+000036A6 6700                       		BEQ.S   LOC_1122E
+000036A8 D441                       		ADD.W   D1,D2
+000036AA                            
+000036AA                            LOC_1122E:		              ; ...
+000036AA 0804 0002                  		BTST    #2,D4
+000036AE 6700                       		BEQ.S   LOC_11236
+000036B0 9641                       		SUB.W   D1,D3
+000036B2                            
+000036B2                            LOC_11236:		              ; ...
+000036B2 0804 0003                  		BTST    #3,D4
+000036B6 6700                       		BEQ.S   LOC_1123E
+000036B8 D641                       		ADD.W   D1,D3
+000036BA                            		
+000036BA                            LOC_1123E:		              ; ...
+000036BA 3142 000C                  		MOVE.W  D2,OBJ.Y(A0)
+000036BE 3143 0008                  		MOVE.W  D3,OBJ.X(A0)
+000036C2 0838 0004 F605             		BTST    #4,(JOYPADPRESS).W
+000036C8 6700                       		BEQ.S   LOC_11264
+000036CA 1028 0001                  		MOVE.B  OBJ.RENDERFLAGS(A0),D0
+000036CE 1200                       		MOVE.B  D0,D1
+000036D0 5200                       		ADDQ.B  #1,D0
+000036D2 0200 0003                  		ANDI.B  #3,D0
+000036D6 0201 00FC                  		ANDI.B  #$FC,D1
+000036DA 8001                       		OR.B    D1,D0
+000036DC 1140 0001                  		MOVE.B  D0,OBJ.RENDERFLAGS(A0)
+000036E0                            
+000036E0                            LOC_11264:		              ; ...
+000036E0 0838 0005 F605             		BTST    #5,(JOYPADPRESS).W
+000036E6 6700                       		BEQ.S   LOC_1127E
+000036E8 5228 001C                  		ADDQ.B  #1,OBJ.ANIM(A0)
+000036EC 0C28 0019 001C             		CMPI.B  #$19,OBJ.ANIM(A0)
+000036F2 6500                       		BCS.S   LOC_1127E
+000036F4 117C 0000 001C             		MOVE.B  #0,OBJ.ANIM(A0)
+000036FA                            		
+000036FA                            LOC_1127E:
+000036FA 4EB9 0000 0A70             		JSR		_OBJECTDISPLAY
+00003700 4E75                       		RTS
+00003702                            
+00003702                            PLAY02_DELETE:
+00003702 4E75                       		RTS
+00003704                            		
+00003704                            MAP_SOUL:
+00003704                            		INCBIN	"SRC/OBJ/SOUL.MAP"
+00003704                            		INCBIN	"SRC/OBJ/SOUL.MAP"
+0000370C                            		
+0000370C                            	ALIGN	$2000
 00004000                            		include	"SOUND/driver.asm"
 00004000                            ; ---------------------------------------------------------------------------
 00004000                            ; Modified SMPS 68k Type 1b sound driver
