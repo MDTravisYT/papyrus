@@ -58,25 +58,7 @@ SpeedUpIndex:
 ; Music	Pointers
 ; ---------------------------------------------------------------------------
 MusicIndex:
-ptr_mus81:	dc.l Music81
-ptr_mus82:	dc.l Music82
-ptr_mus83:	dc.l Music83
-ptr_mus84:	dc.l Music84
-ptr_mus85:	dc.l Music85
-ptr_mus86:	dc.l Music86
-ptr_mus87:	dc.l Music87
-ptr_mus88:	dc.l Music88
-ptr_mus89:	dc.l Music89
-ptr_mus8A:	dc.l Music8A
-ptr_mus8B:	dc.l Music8B
-ptr_mus8C:	dc.l Music8C
-ptr_mus8D:	dc.l Music8D
-ptr_mus8E:	dc.l Music8E
-ptr_mus8F:	dc.l Music8F
-ptr_mus90:	dc.l Music90
-ptr_mus91:	dc.l Music91
-ptr_mus92:	dc.l Music92
-ptr_mus93:	dc.l Music93
+ptr_mus81:	dc.l S81
 ptr_musend
 ; ---------------------------------------------------------------------------
 ; Priority of sound. New music or SFX must have a priority higher than or equal
@@ -708,39 +690,6 @@ PlaySegaSound:
 ; ---------------------------------------------------------------------------
 ; Sound_81to9F:
 Sound_PlayBGM:
-		cmpi.b	#bgm_ExtraLife,d7	; is the "extra life" music to be played?
-		bne.s	@bgmnot1up		; if not, branch
-		tst.b	f_1up_playing(a6)	; Is a 1-up music playing?
-		bne.w	@locdblret		; if yes, branch
-		lea	v_music_track_ram(a6),a5
-		moveq	#((v_music_track_ram_end-v_music_track_ram)/TrackSz)-1,d0	; 1 DAC + 6 FM + 3 PSG tracks
-; loc_71FE6:
-@clearsfxloop:
-		bclr	#2,(a5)			; Clear 'SFX is overriding' bit (TrackPlaybackControl)
-		adda.w	#TrackSz,a5
-		dbf	d0,@clearsfxloop
-
-		lea	v_sfx_track_ram(a6),a5
-		moveq	#((v_sfx_track_ram_end-v_sfx_track_ram)/TrackSz)-1,d0	; 3 FM + 3 PSG tracks (SFX)
-; loc_71FF8:
-@cleartrackplayloop:
-		bclr	#7,(a5)			; Clear 'track is playing' bit (TrackPlaybackControl)
-		adda.w	#TrackSz,a5
-		dbf	d0,@cleartrackplayloop
-
-		clr.b	v_sndprio(a6)		; Clear priority
-		movea.l	a6,a0
-		lea	v_1up_ram_copy(a6),a1
-		move.w	#((v_music_track_ram_end-v_startofvariables)/4)-1,d0	; Backup $220 bytes: all variables and music track data
-; loc_72012:
-@backupramloop:
-		move.l	(a0)+,(a1)+
-		dbf	d0,@backupramloop
-
-		move.b	#$80,f_1up_playing(a6)
-		clr.b	v_sndprio(a6)		; Clear priority again (?)
-		bra.s	@bgm_loadMusic
-; ===========================================================================
 ; loc_72024:
 @bgmnot1up:
 		clr.b	f_1up_playing(a6)
@@ -921,16 +870,6 @@ Sound_PlaySFX:
 		bne.w	@clear_sndprio		; Exit if it is
 		tst.b	f_fadein_flag(a6)	; Is music being faded in?
 		bne.w	@clear_sndprio		; Exit if it is
-		cmpi.b	#sfx_Ring,d7		; is ring sound	effect played?
-		bne.s	@sfx_notRing		; if not, branch
-		tst.b	v_ring_speaker(a6)	; Is the ring sound playing on right speaker?
-		bne.s	@gotringspeaker		; Branch if not
-		move.b	#sfx_RingLeft,d7	; play ring sound in left speaker
-; loc_721EE:
-@gotringspeaker:
-		bchg	#0,v_ring_speaker(a6)	; change speaker
-; Sound_notB5:
-@sfx_notRing:
 		cmpi.b	#sfx_Push,d7		; is "pushing" sound played?
 		bne.s	@sfx_notPush		; if not, branch
 		tst.b	f_push_playing(a6)	; Is pushing sound already playing?
@@ -2515,208 +2454,41 @@ Kos_Z80:
 ; ---------------------------------------------------------------------------
 ; Music data
 ; ---------------------------------------------------------------------------
-Music81:	include	"sound/music/sng81.s"
-		even
-Music82:	incbin	"sound/music/Mus82 - LZ.bin"
-		even
-Music83:	incbin	"sound/music/Mus83 - MZ.bin"
-		even
-Music84:	incbin	"sound/music/Mus84 - SLZ.bin"
-		even
-Music85:	incbin	"sound/music/Mus85 - SYZ.bin"
-		even
-Music86:	incbin	"sound/music/Mus86 - SBZ.bin"
-		even
-Music87:	incbin	"sound/music/Mus87 - Invincibility.bin"
-		even
-Music88:	incbin	"sound/music/Mus88 - Extra Life.bin"
-		even
-Music89:	incbin	"sound/music/Mus89 - Special Stage.bin"
-		even
-Music8A:	incbin	"sound/music/Mus8A - Title Screen.bin"
-		even
-Music8B:	incbin	"sound/music/Mus8B - Ending.bin"
-		even
-Music8C:	incbin	"sound/music/Mus8C - Boss.bin"
-		even
-Music8D:	incbin	"sound/music/Mus8D - FZ.bin"
-		even
-Music8E:	incbin	"sound/music/Mus8E - Sonic Got Through.bin"
-		even
-Music8F:	incbin	"sound/music/Mus8F - Game Over.bin"
-		even
-Music90:	incbin	"sound/music/Mus90 - Continue Screen.bin"
-		even
-Music91:	incbin	"sound/music/Mus91 - Credits.bin"
-		even
-Music92:	incbin	"sound/music/Mus92 - Drowning.bin"
-		even
-Music93:	incbin	"sound/music/Mus93 - Get Emerald.bin"
+		include	"sound/music/sng81.s"
 		even
 
 ; ---------------------------------------------------------------------------
 ; Sound	effect pointers
 ; ---------------------------------------------------------------------------
 SoundIndex:
-ptr_sndA0:	dc.l SoundA0
-ptr_sndA1:	dc.l SoundA1
-ptr_sndA2:	dc.l SoundA2
-ptr_sndA3:	dc.l SoundA3
-ptr_sndA4:	dc.l SoundA4
-ptr_sndA5:	dc.l SoundA5
-ptr_sndA6:	dc.l SoundA6
-ptr_sndA7:	dc.l SoundA7
-ptr_sndA8:	dc.l SoundA8
-ptr_sndA9:	dc.l SoundA9
-ptr_sndAA:	dc.l SoundAA
-ptr_sndAB:	dc.l SoundAB
-ptr_sndAC:	dc.l SoundAC
-ptr_sndAD:	dc.l SoundAD
-ptr_sndAE:	dc.l SoundAE
-ptr_sndAF:	dc.l SoundAF
-ptr_sndB0:	dc.l SoundB0
-ptr_sndB1:	dc.l SoundB1
-ptr_sndB2:	dc.l SoundB2
-ptr_sndB3:	dc.l SoundB3
-ptr_sndB4:	dc.l SoundB4
-ptr_sndB5:	dc.l SoundB5
-ptr_sndB6:	dc.l SoundB6
-ptr_sndB7:	dc.l SoundB7
-ptr_sndB8:	dc.l SoundB8
-ptr_sndB9:	dc.l SoundB9
-ptr_sndBA:	dc.l SoundBA
-ptr_sndBB:	dc.l SoundBB
-ptr_sndBC:	dc.l SoundBC
-ptr_sndBD:	dc.l SoundBD
-ptr_sndBE:	dc.l SoundBE
-ptr_sndBF:	dc.l SoundBF
-ptr_sndC0:	dc.l SoundC0
-ptr_sndC1:	dc.l SoundC1
-ptr_sndC2:	dc.l SoundC2
-ptr_sndC3:	dc.l SoundC3
-ptr_sndC4:	dc.l SoundC4
-ptr_sndC5:	dc.l SoundC5
-ptr_sndC6:	dc.l SoundC6
-ptr_sndC7:	dc.l SoundC7
-ptr_sndC8:	dc.l SoundC8
-ptr_sndC9:	dc.l SoundC9
-ptr_sndCA:	dc.l SoundCA
-ptr_sndCB:	dc.l SoundCB
-ptr_sndCC:	dc.l SoundCC
-ptr_sndCD:	dc.l SoundCD
-ptr_sndCE:	dc.l SoundCE
-ptr_sndCF:	dc.l SoundCF
+ptr_sndA0:	dc.l SA0
+ptr_sndA1:	dc.l SA1
+ptr_sndA2:	dc.l SA2
+ptr_sndA3:	dc.l SA3
+ptr_sndA4:	dc.l SA4
+ptr_sndA5:	dc.l SA5
+ptr_sndA6:	dc.l SA6
+ptr_sndA7:	dc.l SA7
+ptr_sndA8:	dc.l SA8
+ptr_sndA9:	dc.l SA9
+ptr_sndAA:	dc.l SAA
+ptr_sndAB:	dc.l SAB
+ptr_sndAC:	dc.l SAC
+ptr_sndAD:	dc.l SAD
+ptr_sndAE:	dc.l SAE
+ptr_sndAF:	dc.l SAF
+
 ptr_sndend
 
 ; ---------------------------------------------------------------------------
 ; Special sound effect pointers
 ; ---------------------------------------------------------------------------
 SpecSoundIndex:
-ptr_sndD0:	dc.l SoundD0
 ptr_specend
 
 ; ---------------------------------------------------------------------------
 ; Sound effect data
 ; ---------------------------------------------------------------------------
-SoundA0:	incbin	"sound/sfx/SndA0 - Jump.bin"
-		even
-SoundA1:	incbin	"sound/sfx/SndA1 - Lamppost.bin"
-		even
-SoundA2:	incbin	"sound/sfx/SndA2.bin"
-		even
-SoundA3:	incbin	"sound/sfx/SndA3 - Death.bin"
-		even
-SoundA4:	incbin	"sound/sfx/SndA4 - Skid.bin"
-		even
-SoundA5:	incbin	"sound/sfx/SndA5.bin"
-		even
-SoundA6:	incbin	"sound/sfx/SndA6 - Hit Spikes.bin"
-		even
-SoundA7:	incbin	"sound/sfx/SndA7 - Push Block.bin"
-		even
-SoundA8:	incbin	"sound/sfx/SndA8 - SS Goal.bin"
-		even
-SoundA9:	incbin	"sound/sfx/SndA9 - SS Item.bin"
-		even
-SoundAA:	incbin	"sound/sfx/SndAA - Splash.bin"
-		even
-SoundAB:	incbin	"sound/sfx/SndAB.bin"
-		even
-SoundAC:	incbin	"sound/sfx/SndAC - Hit Boss.bin"
-		even
-SoundAD:	incbin	"sound/sfx/SndAD - Get Bubble.bin"
-		even
-SoundAE:	incbin	"sound/sfx/SndAE - Fireball.bin"
-		even
-SoundAF:	incbin	"sound/sfx/SndAF - Shield.bin"
-		even
-SoundB0:	incbin	"sound/sfx/SndB0 - Saw.bin"
-		even
-SoundB1:	incbin	"sound/sfx/SndB1 - Electric.bin"
-		even
-SoundB2:	incbin	"sound/sfx/SndB2 - Drown Death.bin"
-		even
-SoundB3:	incbin	"sound/sfx/SndB3 - Flamethrower.bin"
-		even
-SoundB4:	incbin	"sound/sfx/SndB4 - Bumper.bin"
-		even
-SoundB5:	incbin	"sound/sfx/SndB5 - Ring.bin"
-		even
-SoundB6:	incbin	"sound/sfx/SndB6 - Spikes Move.bin"
-		even
-SoundB7:	incbin	"sound/sfx/SndB7 - Rumbling.bin"
-		even
-SoundB8:	incbin	"sound/sfx/SndB8.bin"
-		even
-SoundB9:	incbin	"sound/sfx/SndB9 - Collapse.bin"
-		even
-SoundBA:	incbin	"sound/sfx/SndBA - SS Glass.bin"
-		even
-SoundBB:	incbin	"sound/sfx/SndBB - Door.bin"
-		even
-SoundBC:	incbin	"sound/sfx/SndBC - Teleport.bin"
-		even
-SoundBD:	incbin	"sound/sfx/SndBD - ChainStomp.bin"
-		even
-SoundBE:	incbin	"sound/sfx/SndBE - Roll.bin"
-		even
-SoundBF:	incbin	"sound/sfx/SndBF - Get Continue.bin"
-		even
-SoundC0:	incbin	"sound/sfx/SndC0 - Basaran Flap.bin"
-		even
-SoundC1:	incbin	"sound/sfx/SndC1 - Break Item.bin"
-		even
-SoundC2:	incbin	"sound/sfx/SndC2 - Drown Warning.bin"
-		even
-SoundC3:	incbin	"sound/sfx/SndC3 - Giant Ring.bin"
-		even
-SoundC4:	incbin	"sound/sfx/SndC4 - Bomb.bin"
-		even
-SoundC5:	incbin	"sound/sfx/SndC5 - Cash Register.bin"
-		even
-SoundC6:	incbin	"sound/sfx/SndC6 - Ring Loss.bin"
-		even
-SoundC7:	incbin	"sound/sfx/SndC7 - Chain Rising.bin"
-		even
-SoundC8:	incbin	"sound/sfx/SndC8 - Burning.bin"
-		even
-SoundC9:	incbin	"sound/sfx/SndC9 - Hidden Bonus.bin"
-		even
-SoundCA:	incbin	"sound/sfx/SndCA - Enter SS.bin"
-		even
-SoundCB:	incbin	"sound/sfx/SndCB - Wall Smash.bin"
-		even
-SoundCC:	incbin	"sound/sfx/SndCC - Spring.bin"
-		even
-SoundCD:	incbin	"sound/sfx/SndCD - Switch.bin"
-		even
-SoundCE:	incbin	"sound/sfx/SndCE - Ring Left Speaker.bin"
-		even
-SoundCF:	incbin	"sound/sfx/SndCF - Signpost.bin"
+		include	"sound/sfx/se1.s"
 		even
 
-; ---------------------------------------------------------------------------
-; Special sound effect data
-; ---------------------------------------------------------------------------
-SoundD0:	incbin	"sound/sfx/SndD0 - Waterfall.bin"
-		even
