@@ -34,7 +34,6 @@ LOGO:
 		BEQ.S	@LOOP
 	@EXIT:
 	;	JSR		PALFADEOUT
-		RaiseError "Intentional crash mwahahahahha"
 		MOVE.B	#1*4,	GAMEMODE
 		RTS
 		

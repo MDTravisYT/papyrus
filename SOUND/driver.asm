@@ -2505,11 +2505,17 @@ cfOpF9:
 Kos_Z80:
 		incbin	"sound\z80.bin"
 		even
+		
+	pusho
+	opt		l?,an+
+		include	"sound\tb.lib"
+		include	"sound\mcr.lib"
+		include	"sound\eq.lib"
 
 ; ---------------------------------------------------------------------------
 ; Music data
 ; ---------------------------------------------------------------------------
-Music81:	incbin	"sound/music/Mus81 - GHZ.bin"
+Music81:	include	"sound/music/sng81.s"
 		even
 Music82:	incbin	"sound/music/Mus82 - LZ.bin"
 		even
