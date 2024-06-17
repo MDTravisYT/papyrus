@@ -5664,14 +5664,14 @@
 00005392                            		
 00005392 =00005392                  T81DD2	EQU		*
 00005392 8106 8082 8082 8282 80     		DC.B	B,L8,NL,S,NL,S,S,S,NL
-0000539B 8080 8280 8080 8284        		DC.B	NL,NL,S,NL,NL,NL,S,O
+0000539B 8080 8280 8080 8280        		DC.B	NL,NL,S,NL,NL,NL,S,NL
 000053A3                            		
 000053A3 F6                         		DC.B	CMJUMP
 000053A4 FFCC                       		JDW		T81D0
 000053A6                            		
 000053A6 =000053A6                  SUB81D0	EQU		*
 000053A6 8006 8182 8181 8182 81     		DC.B	NL,L8,B,S,B,B,B,S,B
-000053AF 8181 8281 8181 8284        		DC.B	B,B,S,B,B,B,S,O
+000053AF 8181 8281 8181 8280        		DC.B	B,B,S,B,B,B,S,NL
 000053B7 E3                         		DC.B	CMRET
 000053B8 =000053B8                  SUB81D1	EQU		*
 000053B8 8181 8281                  		DC.B	B,B,S,B
