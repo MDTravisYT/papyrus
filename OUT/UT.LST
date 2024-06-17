@@ -2164,90 +2164,90 @@
 00001AF2                            BATTLEMAP:	INCBIN		"MAP/BATTLE.MAP"
 00002242                            BATTLEART:	INCBIN		"ART/BATTLE.UNC"
 00002242                            BATTLEART:	INCBIN		"ART/BATTLE.UNC"
-00003642                            		
-00003642                            		INCLUDE		"SRC/OBJ/SOUL.ASM"
-00003642                            SOUL:
-00003642 7000                       		MOVEQ	#0,	D0
-00003644 1028 0024                  		MOVE.B	OBJ.ACTION(A0),	D0
-00003648 323B 0000                  		MOVE.W	@INDEX(PC,D0.W),	D1
-0000364C 4EFB 1000                  		JMP		@INDEX(PC,D1.W)
-00003650                            		
-00003650                            	@INDEX:
-00003650 0000                       		DC.W	PLAY02_INIT-@INDEX
-00003652 0000                       		DC.W	PLAY02_DO-@INDEX
-00003654 0000                       		DC.W	PLAY02_DELETE-@INDEX
-00003656 0000                       		DC.W	PLAY02_DELETE-@INDEX
-00003658                            		
-00003658                            PLAY02_INIT:
-00003658 5428 0024                  		ADDQ.B	#2,	OBJ.ACTION(A0)
-0000365C 117C 0012 0016             		MOVE.B	#$12,	OBJ.YRAD(A0)
-00003662 117C 0009 0017             		MOVE.B	#9,	OBJ.XRAD(A0)
-00003668 217C 0000 0000 0004        		MOVE.L	#MAP_SOUL,	OBJ.MAP(A0)
-00003670 317C 0000 0002             		MOVE.W	#$0,	OBJ.TILE(A0)
-00003676 117C 0004 0001             		MOVE.B	#4,	OBJ.RENDERFLAGS(A0)
-0000367C 117C 0002 0019             		MOVE.B	#2,	OBJ.PRIORITY(A0)
-00003682                            
-00003682                            PLAY02_DO:
-00003682 6100 0000                  		BSR.W	@JOYPADCTRL
-00003686 4EF9 0000 0A70             		JMP		_OBJECTDISPLAY
-0000368C                            		
-0000368C                            	@JOYPADCTRL:
-0000368C 1838 F604                  		MOVE.B	(JOYPAD).W,	D4
-00003690 3428 000C                  		MOVE.W	OBJ.Y(A0),	D2
-00003694 3628 0008                  		MOVE.W	OBJ.X(A0),	D3
-00003698 7201                       		MOVEQ	#1,	D1
-0000369A 0804 0000                  		BTST	#0,	D4
-0000369E 6700                       		BEQ.S   LOC_11226
-000036A0 9441                       		SUB.W   D1,D2
+00003662                            		
+00003662                            		INCLUDE		"SRC/OBJ/SOUL.ASM"
+00003662                            SOUL:
+00003662 7000                       		MOVEQ	#0,	D0
+00003664 1028 0024                  		MOVE.B	OBJ.ACTION(A0),	D0
+00003668 323B 0000                  		MOVE.W	@INDEX(PC,D0.W),	D1
+0000366C 4EFB 1000                  		JMP		@INDEX(PC,D1.W)
+00003670                            		
+00003670                            	@INDEX:
+00003670 0000                       		DC.W	PLAY02_INIT-@INDEX
+00003672 0000                       		DC.W	PLAY02_DO-@INDEX
+00003674 0000                       		DC.W	PLAY02_DELETE-@INDEX
+00003676 0000                       		DC.W	PLAY02_DELETE-@INDEX
+00003678                            		
+00003678                            PLAY02_INIT:
+00003678 5428 0024                  		ADDQ.B	#2,	OBJ.ACTION(A0)
+0000367C 117C 0012 0016             		MOVE.B	#$12,	OBJ.YRAD(A0)
+00003682 117C 0009 0017             		MOVE.B	#9,	OBJ.XRAD(A0)
+00003688 217C 0000 0000 0004        		MOVE.L	#MAP_SOUL,	OBJ.MAP(A0)
+00003690 317C 0001 0002             		MOVE.W	#$1,	OBJ.TILE(A0)
+00003696 117C 0004 0001             		MOVE.B	#4,	OBJ.RENDERFLAGS(A0)
+0000369C 117C 0002 0019             		MOVE.B	#2,	OBJ.PRIORITY(A0)
 000036A2                            
-000036A2                            LOC_11226:		              ; ...
-000036A2 0804 0001                  		BTST    #1,D4
-000036A6 6700                       		BEQ.S   LOC_1122E
-000036A8 D441                       		ADD.W   D1,D2
-000036AA                            
-000036AA                            LOC_1122E:		              ; ...
-000036AA 0804 0002                  		BTST    #2,D4
-000036AE 6700                       		BEQ.S   LOC_11236
-000036B0 9641                       		SUB.W   D1,D3
-000036B2                            
-000036B2                            LOC_11236:		              ; ...
-000036B2 0804 0003                  		BTST    #3,D4
-000036B6 6700                       		BEQ.S   LOC_1123E
-000036B8 D641                       		ADD.W   D1,D3
-000036BA                            		
-000036BA                            LOC_1123E:		              ; ...
-000036BA 3142 000C                  		MOVE.W  D2,OBJ.Y(A0)
-000036BE 3143 0008                  		MOVE.W  D3,OBJ.X(A0)
-000036C2 0838 0004 F605             		BTST    #4,(JOYPADPRESS).W
-000036C8 6700                       		BEQ.S   LOC_11264
-000036CA 1028 0001                  		MOVE.B  OBJ.RENDERFLAGS(A0),D0
-000036CE 1200                       		MOVE.B  D0,D1
-000036D0 5200                       		ADDQ.B  #1,D0
-000036D2 0200 0003                  		ANDI.B  #3,D0
-000036D6 0201 00FC                  		ANDI.B  #$FC,D1
-000036DA 8001                       		OR.B    D1,D0
-000036DC 1140 0001                  		MOVE.B  D0,OBJ.RENDERFLAGS(A0)
-000036E0                            
-000036E0                            LOC_11264:		              ; ...
-000036E0 0838 0005 F605             		BTST    #5,(JOYPADPRESS).W
-000036E6 6700                       		BEQ.S   LOC_1127E
-000036E8 5228 001C                  		ADDQ.B  #1,OBJ.ANIM(A0)
-000036EC 0C28 0019 001C             		CMPI.B  #$19,OBJ.ANIM(A0)
-000036F2 6500                       		BCS.S   LOC_1127E
-000036F4 117C 0000 001C             		MOVE.B  #0,OBJ.ANIM(A0)
-000036FA                            		
-000036FA                            LOC_1127E:
-000036FA 4EB9 0000 0A70             		JSR		_OBJECTDISPLAY
-00003700 4E75                       		RTS
-00003702                            
-00003702                            PLAY02_DELETE:
-00003702 4E75                       		RTS
-00003704                            		
-00003704                            MAP_SOUL:
-00003704                            		INCBIN	"SRC/OBJ/SOUL.MAP"
-00003704                            		INCBIN	"SRC/OBJ/SOUL.MAP"
-0000370C                            		
-0000370C                            	ALIGN	$2000
+000036A2                            PLAY02_DO:
+000036A2 6100 0000                  		BSR.W	@JOYPADCTRL
+000036A6 4EF9 0000 0A70             		JMP		_OBJECTDISPLAY
+000036AC                            		
+000036AC                            	@JOYPADCTRL:
+000036AC 1838 F604                  		MOVE.B	(JOYPAD).W,	D4
+000036B0 3428 000C                  		MOVE.W	OBJ.Y(A0),	D2
+000036B4 3628 0008                  		MOVE.W	OBJ.X(A0),	D3
+000036B8 7201                       		MOVEQ	#1,	D1
+000036BA 0804 0000                  		BTST	#0,	D4
+000036BE 6700                       		BEQ.S   LOC_11226
+000036C0 9441                       		SUB.W   D1,D2
+000036C2                            
+000036C2                            LOC_11226:		              ; ...
+000036C2 0804 0001                  		BTST    #1,D4
+000036C6 6700                       		BEQ.S   LOC_1122E
+000036C8 D441                       		ADD.W   D1,D2
+000036CA                            
+000036CA                            LOC_1122E:		              ; ...
+000036CA 0804 0002                  		BTST    #2,D4
+000036CE 6700                       		BEQ.S   LOC_11236
+000036D0 9641                       		SUB.W   D1,D3
+000036D2                            
+000036D2                            LOC_11236:		              ; ...
+000036D2 0804 0003                  		BTST    #3,D4
+000036D6 6700                       		BEQ.S   LOC_1123E
+000036D8 D641                       		ADD.W   D1,D3
+000036DA                            		
+000036DA                            LOC_1123E:		              ; ...
+000036DA 3142 000C                  		MOVE.W  D2,OBJ.Y(A0)
+000036DE 3143 0008                  		MOVE.W  D3,OBJ.X(A0)
+000036E2 0838 0004 F605             		BTST    #4,(JOYPADPRESS).W
+000036E8 6700                       		BEQ.S   LOC_11264
+000036EA 1028 0001                  		MOVE.B  OBJ.RENDERFLAGS(A0),D0
+000036EE 1200                       		MOVE.B  D0,D1
+000036F0 5200                       		ADDQ.B  #1,D0
+000036F2 0200 0003                  		ANDI.B  #3,D0
+000036F6 0201 00FC                  		ANDI.B  #$FC,D1
+000036FA 8001                       		OR.B    D1,D0
+000036FC 1140 0001                  		MOVE.B  D0,OBJ.RENDERFLAGS(A0)
+00003700                            
+00003700                            LOC_11264:		              ; ...
+00003700 0838 0005 F605             		BTST    #5,(JOYPADPRESS).W
+00003706 6700                       		BEQ.S   LOC_1127E
+00003708 5228 001C                  		ADDQ.B  #1,OBJ.ANIM(A0)
+0000370C 0C28 0019 001C             		CMPI.B  #$19,OBJ.ANIM(A0)
+00003712 6500                       		BCS.S   LOC_1127E
+00003714 117C 0000 001C             		MOVE.B  #0,OBJ.ANIM(A0)
+0000371A                            		
+0000371A                            LOC_1127E:
+0000371A 4EB9 0000 0A70             		JSR		_OBJECTDISPLAY
+00003720 4E75                       		RTS
+00003722                            
+00003722                            PLAY02_DELETE:
+00003722 4E75                       		RTS
+00003724                            		
+00003724                            MAP_SOUL:
+00003724                            		INCBIN	"SRC/OBJ/SOUL.MAP"
+00003724                            		INCBIN	"SRC/OBJ/SOUL.MAP"
+0000372C                            		
+0000372C                            	ALIGN	$2000
 00004000                            		include	"SOUND/driver.asm"
 00004000                            ; ---------------------------------------------------------------------------
 00004000                            ; Modified SMPS 68k Type 1b sound driver
