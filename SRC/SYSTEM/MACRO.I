@@ -13,3 +13,24 @@ COPYTILEMAP		MACRO	source,loc,width,height
 WRITEVRAM	MACRO	LOC
 		MOVE.L	#VRAMWRITE+((LOC&$3FFF)<<16)+((LOC&$C000)>>14),	(VDPCTRL)
 		ENDM
+		
+startZ80:       macro
+		move.w	#0,(Z80BUS).l
+		endm
+		
+stopZ80:        macro
+		move.w	#$100,(Z80BUS).l
+		endm
+		
+waitZ80:	macro
+.wait:		btst	#0,(Z80BUS).l
+		bne.s	.wait
+		endm
+		
+resetZ80:	macro
+		move.w	#$100,(Z80_RESET).l
+		endm
+
+resetZ80a:	macro
+		move.w	#0,(Z80_RESET).l
+		endm

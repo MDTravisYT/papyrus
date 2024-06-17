@@ -21,6 +21,7 @@ VBLANK:
 		JSR		.INDEX(PC,D0.W)
 		
 	.END:
+		JSR		UpdateMusic
 		ADDQ.L	#1,	VBLANKCOUNTER
 	;	JSR		
 		MOVEM.L	(SP)+,	D0-D7/A0-A6

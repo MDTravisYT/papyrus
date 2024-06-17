@@ -11,6 +11,9 @@ LOGO:
 	COPYTILEMAP		LOGOMAP,	$A61C,	11,	3
 	COPYTILEMAP		LOGOMAPB,	$861C,	11,	3
 	
+		move.b	#bgm_GHZ,d0
+		bsr.w	PlaySound
+	
 		MOVEQ	#0,	D0
 	;	BSR.W	PALLOAD
 		MOVE.W	#112,	(PALCYCCURRENT).W
@@ -31,7 +34,7 @@ LOGO:
 		BEQ.S	@LOOP
 	@EXIT:
 	;	JSR		PALFADEOUT
-		ILLEGAL
+		RaiseError "Intentional crash mwahahahahha"
 		MOVE.B	#1*4,	GAMEMODE
 		RTS
 		
