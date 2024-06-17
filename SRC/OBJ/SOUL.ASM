@@ -39,8 +39,15 @@ SOUL:
 		subi.w	#1,D1
 	@righttst:
 		btst	#bitR,D0
-		beq.s	@apply
+		beq.s	@bluetst
 		addi.w	#1,D1
+	@bluetst:
+		andi.b	#btnA+btnB+btnC,D0
+		beq.s	@apply
+		move.b	#0,	OBJ.ACTION(A0)
+		move.b	#2,	OBJ.ID(A0)
+		move.w	#$A0,	D0
+		jmp		PlaySound
 	@apply:
 		add.w	D1,OBJ.X(A0)
 		rol.l	#8,d1

@@ -1942,7 +1942,7 @@
 00000B02 E180                       		ASL.L   #8,D0
 00000B04 D480                       		ADD.L   D0,D2
 00000B06 3028 0012                  		MOVE.W  OBJ.YSPEED(A0),D0
-00000B0A 0640 0038                  		ADDI.W  #$38,D0
+00000B0A 0640 0010                  		ADDI.W  #$10,D0
 00000B0E 3140 0012                  		MOVE.W  D0,OBJ.YSPEED(A0)
 00000B12 48C0                       		EXT.L   D0
 00000B14 E180                       		ASL.L   #8,D0
@@ -2181,7 +2181,7 @@
 00001A4E                            		
 00001A4E 43F9 0000 0000 203C 4084+  	COPYTILEMAP		BATTLEMAP,	$8084,	35,	25
 00001A64                            	
-00001A64 13FC 0002 FFFF D000        		MOVE.B	#$02,	(OBJSLOT00)
+00001A64 13FC 0001 FFFF D000        		MOVE.B	#$01,	(OBJSLOT00)
 00001A6C 41F9 FFFF D000             		LEA		(OBJSLOT00),	A0
 00001A72 317C 00A0 0008             		MOVE.W	#160,	OBJ.X(A0)
 00001A78 317C 0070 000C             		MOVE.W	#112,	OBJ.Y(A0)
@@ -2242,52 +2242,86 @@
 000036F4 0441 0001                  		subi.w	#1,D1
 000036F8                            	@righttst:
 000036F8 0800 0003                  		btst	#bitR,D0
-000036FC 6700                       		beq.s	@apply
+000036FC 6700                       		beq.s	@bluetst
 000036FE 0641 0001                  		addi.w	#1,D1
-00003702                            	@apply:
-00003702 D368 0008                  		add.w	D1,OBJ.X(A0)
-00003706 E199                       		rol.l	#8,d1
-00003708 E199                       		rol.l	#8,d1
-0000370A D368 000C                  		add.w	D1,OBJ.Y(A0)
-0000370E 4EB9 0000 0A70             		JSR		_OBJECTDISPLAY
-00003714 4E75                       		RTS
-00003716                            		
-00003716                            MAP_SOUL:
-00003716                            		INCBIN	"SRC/OBJ/SOUL.MAP"
-00003716                            		INCBIN	"SRC/OBJ/SOUL.MAP"
-0000371E                            		INCLUDE		"SRC/OBJ/INTEGRITY.ASM"
-0000371E                            INTEGRITY:
-0000371E 7000                       		MOVEQ	#0,	D0
-00003720 1028 0024                  		MOVE.B	OBJ.ACTION(A0),	D0
-00003724 323B 0000                  		MOVE.W	@INDEX(PC,D0.W),	D1
-00003728 4EFB 1000                  		JMP		@INDEX(PC,D1.W)
-0000372C                            		
-0000372C                            	@INDEX:
-0000372C 0000                       		DC.W	@init-@INDEX
-0000372E 0000                       		DC.W	@fall-@INDEX
-00003730                            	;	DC.W	@delete-@INDEX
-00003730                            	;	DC.W	@delete-@INDEX
-00003730                            		
-00003730                            	@init:
-00003730 5428 0024                  		ADDQ.B	#2,			OBJ.ACTION(A0)
-00003734 117C 0012 0016             		MOVE.B	#$12,		OBJ.YRAD(A0)
-0000373A 117C 0009 0017             		MOVE.B	#9,			OBJ.XRAD(A0)
-00003740 217C 0000 3716 0004        		MOVE.L	#MAP_SOUL,	OBJ.MAP(A0)
-00003748 317C 2001 0002             		MOVE.W	#$2001,		OBJ.TILE(A0)
-0000374E 117C 0004 0001             		MOVE.B	#4,			OBJ.RENDERFLAGS(A0)
-00003754 117C 0002 0019             		MOVE.B	#2,			OBJ.PRIORITY(A0)
-0000375A                            		
-0000375A                            	@fall:
-0000375A 4EB9 0000 0AF4             		JSR		OBJECTFALL
-00003760 4EB9 0000 0A70             		JSR		_OBJECTDISPLAY
-00003766 4E75                       		RTS
-00003766 4E75                       		RTS
-00003768                            		INCLUDE		"SRC/OBJ/MENU HANDLE.ASM"
-00003768                            MENU_HANDLE:
-00003768 4E75                       		RTS
-00003768 4E75                       		RTS
-0000376A                            		
-0000376A                            	ALIGN	$2000
+00003702                            	@bluetst:
+00003702 0200 0070                  		andi.b	#btnA+btnB+btnC,D0
+00003706 6700                       		beq.s	@apply
+00003708 117C 0000 0024             		move.b	#0,	OBJ.ACTION(A0)
+0000370E 117C 0002 0000             		move.b	#2,	OBJ.ID(A0)
+00003714 303C 00A0                  		move.w	#$A0,	D0
+00003718 4EF9 0000 0756             		jmp		PlaySound
+0000371E                            	@apply:
+0000371E D368 0008                  		add.w	D1,OBJ.X(A0)
+00003722 E199                       		rol.l	#8,d1
+00003724 E199                       		rol.l	#8,d1
+00003726 D368 000C                  		add.w	D1,OBJ.Y(A0)
+0000372A 4EB9 0000 0A70             		JSR		_OBJECTDISPLAY
+00003730 4E75                       		RTS
+00003732                            		
+00003732                            MAP_SOUL:
+00003732                            		INCBIN	"SRC/OBJ/SOUL.MAP"
+00003732                            		INCBIN	"SRC/OBJ/SOUL.MAP"
+0000373A                            		INCLUDE		"SRC/OBJ/INTEGRITY.ASM"
+0000373A                            INTEGRITY:
+0000373A 7000                       		MOVEQ	#0,	D0
+0000373C 1028 0024                  		MOVE.B	OBJ.ACTION(A0),	D0
+00003740 323B 0000                  		MOVE.W	@INDEX(PC,D0.W),	D1
+00003744 4EFB 1000                  		JMP		@INDEX(PC,D1.W)
+00003748                            		
+00003748                            	@INDEX:
+00003748 0000                       		DC.W	@init-@INDEX	;	0
+0000374A 0000                       		DC.W	@fall-@INDEX	;	2
+0000374C 0000                       		DC.W	@ground-@INDEX	;	4
+0000374E                            	;	DC.W	@delete-@INDEX
+0000374E                            		
+0000374E                            	@init:
+0000374E 5428 0024                  		ADDQ.B	#2,			OBJ.ACTION(A0)
+00003752 117C 0012 0016             		MOVE.B	#$12,		OBJ.YRAD(A0)
+00003758 117C 0009 0017             		MOVE.B	#9,			OBJ.XRAD(A0)
+0000375E 217C 0000 3732 0004        		MOVE.L	#MAP_SOUL,	OBJ.MAP(A0)
+00003766 317C 2001 0002             		MOVE.W	#$2001,		OBJ.TILE(A0)
+0000376C 117C 0004 0001             		MOVE.B	#4,			OBJ.RENDERFLAGS(A0)
+00003772 117C 0002 0019             		MOVE.B	#2,			OBJ.PRIORITY(A0)
+00003778                            		
+00003778                            	@fall:
+00003778 4EB9 0000 0AF4             		JSR		OBJECTFALL
+0000377E 0C68 00A8 000C             		cmpi.w	#$A8,	OBJ.Y(A0)	;	bottom of playfield
+00003784 6500                       		blo.s	@contfall
+00003786 5428 0024                  		ADDQ.B	#2,			OBJ.ACTION(A0)
+0000378A 317C 00A8 000C             		move.w	#$A8,	OBJ.Y(A0)
+00003790                            	@contfall:
+00003790                            		
+00003790                            	@ground:
+00003790 7000                       		MOVEQ	#0,	D0
+00003792 7200                       		MOVEQ	#0,	D1
+00003794 1039 FFFF F604             		MOVE.B	JOYPAD,	D0
+0000379A                            	@uptst:
+0000379A 0C28 0002 0024             		cmpi.b	#2,	OBJ.ACTION(A0)
+000037A0 6700                       		beq.s	@lefttst
+000037A2 0800 0000                  		btst	#bitUp,D0
+000037A6 6700                       		beq.s	@lefttst
+000037A8 5528 0024                  		SUBQ.B	#2,	OBJ.ACTION(A0)
+000037AC 317C FDA8 0012             		move.w	#-600,	OBJ.YSPEED(A0)
+000037B2                            	@lefttst:
+000037B2 0800 0002                  		btst	#bitL,D0
+000037B6 6700                       		beq.s	@righttst
+000037B8 0441 0001                  		subi.w	#1,D1
+000037BC                            	@righttst:
+000037BC 0800 0003                  		btst	#bitR,D0
+000037C0 6700                       		beq.s	@apply
+000037C2 0641 0001                  		addi.w	#1,D1
+000037C6                            	@apply:
+000037C6 D368 0008                  		add.w	D1,OBJ.X(A0)
+000037CA 4EB9 0000 0A70             		JSR		_OBJECTDISPLAY
+000037D0 4E75                       		RTS
+000037D0 4E75                       		RTS
+000037D2                            		INCLUDE		"SRC/OBJ/MENU HANDLE.ASM"
+000037D2                            MENU_HANDLE:
+000037D2 4E75                       		RTS
+000037D2 4E75                       		RTS
+000037D4                            		
+000037D4                            	ALIGN	$2000
 00004000                            		include	"SOUND/driver.asm"
 00004000                            ; ---------------------------------------------------------------------------
 00004000                            ; Modified SMPS 68k Type 1b sound driver
