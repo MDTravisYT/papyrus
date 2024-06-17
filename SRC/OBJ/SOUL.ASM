@@ -5,76 +5,48 @@ SOUL:
 		JMP		@INDEX(PC,D1.W)
 		
 	@INDEX:
-		DC.W	PLAY02_INIT-@INDEX
-		DC.W	PLAY02_DO-@INDEX
-		DC.W	PLAY02_DELETE-@INDEX
-		DC.W	PLAY02_DELETE-@INDEX
+		DC.W	@init-@INDEX
+		DC.W	@do-@INDEX
+	;	DC.W	@delete-@INDEX
+	;	DC.W	@delete-@INDEX
 		
-PLAY02_INIT:
-		ADDQ.B	#2,	OBJ.ACTION(A0)
-		MOVE.B	#$12,	OBJ.YRAD(A0)
-		MOVE.B	#9,	OBJ.XRAD(A0)
+	@init:
+		ADDQ.B	#2,			OBJ.ACTION(A0)
+		MOVE.B	#$12,		OBJ.YRAD(A0)
+		MOVE.B	#9,			OBJ.XRAD(A0)
 		MOVE.L	#MAP_SOUL,	OBJ.MAP(A0)
-		MOVE.W	#$1,	OBJ.TILE(A0)
-		MOVE.B	#4,	OBJ.RENDERFLAGS(A0)
-		MOVE.B	#2,	OBJ.PRIORITY(A0)
+		MOVE.W	#$1,		OBJ.TILE(A0)
+		MOVE.B	#4,			OBJ.RENDERFLAGS(A0)
+		MOVE.B	#2,			OBJ.PRIORITY(A0)
 
-PLAY02_DO:
-		BSR.W	@JOYPADCTRL
-		JMP		_OBJECTDISPLAY
-		
-	@JOYPADCTRL:
-		MOVE.B	(JOYPAD).W,	D4
-		MOVE.W	OBJ.Y(A0),	D2
-		MOVE.W	OBJ.X(A0),	D3
-		MOVEQ	#1,	D1
-		BTST	#0,	D4
-		BEQ.S   LOC_11226
-		SUB.W   D1,D2
-
-LOC_11226:		              ; ...
-		BTST    #1,D4
-		BEQ.S   LOC_1122E
-		ADD.W   D1,D2
-
-LOC_1122E:		              ; ...
-		BTST    #2,D4
-		BEQ.S   LOC_11236
-		SUB.W   D1,D3
-
-LOC_11236:		              ; ...
-		BTST    #3,D4
-		BEQ.S   LOC_1123E
-		ADD.W   D1,D3
-		
-LOC_1123E:		              ; ...
-		MOVE.W  D2,OBJ.Y(A0)
-		MOVE.W  D3,OBJ.X(A0)
-		BTST    #4,(JOYPADPRESS).W
-		BEQ.S   LOC_11264
-		MOVE.B  OBJ.RENDERFLAGS(A0),D0
-		MOVE.B  D0,D1
-		ADDQ.B  #1,D0
-		ANDI.B  #3,D0
-		ANDI.B  #$FC,D1
-		OR.B    D1,D0
-		MOVE.B  D0,OBJ.RENDERFLAGS(A0)
-
-LOC_11264:		              ; ...
-		BTST    #5,(JOYPADPRESS).W
-		BEQ.S   LOC_1127E
-		move.b	#$A0,d0
-		bsr.w	PlaySound
-		ADDQ.B  #1,OBJ.ANIM(A0)
-		CMPI.B  #$19,OBJ.ANIM(A0)
-		BCS.S   LOC_1127E
-		MOVE.B  #0,OBJ.ANIM(A0)
-		
-LOC_1127E:
+	@do:
+		MOVEQ	#0,	D0
+		MOVEQ	#0,	D1
+		MOVE.B	JOYPAD,	D0
+	@uptst:
+		btst	#bitUp,D0
+		beq.s	@downtst
+		subi.w	#1,D1
+	@downtst:
+		btst	#bitDn,D0
+		beq.s	@lefttst
+		addi.w	#1,D1
+	@lefttst:
+		rol.l	#8,d1
+		rol.l	#8,d1
+		btst	#bitL,D0
+		beq.s	@righttst
+		subi.w	#1,D1
+	@righttst:
+		btst	#bitR,D0
+		beq.s	@apply
+		addi.w	#1,D1
+	@apply:
+		add.w	D1,OBJ.X(A0)
+		rol.l	#8,d1
+		rol.l	#8,d1
+		add.w	D1,OBJ.Y(A0)
 		JSR		_OBJECTDISPLAY
-		RTS
-
-PLAY02_DELETE:
 		RTS
 		
 MAP_SOUL:

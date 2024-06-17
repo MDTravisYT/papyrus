@@ -22,8 +22,8 @@ RUNOBJECTS:                             ; ...
 
 OBJECTINDEX:
 		DC.L	SOUL	;	01
-		DC.L	OBJNULL  ;	02
-		DC.L	OBJNULL  ;	03
+		DC.L	INTEGRITY  ;	02
+		DC.L	MENU_HANDLE  ;	03
 		DC.L	OBJNULL  ;	04
 		DC.L	OBJNULL  ;	05
 		DC.L	OBJNULL  ;	06
