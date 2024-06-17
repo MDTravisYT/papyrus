@@ -63,6 +63,8 @@ LOC_1123E:		              ; ...
 LOC_11264:		              ; ...
 		BTST    #5,(JOYPADPRESS).W
 		BEQ.S   LOC_1127E
+		move.b	#$A0,d0
+		bsr.w	PlaySound
 		ADDQ.B  #1,OBJ.ANIM(A0)
 		CMPI.B  #$19,OBJ.ANIM(A0)
 		BCS.S   LOC_1127E

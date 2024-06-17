@@ -2231,23 +2231,25 @@
 00003700                            LOC_11264:		              ; ...
 00003700 0838 0005 F605             		BTST    #5,(JOYPADPRESS).W
 00003706 6700                       		BEQ.S   LOC_1127E
-00003708 5228 001C                  		ADDQ.B  #1,OBJ.ANIM(A0)
-0000370C 0C28 0019 001C             		CMPI.B  #$19,OBJ.ANIM(A0)
-00003712 6500                       		BCS.S   LOC_1127E
-00003714 117C 0000 001C             		MOVE.B  #0,OBJ.ANIM(A0)
-0000371A                            		
-0000371A                            LOC_1127E:
-0000371A 4EB9 0000 0A70             		JSR		_OBJECTDISPLAY
-00003720 4E75                       		RTS
-00003722                            
-00003722                            PLAY02_DELETE:
-00003722 4E75                       		RTS
-00003724                            		
-00003724                            MAP_SOUL:
-00003724                            		INCBIN	"SRC/OBJ/SOUL.MAP"
-00003724                            		INCBIN	"SRC/OBJ/SOUL.MAP"
+00003708 103C 00A0                  		move.b	#$A0,d0
+0000370C 6100 D048                  		bsr.w	PlaySound
+00003710 5228 001C                  		ADDQ.B  #1,OBJ.ANIM(A0)
+00003714 0C28 0019 001C             		CMPI.B  #$19,OBJ.ANIM(A0)
+0000371A 6500                       		BCS.S   LOC_1127E
+0000371C 117C 0000 001C             		MOVE.B  #0,OBJ.ANIM(A0)
+00003722                            		
+00003722                            LOC_1127E:
+00003722 4EB9 0000 0A70             		JSR		_OBJECTDISPLAY
+00003728 4E75                       		RTS
+0000372A                            
+0000372A                            PLAY02_DELETE:
+0000372A 4E75                       		RTS
 0000372C                            		
-0000372C                            	ALIGN	$2000
+0000372C                            MAP_SOUL:
+0000372C                            		INCBIN	"SRC/OBJ/SOUL.MAP"
+0000372C                            		INCBIN	"SRC/OBJ/SOUL.MAP"
+00003734                            		
+00003734                            	ALIGN	$2000
 00004000                            		include	"SOUND/driver.asm"
 00004000                            ; ---------------------------------------------------------------------------
 00004000                            ; Modified SMPS 68k Type 1b sound driver
