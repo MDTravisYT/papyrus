@@ -1,0 +1,544 @@
+<html>
+<head>
+    <title>VDP command calculator</title>
+    <style>
+        @media screen and (max-width : 450px) {
+            .th1 .th2 {
+                min-width: 40px;
+            }
+            .th3 {
+                min-width: 60px;
+            }
+            th {
+                font-weight: 300;
+                font-size: 14px;
+            }
+            input {
+                font-weight: normal;
+                font-size: 12px;
+            }
+            #cpy {
+                width:100%;
+                font-size: 10px;
+            }
+        }
+
+        @media screen and (min-width : 451px) and (max-width : 500px) {
+            .th1 .th2 {
+                min-width: 90px;
+            }
+            .th3 {
+                min-width: 120px;
+            }
+            th {
+                font-weight: 400;
+                font-size: 14px;
+            }
+            input {
+                font-weight: normal;
+                font-size: 12px;
+            }
+            #cpy {
+                width:100%;
+                font-size: 10px;
+            }
+        }
+
+        @media screen and (min-width : 501px) and (max-width : 600px) {
+            .th1 .th2 {
+                min-width: 180px;
+            }
+            .th3 {
+                min-width: 200px;
+            }
+            th {
+                font-weight: 500;
+                font-size: 16px;
+            }
+            input {
+                font-weight: bold;
+                font-size: 14px;
+            }
+            #cpy {
+                height:0;
+                margin: 4px 6px -4px 0;
+                font-size: 12px;
+            }
+        }
+
+        @media screen and (min-width : 601px) {
+            .th1 {
+                width: 150px;
+            }
+            .th2 {
+                width: 250px;
+            }
+            .th3 {
+                min-width: 200px;
+            }
+            table {
+                width:100%;
+                table-layout: fixed;
+            }
+            th {
+                font-weight: 500;
+                font-size: 17px;
+            }
+            input {
+                font-weight: bold;
+                font-size: 15px;
+            }
+            #cpy {
+                height:0;
+                margin: 4px 6px -4px 0;
+            }
+        }
+
+        th {
+            border: 1px solid #185886;
+            text-align: left;
+        }
+        .hdr {
+            background-color: #bcdef5;
+        }
+        input {
+            background-color: #f5f5f5;
+        }
+        #cpy {
+            user-select: none;
+            -moz-user-select: none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            -o-user-select: none;
+            color:#a5a5a5;
+            float:right;
+        }
+    </style>
+    <script>
+        if (!String.prototype.padStart) {
+            String.prototype.padStart = function padStart(targetLength,padString) {
+                targetLength = targetLength>>0;
+                padString = String((typeof padString !== 'undefined' ? padString : ' '));
+                if (this.length > targetLength) {
+                    return String(this);
+                }
+                else {
+                    targetLength = targetLength-this.length;
+                    if (targetLength > padString.length) {
+                        padString += padString.repeat(targetLength/padString.length);
+                    }
+                    return padString.slice(0,targetLength) + String(this);
+                }
+            };
+        }
+
+        Number.prototype.hex = function hex(pad) {
+            return this.toString(16).toUpperCase().padStart(pad.length, pad);
+        };
+
+        vdp = [
+            "VRAM READ", "VRAM WRITE", "", "CRAM WRITE", "VSRAM READ", "VSRAM WRITE", "", "",
+            "CRAM READ", "", "", "", "VRAM READ8", "", "", "",
+            "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "",
+            "", "VRAM DMA", "", "CRAM DMA", "", "VSRAM DMA", "", "",
+            "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "",
+        ];
+
+        window.onload = calc;
+        function calc(){
+            // do VDP command long conversion first
+            comm:
+            {
+                if(document.getElementById("cmdlong").value.replace('$', '').length === 0){
+                    u(document.getElementById("rglid"), '');
+                    u(document.getElementById("rglinf"), '');
+                    u(document.getElementById("rghid"), '');
+                    u(document.getElementById("rghinf"), '');
+                    u(document.getElementById("cmdaddr"), '');
+                    u(document.getElementById("cmdmode"), '');
+                    break comm;
+                }
+
+                var com = parseInt(document.getElementById("cmdlong").value.replace('$', ''), 16);
+                if (com !== com || com == undefined) {
+                    u(document.getElementById("cmdaddr"), "Command value is invalid");
+                    break comm;
+                }
+
+                u(document.getElementById("cmdaddr"), '$' + ((((com & 3) << 14) | ((com & 0x3FFF0000) >> 16)) >>> 0).hex("0000"));
+                var x = com & 0xFF0C;
+                var y = com & 0xFFFF;
+                var z = (com & 0xFFFF0000) >>> 16;
+                com = (((com & 0xC0000000) >>> 30) | ((com & 0xFC) >>> 2));
+                let pp = false;
+
+                // handle hi word
+                if((z & 0xC000) == 0x8000){
+                    u(document.getElementById("cmdaddr"), '');
+                    u(document.getElementById("cmdmode"), '');
+                    reg(z, document.getElementById("rghid"), document.getElementById("rghinf"));
+                    pp = true;
+                }
+
+                // handle low word
+                if((y & 0xC000) == 0x8000 && ((com & 3) == 2 || z == 0)){
+                    u(document.getElementById("cmdaddr"), '');
+                    u(document.getElementById("cmdmode"), '');
+                    reg(y, document.getElementById("rglid"), document.getElementById("rglinf"));
+
+                    if(!pp){
+                        u(document.getElementById("rghid"), '');
+                        u(document.getElementById("rghinf"), '');
+                    }
+                    pp = true;
+
+                } else if(pp){
+                    u(document.getElementById("rglid"), '');
+                    u(document.getElementById("rglinf"), '');
+                }
+
+                if(pp) break comm;
+                u(document.getElementById("rglid"), '');
+                u(document.getElementById("rglinf"), '');
+                u(document.getElementById("rghid"), '');
+                u(document.getElementById("rghinf"), '');
+
+                if(x != 0){
+                    u(document.getElementById("cmdaddr"), "Invalid bits set");
+                    u(document.getElementById("cmdmode"), '');
+                    break comm;
+                }
+
+                var type = vdp[com];
+                if (type === ""){
+                    u(document.getElementById("cmdmode"), (com >>> 0).hex("00"));
+
+                } else {
+                    u(document.getElementById("cmdmode"), type);
+                }
+            }
+
+            // do mode & address conversion
+            mod:
+            {
+                if(document.getElementById("ptaddr").value.replace('$', '').length === 0){
+                    u(document.getElementById("ptaddr"), '');
+                    u(document.getElementById("ptlong"), '');
+                    break mod;
+                }
+
+                var addr = parseInt(document.getElementById("ptaddr").value.replace('$', ''), 16);
+                if (addr !== addr || addr == undefined) {
+                    u(document.getElementById("ptlong"), "Address component has an invalid value");
+                    break mod;
+                }
+
+                var type, rwd, ddct = 0;
+                var text = document.getElementById("ptmode").value.toLowerCase();
+
+                if (text.indexOf("vsram") >= 0) { type = 0b100101; ddct++; }
+                if (text.indexOf("vram") >= 0) { type = 0b100001; ddct++; }
+                if (text.indexOf("cram") >= 0) { type = 0b101011; ddct++; }
+
+                if (text.indexOf("dma") >= 0) { rwd = 0b100111; ddct++; }
+                if (text.indexOf("read") >= 0) { rwd = 0b001100; ddct++; }
+                if (text.indexOf("write") >= 0) { rwd = 0b000111; ddct++; }
+
+                if (ddct != 2){
+                    u(document.getElementById("ptlong"), "Mode component has an invalid value");
+                    break mod;
+                }
+
+                var data = (((type&rwd)&3)<<30)|((addr&0x3FFF)<<16)|(((type&rwd)&0xFC)<<2)|((addr&0xC000)>>14);
+                u(document.getElementById("ptlong"), '$'+ (data >>> 0).hex("00000000"));
+            }
+
+            setTimeout(calc, 250);
+        }
+
+        function reg(word, regs, info){
+            switch(word >>> 8){
+                case 0x80:
+                    regs.innerText = "Mode Register 1";
+                    info.innerText = bits(word,
+                            [["CSYNC disabled", "CSYNC enabled"], ["HV not latched", "HV latched"], ["Invalid bit2",], [, "Invalid bit3"],
+                            [, "H-ints enabled"], [, "8 leftmost pixels blanked"], [, "Invalid bit6"], [, "Invalid bit7"]]);
+                    break;
+
+                case 0x81:
+                    regs.innerText = "Mode Register 2";
+                    info.innerText = bits(word,
+                            [[, "Invalid bit0"], [, "Invalid bit1"], ["VDP Mode 4 (Master System)", "VDP mode 5 (Mega Drive)"], ["Vertical resolution 224px", "Vertical resolution 240px"],
+                            [,"DMA's enabled"], [, "V-ints enabled"], ["Display disabled", "Display enabled"], [,"128KB VRAM mode enabled"]]);
+                    break;
+
+                case 0x82:
+                    regs.innerText = "Plane A Nametable Location";
+                    info.innerText = "$"+ ((word & 0x78) * 0x400).hex("0000");
+                    break;
+
+                case 0x83:
+                    regs.innerText = "Window Nametable Location";
+                    info.innerText = "$"+ ((word & 0x7E) * 0x400).hex("0000");
+                    break;
+
+                case 0x84:
+                    regs.innerText = "Plane B Nametable Location";
+                    info.innerText = "$"+ ((word & 0x0F) * 0x2000).hex("0000");
+                    break;
+
+                case 0x85:
+                    regs.innerText = "Sprite List Location";
+                    info.innerText = "$"+ ((word & 0xFF) * 0x200).hex("0000");
+                    break;
+
+                case 0x86:
+                    regs.innerText = "Sprite Pattern Location";
+                    info.innerText = (word & 0x20) == 0 ? "Low 64KB" : "High 64KB";
+                    break;
+
+                case 0x87:
+                    regs.innerText = "Background Colour";
+                    info.innerText = "Palette line "+ ((word & 0x30) >>> 4) +" entry "+ (word & 0x0F).hex("0");
+                    break;
+
+                case 0x88:case 0x89:
+                    regs.innerText = "Unused $"+ ((word & 0xFF00) >>> 8).hex("00");
+                    info.innerText = "$"+ (word & 0xFF).hex("00");
+                    break;
+
+                case 0x8A:
+                    regs.innerText = "H-int Counter";
+                    info.innerText = "Counter value $"+ (word & 0xFF).hex("00") + ((word & 0xFF) >= 0xE0 ? (word & 0xFF) >= 0xF0 ? " (Does not trigger!)" : " (Does not trigger in V28 mode!)" : "");
+                    break;
+
+                case 0x8B:
+                    regs.innerText = "Mode Register 3";
+                    info.innerText = bits(word,
+                            [[,], [,], ["Vertical scroll full", "Vertical scroll 2 cell"], [, "TH interrupts enabled"],
+                            [,"Invalid bit4"], [,"Invalid bit5"], [,"Invalid bit6"], [,"Invalid bit7"]]);
+                    switch (word & 3){
+                        case 0:
+                            info.innerText = "Horizontal scroll full, "+ info.innerText;
+                            break;
+
+                        case 1:
+                            info.innerText = "Horizontal scroll invalid, "+ info.innerText;
+                            break;
+
+                        case 2:
+                            info.innerText = "Horizontal scroll 8px, "+ info.innerText;
+                            break;
+
+                        case 3:
+                            info.innerText = "Horizontal scroll 1px, "+ info.innerText;
+                            break;
+
+                        default:
+                            info.innerText = "Horizontal scroll illegal wut thx JavaScript, "+ info.innerText;
+                            break;
+                    }
+                    break;
+
+                case 0x8C:
+                    regs.innerText = "Mode Register 4";
+                    info.innerText = bits(word,
+                            [[,], [,], [,], [, "Shadow/Highlight enabled"],
+                            [, "External pixel bus enabled"], [, "Horizontal sync (unknown)"], ["Vsync signal", "Pixel clock"], [,]]);
+                    switch (word & 6){
+                        case 0:
+                            info.innerText = "Interlace none, "+ info.innerText;
+                            break;
+
+                        case 2:
+                            info.innerText = "Interlace normal, "+ info.innerText;
+                            break;
+
+                        case 4:
+                            info.innerText = "Interlace invalid, "+ info.innerText;
+                            break;
+
+                        case 6:
+                            info.innerText = "Interlace double, "+ info.innerText;
+                            break;
+
+                        default:
+                            info.innerText = "Interlace illegal wut thx JavaScript, "+ info.innerText;
+                            break;
+                    }
+
+                    switch (word & 0x81){
+                        case 0:
+                            info.innerText = "Horizontal resolution 256px (32 cell), "+ info.innerText;
+                            break;
+
+                        case 1:
+                            info.innerText = "Horizontal resolution invalid $01, "+ info.innerText;
+                            break;
+
+                        case 0x80:
+                            info.innerText = "Horizontal resolution invalid $80, "+ info.innerText;
+                            break;
+
+                        case 0x81:
+                            info.innerText = "Horizontal resolution 320px (40 cell), "+ info.innerText;
+                            break;
+
+                        default:
+                            info.innerText = "Horizontal resolution illegal wut thx JavaScript, "+ info.innerText;
+                            break;
+                    }
+                    break;
+
+                case 0x8D:
+                    regs.innerText = "Horizontal Scroll Data Location";
+                    info.innerText = "$"+ ((word & 0x7F) * 0x400).hex("0000");
+                    break;
+
+                case 0x8E:
+                    regs.innerText = "Nametable Pattern Location";
+                    info.innerText = "Plane A and Window "+ ((word & 1) == 0 ? "Low 64KB" : "High 64KB") + ", Plane B "+ ((word & 0x20) == 0 ? "Low 64KB" : "High 64KB");
+                    break;
+
+                case 0x8F:
+                    regs.innerText = "Autoincrement Value";
+                    info.innerText = "$"+ (word & 0xFF).hex("00");
+                    break;
+
+                case 0x90: {
+                    regs.innerText = "Plane Size";
+                    let h = word & 3, v = (word & 0x30) >>> 4, s = planetl[v] * planetl[h] * 2;
+
+                    info.innerText = "Width "+ planetl[h] +" cells ("+ planepx[h] +"), Height "+ planetl[v] +" cells ("+ planepx[v] +"),"+ (s !== s ? "" : " Size " + s +" bytes ($"+ s.hex("0000") +")");
+                    if(s > 8192) info.innerText += " (Too large!)";
+                }
+                    break;
+
+                case 0x91:
+                    regs.innerText = "Window Plane Horizontal Position";
+                    info.innerText = ((word & 0xF) * 2) + " cells from "+ ((word & 0x80) == 0 ? "left" : "right");
+                    break;
+
+                case 0x92:
+                    regs.innerText = "Window Plane Vertical Position";
+                    info.innerText = ((word & 0xF) * 2) + " cells from "+ ((word & 0x80) == 0 ? "top" : "bottom");
+                    break;
+
+                case 0x93:
+                    regs.innerText = "DMA Length Low Byte";
+                    info.innerText = "$XX"+ (word & 0xFF).hex("00");
+                    break;
+
+                case 0x94:
+                    regs.innerText = "DMA Length High Byte";
+                    info.innerText = "$"+ (word & 0xFF).hex("00");
+                    break;
+
+                case 0x95:
+                    regs.innerText = "DMA Source Low Byte";
+                    info.innerText = "$XXX" + ((word & 0x80) >> 7) + ((word & 0x7F) << 1).hex("00");
+                    break;
+
+                case 0x96:
+                    regs.innerText = "DMA Source Mid Byte";
+                    info.innerText = "$X" + ((word & 0x80) >> 7) + ((word & 0x7F) << 1).hex("00") +"XX";
+                    break;
+
+                case 0x97:
+                    regs.innerText = "DMA Source High Byte";
+                    info.innerText = "$"+ ((word & 0x3F) << 1).hex("00") +"XXXX - ";
+
+                    switch (word & 0xC0){
+                        case 0:case 0x40:
+                            info.innerText += "68K -> VDP DMA";
+                            break;
+
+                        case 0x80:
+                     	   info.innerText += "DMA FILL";
+                            break;
+
+                        case 0xC0:
+                            info.innerText += "DMA COPY";
+                            break;
+                    }
+                    break;
+
+                default:
+                    regs.innerText = "Illegal $"+ ((word >>> 8)).hex("00");
+                    info.innerText = "$"+ (word & 0xFF).hex("00");
+                    break;
+            }
+        }
+
+        planetl = [32, 64, "invalid", 128];
+        planepx = ["256px", "512px", "invalid", "1024px"];
+
+        function bits(word, text){
+            var tx = "";
+
+            for(let i = 0, b = 1;i < 8;i ++, b += b){
+                let z = text[i][(word & b) == 0 ? 0 : 1];
+                if(z != undefined && z != null){
+                    if(tx.length != 0) tx += ", ";
+                    tx += z;
+                }
+            }
+
+            return tx;
+        }
+
+        function u(a,s){
+            if(a.innerText !== s) a.innerText = s;
+        }
+    </script>
+</head>
+<body>
+<br/>
+    <table style="background-color: #ececec;">
+        <tr>
+            <th class="th1 hdr">VDP command</th>
+            <th class="th2 hdr">Mode</th>
+            <th class="th3 hdr">Address</th>
+            <div id="cpy">&copy;Natsumi 2018-2018</div>
+        </tr>
+        <tr>
+            <th class="th1"><input id="cmdlong" style="width: 100%" /></th>
+            <th class="th2" id="cmdmode"></th>
+            <th class="th3" id="cmdaddr"></th>
+        </tr>
+        <tr>
+            <th class="th1 hdr"></th>
+            <th class="th2 hdr">Register</th>
+            <th class="th3 hdr">Value</th>
+        </tr>
+        <tr>
+            <th class="th1 hdr">Low Word</th>
+            <th class="th2" id="rglid"></th>
+            <th class="th3" id="rglinf"></th>
+        </tr>
+        <tr>
+            <th class="th1 hdr">High Word</th>
+            <th class="th2" id="rghid"></th>
+            <th class="th3" id="rghinf"></th>
+        </tr>
+        <tr>
+            <th class="th1">&nbsp;</th>
+            <th class="th2">&nbsp;</th>
+            <th class="th3">&nbsp;</th>
+        </tr>
+        <tr>
+            <th class="th1 hdr">Mode</th>
+            <th class="th2 hdr">Address</th>
+            <th class="th3 hdr">VDP command</th>
+        </tr>
+        <tr>
+            <th class="th1"><input id="ptmode" style="width: 100%" /></th>
+            <th class="th2"><input id="ptaddr" style="width: 100%" /></th>
+            <th class="th3" id="ptlong"></th>
+        </tr>
+    </table>
+</body>
+</html>

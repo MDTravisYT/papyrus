@@ -1,0 +1,28 @@
+READJOYPADS:
+		LEA		(JOYPAD).W,	A0
+		LEA		(IODATA1).L,	A1
+		BSR.S	@READPAD
+		ADDQ.W	#2,	A1
+		BSR.S	@READPAD
+		RTS
+		
+	@READPAD:
+		MOVE.B  #0,(A1)
+		NOP
+		NOP
+		MOVE.B  (A1),D0
+		LSL.B   #2,D0
+		ANDI.B  #$C0,D0
+		MOVE.B  #$40,(A1) ; '@'
+		NOP
+		NOP
+		MOVE.B  (A1),D1
+		ANDI.B  #$3F,D1 ; '?'
+		OR.B    D1,D0
+		NOT.B   D0
+		MOVE.B  (A0),D1
+		EOR.B   D0,D1
+		MOVE.B  D0,(A0)+
+		AND.B   D0,D1
+		MOVE.B  D1,(A0)+
+		RTS
