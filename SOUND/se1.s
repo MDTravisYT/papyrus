@@ -25,50 +25,34 @@
 SA0:
 
 		TDW		TIMBA0,SA0				; Voice Top Address
-		DC.B	1,2						; Base,Use Channel Total
+		DC.B	2,2						; Base,Use Channel Total
 
 		DC.B	80H,080H				; Flag,Channel
 		TDW		TABA00,SA0				; FM 1ch Table Pointer
-		DC.B	00H,003H				; Bias,Volm
-
+		DC.B	-12,000H				; Bias,Volm
+		
 		DC.B	80H,0A0H				; Flag,Channel
 		TDW		TABA01,SA0				; FM 1ch Table Pointer
-		DC.B	00H,003H				; Bias,Volm
+		DC.B	-12,000H				; Bias,Volm
 
 ;------------< Table Data >-------------;
 TABA00	EQU		*
-		DC.B	NL,2
-		DC.B	FDT,10
 		DC.B	EV,3
-TA00	EQU		*
-		DC.B	0C1H,3,0C3H,0C5H
-		DC.B	PVADD,2
-		DC.B	CMBIAS,-1
-		DC.B	CMREPT,0,4
-		JDW		TA00
-TA01	EQU		*
-		DC.B	0C1H,3,0C3H,0C5H
-		DC.B	PVADD,2
-		DC.B	CMBIAS,1
-		DC.B	CMREPT,0,2
-		JDW		TA01
-		DC.B	CMEND
+		DC.B	GS4,1,CS5,FS5
+		DC.B	PVADD,4
+		DC.B	CS5,FS5
+		DC.B	PVADD,4
+		DC.B	CS5,FS5
+		DC.B	SFEND
 
 TABA01	EQU		*
 		DC.B	EV,3
-TA001	EQU		*
-		DC.B	0C1H,2,0C3H,0C5H
-		DC.B	PVADD,2
-		DC.B	CMBIAS,-1
-		DC.B	CMREPT,0,6
-		JDW		TA001
-TA011	EQU		*
-		DC.B	0C1H,2,0C3H,0C5H
-		DC.B	PVADD,2
-		DC.B	CMBIAS,1
-		DC.B	CMREPT,0,4
-		JDW		TA011
-		DC.B	CMEND
+		DC.B	NL,2
+		DC.B	PVADD,4
+		DC.B	GS4,1,NL
+		DC.B	PVADD,4
+		DC.B	GS4,NL
+		DC.B	SFEND
 
 ;------------< Voice Data >-------------;
 TIMBA0	EQU		*
@@ -80,41 +64,17 @@ TIMBA0	EQU		*
 ;=======================================;
 SA1:
 		TDW		TIMBA1,SA1				; Voice Top Address
-		DC.B	1,2						; Base,Use Channel Total
+		DC.B	1,1						; Base,Use Channel Total
 
 		DC.B	80H,080H				; Flag,Channel
 		TDW		TABA10,SA1				; FM 1ch Table Pointer
-		DC.B	0E8H,002H				; Bias,Volm
-
-		DC.B	80H,0A0H				; Flag,Channel
-		TDW		TABA11,SA1				; FM 1ch Table Pointer
-		DC.B	0E8H,002H				; Bias,Volm
+		DC.B	-12,000H				; Bias,Volm
 
 ;------------< Table Data >-------------;
-TABA11	EQU		*
-		DC.B	FDT,1
 TABA10	EQU		*
-TA100	EQU		*
-		DC.B	0DDH,2,0DBH,0D9H
-		DC.B	CMREPT,0,3
-		JDW		TA100
-TA101	EQU		*
-		DC.B	0DBH,0D9H,0D7H
-		DC.B	CMREPT,0,3
-		JDW		TA101
-TA102	EQU		*
-		DC.B	0D9H,0D7H,0D5H
-		DC.B	CMREPT,0,3
-		JDW		TA102
-TA103	EQU		*
-		DC.B	0DBH,0D9H,0D7H
-		DC.B	CMREPT,0,3
-		JDW		TA103
-
-		DC.B	CMJUMP
-		JDW		TA100
-
-		DC.B	CMEND
+		DC.B	EV,3
+		DC.B	BN4,1
+		DC.B	SFEND
 
 ;------------< Voice Data >-------------;
 TIMBA1	EQU		*

@@ -190,7 +190,7 @@ CMEND           EQU     $EE             ; music table end
 FEV             EQU     $EF             ; FM voice no. set
 FVR             EQU     $F0             ; FM auto vibrate set
 VRON            EQU     $F1             ; FVR on (before FVR parameter set)
-;	f2
+SFEND			EQU		$F2
 CMNOIS          EQU     $F3             ; PSG noise mode set
 VROFF           EQU     $F4             ; FVR stop
 EV              EQU     $F5             ; PSG envelope no. set
