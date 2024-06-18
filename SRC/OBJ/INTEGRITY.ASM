@@ -58,8 +58,17 @@ INTEGRITY:
 		subi.w	#1,D1
 	@righttst:
 		btst	#bitR,D0
-		beq.s	@apply
+		beq.s	@endtst
 		addi.w	#1,D1
+	@endtst:
+		btst	#bitStart,D0
+		beq.s	@apply
+		MOVE.W	#152,	OBJ.X(A0)
+		MOVE.W	#204,	OBJ.Y(A0)
+		MOVE.B	#0,	OBJ.ACTION(A0)
+		MOVE.B	#0,	OBJ.FRAME(A0)
+		MOVE.B	#3,	OBJ.ID(A0)
+		rts
 	@apply:
 		add.w	D1,OBJ.X(A0)
 		JMP		_OBJECTDISPLAY
