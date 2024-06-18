@@ -68,7 +68,16 @@ INTEGRITY:
 		MOVE.B	#0,	OBJ.ACTION(A0)
 		MOVE.B	#0,	OBJ.FRAME(A0)
 		MOVE.B	#3,	OBJ.ID(A0)
+		COPYTILEMAP		BATTLEMAP,	$8084,	35,	25
 		rts
 	@apply:
 		add.w	D1,OBJ.X(A0)
+		cmpi.w	#$D1,OBJ.X(A0)
+		ble.s	@contchk
+		move.w	#$D1,OBJ.X(A0)
+	@contchk:
+		cmpi.w	#$6F,OBJ.X(A0)
+		bge.s	@allgood
+		move.w	#$6F,OBJ.X(A0)
+	@allgood:
 		JMP		_OBJECTDISPLAY
