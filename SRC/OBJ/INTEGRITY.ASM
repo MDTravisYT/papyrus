@@ -26,9 +26,12 @@ INTEGRITY:
 		MOVE.B	JOYPAD,	D0
 		btst	#0,	INTEG_UPHOLD(A0)
 		bne.s	@chkfloor
+		cmpi.b	#0,	OBJ.YSPEED(A0)
+		bge.s	@set
 		btst	#bitUp,D0
 		bne.s	@chkfloor
 		move.w	#0,	OBJ.YSPEED(A0)	;	clear upwards movement if up is no longer held
+	@set:
 		bset	#0,	INTEG_UPHOLD(A0)
 	@chkfloor:
 		cmpi.w	#$A8,	OBJ.Y(A0)	;	bottom of playfield
