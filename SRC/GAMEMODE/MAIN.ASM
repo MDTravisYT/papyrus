@@ -35,6 +35,7 @@ MAIN:
 		JSR		PALFADEIN
 		
 		MOVE.L	#$48080002,	TEXTLOG
+		MOVE.L	#$48080002,	NEWLINE_MEMO
 		MOVE.W	#$0,	TEXTPROG
 		
 	@loop:
@@ -49,7 +50,8 @@ MAIN:
 		ADD.W	TEXTPROG,	A0
 		CMPI.B	#1,	(A0)
 		BNE.S	@no_newline
-		MOVE.L	#$49080002,	TEXTLOG
+		ADD.L	#$1000000,	NEWLINE_MEMO
+		MOVE.L	NEWLINE_MEMO,	TEXTLOG
 		ADDI.W	#1,	TEXTPROG
 		bra.w	@loop
 	@no_newline:
@@ -79,7 +81,12 @@ BATTLEART:	INCBIN		"ART/BATTLE.UNC"
 TXTART:	INCBIN		"ART/FONT.UNC"
 	TXTART_END:
 
+SKIP_BLIP:
+	DC.B	' ',$FF
+
 TST:
-	DC.B	'Boner.',1,'This should a new line!',$FF
+	DC.B	'Boner.',1
+	dc.b	'This should a new line!',1
+	dc.b	'ooooo',$FF
 	TSTEND:
 	even
