@@ -90,27 +90,29 @@ SA2:
 
 		DC.B	80H,5					; Flag,Channel
 		TDW		TABA20,SA2				; FM 1ch Table Pointer
-		DC.B	00H,006H				; Bias,Volm
+		DC.B	00H,000H				; Bias,Volm
 
 ;------------< Table Data >-------------;
 TABA20	EQU		*
 		DC.B	FEV,0
-TA20	EQU		*
-		DC.B	0C4H,1,NL
-		DC.B	CMREPT,0,10H
-		JDW		TA20
-		DC.B	CMJUMP
-		JDW		TA20
+		DC.B	BN4,1
+		DC.B	SFEND
 
 ;------------< Voice Data >-------------;
 TIMBA2	EQU		*
-		CNF		1,7
-		MD		2,0,1,0,2,0,1,0
-		RSAR	0,31,0,31,0,31,0,31
-		D1R		0,0,0,0
-		D2R		0,0,0,0
-		RRL		15,0,15,0,15,0,15,0
-		TL		27,50,40,0
+	smpsVcAlgorithm     $02
+	smpsVcFeedback      $00
+	smpsVcUnusedBits    $00
+	smpsVcDetune        $00, $00, $00, $00
+	smpsVcCoarseFreq    $02, $00, $00, $00
+	smpsVcRateScale     $00, $00, $00, $00
+	smpsVcAttackRate    $1F, $00, $00, $10
+	smpsVcAmpMod        $00, $00, $00, $00
+	smpsVcDecayRate1    $1F, $00, $00, $00
+	smpsVcDecayRate2    $04, $00, $00, $03
+	smpsVcDecayLevel    $00, $00, $00, $00
+	smpsVcReleaseRate   $09, $00, $00, $02
+	smpsVcTotalLevel    $00, $7F, $7F, $5D
 
 		even
 

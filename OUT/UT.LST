@@ -5313,6 +5313,123 @@
 00006B9C                            		DC.B	\R3+\DL3*10H,\R4+\DL4*10H
 00006B9C                            		ENDM
 00006B9C                            
+00006B9C                            ; ---------------------------------------------------------------------------------------------
+00006B9C                            ; Macros for FM instruments
+00006B9C                            ; Voices - Feedback
+00006B9C                            smpsVcFeedback macro val
+00006B9C                            vcFeedback set \val
+00006B9C                            	endm
+00006B9C                            
+00006B9C                            ; Voices - Algorithm
+00006B9C                            smpsVcAlgorithm macro val
+00006B9C                            vcAlgorithm set \val
+00006B9C                            	endm
+00006B9C                            
+00006B9C                            smpsVcUnusedBits macro val
+00006B9C                            vcUnusedBits set \val
+00006B9C                            	endm
+00006B9C                            
+00006B9C                            ; Voices - Detune
+00006B9C                            smpsVcDetune macro op1,op2,op3,op4
+00006B9C                            vcDT1 set \op1
+00006B9C                            vcDT2 set \op2
+00006B9C                            vcDT3 set \op3
+00006B9C                            vcDT4 set \op4
+00006B9C                            	endm
+00006B9C                            
+00006B9C                            ; Voices - Coarse-Frequency
+00006B9C                            smpsVcCoarseFreq macro op1,op2,op3,op4
+00006B9C                            vcCF1 set \op1
+00006B9C                            vcCF2 set \op2
+00006B9C                            vcCF3 set \op3
+00006B9C                            vcCF4 set \op4
+00006B9C                            	endm
+00006B9C                            
+00006B9C                            ; Voices - Rate Scale
+00006B9C                            smpsVcRateScale macro op1,op2,op3,op4
+00006B9C                            vcRS1 set \op1
+00006B9C                            vcRS2 set \op2
+00006B9C                            vcRS3 set \op3
+00006B9C                            vcRS4 set \op4
+00006B9C                            	endm
+00006B9C                            
+00006B9C                            ; Voices - Attack Rate
+00006B9C                            smpsVcAttackRate macro op1,op2,op3,op4
+00006B9C                            vcAR1 set \op1
+00006B9C                            vcAR2 set \op2
+00006B9C                            vcAR3 set \op3
+00006B9C                            vcAR4 set \op4
+00006B9C                            	endm
+00006B9C                            
+00006B9C                            ; Voices - Amplitude Modulation
+00006B9C                            smpsVcAmpMod macro op1,op2,op3,op4
+00006B9C                            vcAM1 set \op1
+00006B9C                            vcAM2 set \op2
+00006B9C                            vcAM3 set \op3
+00006B9C                            vcAM4 set \op4
+00006B9C                            	endm
+00006B9C                            
+00006B9C                            ; Voices - First Decay Rate
+00006B9C                            smpsVcDecayRate1 macro op1,op2,op3,op4
+00006B9C                            vcD1R1 set \op1
+00006B9C                            vcD1R2 set \op2
+00006B9C                            vcD1R3 set \op3
+00006B9C                            vcD1R4 set \op4
+00006B9C                            	endm
+00006B9C                            
+00006B9C                            ; Voices - Second Decay Rate
+00006B9C                            smpsVcDecayRate2 macro op1,op2,op3,op4
+00006B9C                            vcD2R1 set \op1
+00006B9C                            vcD2R2 set \op2
+00006B9C                            vcD2R3 set \op3
+00006B9C                            vcD2R4 set \op4
+00006B9C                            	endm
+00006B9C                            
+00006B9C                            ; Voices - Decay Level
+00006B9C                            smpsVcDecayLevel macro op1,op2,op3,op4
+00006B9C                            vcDL1 set \op1
+00006B9C                            vcDL2 set \op2
+00006B9C                            vcDL3 set \op3
+00006B9C                            vcDL4 set \op4
+00006B9C                            	endm
+00006B9C                            
+00006B9C                            ; Voices - Release Rate
+00006B9C                            smpsVcReleaseRate macro op1,op2,op3,op4
+00006B9C                            vcRR1 set \op1
+00006B9C                            vcRR2 set \op2
+00006B9C                            vcRR3 set \op3
+00006B9C                            vcRR4 set \op4
+00006B9C                            	endm
+00006B9C                            
+00006B9C                            ; Voices - Total Level
+00006B9C                            smpsVcTotalLevel macro op1,op2,op3,op4
+00006B9C                            vcTL1 set \op1
+00006B9C                            vcTL2 set \op2
+00006B9C                            vcTL3 set \op3
+00006B9C                            vcTL4 set \op4
+00006B9C                            	dc.b	(vcUnusedBits<<6)+(vcFeedback<<3)+vcAlgorithm
+00006B9C                            ;   0     1     2     3     4     5     6     7
+00006B9C                            ;%1000,%1000,%1000,%1000,%1010,%1110,%1110,%1111
+00006B9C                            vcTLMask4 set ((vcAlgorithm=7)<<7)
+00006B9C                            vcTLMask3 set ((vcAlgorithm>=4)<<7)
+00006B9C                            vcTLMask2 set ((vcAlgorithm>=5)<<7)
+00006B9C                            vcTLMask1 set $80
+00006B9C                            ;	dc.b	(vcDT4<<4)+vcCF4 ,(vcDT3<<4)+vcCF3 ,(vcDT2<<4)+vcCF2 ,(vcDT1<<4)+vcCF1
+00006B9C                            ;	dc.b	(vcRS4<<6)+vcAR4 ,(vcRS3<<6)+vcAR3 ,(vcRS2<<6)+vcAR2 ,(vcRS1<<6)+vcAR1
+00006B9C                            ;	dc.b	(vcAM4<<5)+vcD1R4,(vcAM3<<5)+vcD1R3,(vcAM2<<5)+vcD1R2,(vcAM1<<5)+vcD1R1
+00006B9C                            ;	dc.b	vcD2R4           ,vcD2R3           ,vcD2R2           ,vcD2R1
+00006B9C                            ;	dc.b	(vcDL4<<4)+vcRR4 ,(vcDL3<<4)+vcRR3 ,(vcDL2<<4)+vcRR2 ,(vcDL1<<4)+vcRR1
+00006B9C                            ;	dc.b	vcTL4|vcTLMask4  ,vcTL3|vcTLMask3  ,vcTL2|vcTLMask2  ,vcTL1|vcTLMask1
+00006B9C                            	dc.b	(vcDT4<<4)+vcCF4,(vcDT3<<4)+vcCF3,(vcDT2<<4)+vcCF2,(vcDT1<<4)+vcCF1
+00006B9C                            	dc.b	(vcRS4<<6)+vcAR4,(vcRS3<<6)+vcAR3,(vcRS2<<6)+vcAR2,(vcRS1<<6)+vcAR1
+00006B9C                            	dc.b	(vcAM4<<5)+vcD1R4,(vcAM3<<5)+vcD1R3,(vcAM2<<5)+vcD1R2,(vcAM1<<5)+vcD1R1
+00006B9C                            	dc.b	vcD2R4,vcD2R3,vcD2R2,vcD2R1
+00006B9C                            	dc.b	(vcDL4<<4)+vcRR4,(vcDL3<<4)+vcRR3,(vcDL2<<4)+vcRR2,(vcDL1<<4)+vcRR1
+00006B9C                            	dc.b	vcTL4|vcTLMask4,vcTL3|vcTLMask3,vcTL2|vcTLMask2,vcTL1|vcTLMask1
+00006B9C                            	endm
+00006B9C                            
+00006B9C                            
+00006B9C                            
 00006B9C                            ;=======================================;
 00006B9C                            ;			  END OF FILE				;
 00006B9C                            ;=======================================;
@@ -6566,443 +6683,446 @@
 00007444                            
 00007444 8005                       		DC.B	80H,5					; Flag,Channel
 00007446 0000                       		TDW		TABA20,SA2				; FM 1ch Table Pointer
-00007448 0006                       		DC.B	00H,006H				; Bias,Volm
+00007448 0000                       		DC.B	00H,000H				; Bias,Volm
 0000744A                            
 0000744A                            ;------------< Table Data >-------------;
 0000744A =0000744A                  TABA20	EQU		*
 0000744A EF00                       		DC.B	FEV,0
-0000744C =0000744C                  TA20	EQU		*
-0000744C C401 80                    		DC.B	0C4H,1,NL
-0000744F F700 10                    		DC.B	CMREPT,0,10H
-00007452 FFF9                       		JDW		TA20
-00007454 F6                         		DC.B	CMJUMP
-00007455 FFF6                       		JDW		TA20
-00007457                            
-00007457                            ;------------< Voice Data >-------------;
-00007457 =00007457                  TIMBA2	EQU		*
-00007457 39                         		CNF		1,7
-00007458 0201 0201                  		MD		2,0,1,0,2,0,1,0
-0000745C 1F1F 1F1F                  		RSAR	0,31,0,31,0,31,0,31
-00007460 0000 0000                  		D1R		0,0,0,0
-00007464 0000 0000                  		D2R		0,0,0,0
-00007468 0F0F 0F0F                  		RRL		15,0,15,0,15,0,15,0
-00007470                            
-00007470                            		even
-00007470                            
-00007470                            ;=======================================;
-00007470                            ;				   SA3					;
-00007470                            ;=======================================;
-00007470                            SA3:
-00007470 0000                       		TDW		TIMBA3,SA3				; Voice Top Address
-00007472 0101                       		DC.B	1,1						; Base,Use Channel Total
-00007474                            
-00007474 8005                       		DC.B	80H,005H				; Flag,Channel
-00007476 0000                       		TDW		TABA30,SA3				; FM 1ch Table Pointer
-00007478 2402                       		DC.B	24H,002H				; Bias,Volm
-0000747A                            
-0000747A                            ;------------< Table Data >-------------;
-0000747A =0000747A                  TABA30	EQU		*
-0000747A EF00                       		DC.B	FEV,0
-0000747C F068 30                    		DC.B	LFO,68H,30H
-0000747F =0000747F                  TABA31	EQU		*
-0000747F F001 02F8 FF               		DC.B	FVR,1,2,0F8H,0FFH
-00007484 AD2A                       		DC.B	0ADH,2AH
-00007486 EE                         		DC.B	CMEND
-00007487                            
-00007487                            ;------------< Voice Data >-------------;
-00007487 =00007487                  TIMBA3	EQU		*
-00007487 3C                         		CNF		4,7
-00007488 0201 0201                  		MD		2,0,1,0,2,0,1,0
-0000748C 1F0B 1F0B                  		RSAR	0,31,0,0BH,0,31,0,0BH
-00007490 0008 0008                  		D1R		0,8,0,8
-00007494 010E 010E                  		D2R		1,0EH,1,0EH
-00007498 0F1F 0F1F                  		RRL		15,0,15,1,15,0,15,1
-000074A0                            
-000074A0                            		even
-000074A0                            
-000074A0                            ;=======================================;
-000074A0                            ;				   SA4					;
-000074A0                            ;=======================================;
-000074A0                            SA4:
-000074A0 0000                       		TDW		TIMBA4,SA4				; Voice Top Address
-000074A2 0101                       		DC.B	1,1						; Base,Use Channel Total
-000074A4                            
-000074A4 8005                       		DC.B	80H,5					; Flag,Channel
-000074A6 0000                       		TDW		TABA40,SA4				; FM 1ch Table Pointer
-000074A8 F400                       		DC.B	0F4H,000H				; Bias,Volm
-000074AA                            
-000074AA                            ;------------< Table Data >-------------;
-000074AA =000074AA                  TABA40	EQU		*
-000074AA EF00                       		DC.B	FEV,0
-000074AC =000074AC                  TA40	EQU		*
-000074AC A060                       		DC.B	0A0H,60h
-000074AE EE                         		DC.B	CMEND
-000074AF                            
-000074AF                            ;------------< Voice Data >-------------;
-000074AF =000074AF                  TIMBA4	EQU		*
-000074AF 3B                         		CNF		3,7
-000074B0 5231 5151                  		MD		2,5,1,3,1,5,1,5
-000074B4 0C0C 1212                  		RSAR	0,0CH,0,0CH,0,12H,0,12H
-000074B8 0E00 0E0C                  		D1R		0EH,0,0EH,0CH
-000074BC 0000 000E                  		D2R		0,0,0,0EH
-000074C0 4F0F 5F3F                  		RRL		15,4,15,0,15,5,15,3
-000074C8                            
-000074C8                            		even
-000074C8                            
-000074C8                            ;=======================================;
-000074C8                            ;				   SA5					;
-000074C8                            ;=======================================;
-000074C8                            SA5:
-000074C8 0000                       		TDW		TIMBA5,SA5				; Voice Top Address
-000074CA 0102                       		DC.B	1,2						; Base,Use Channel Total
-000074CC                            
-000074CC 80A0                       		DC.B	80H,0A0H				; Flag,Channel
-000074CE 0000                       		TDW		TABA50,SA5				; FM 1ch Table Pointer
-000074D0 F400                       		DC.B	0F4H,000H				; Bias,Volm
-000074D2                            
-000074D2 80C0                       		DC.B	80H,0C0H				; Flag,Channel
-000074D4 0000                       		TDW		TABA51,SA5				; FM 1ch Table Pointer
-000074D6 F400                       		DC.B	0F4H,000H				; Bias,Volm
-000074D8                            
-000074D8                            ;------------< Table Data >-------------;
-000074D8 =000074D8                  TABA50	EQU		*
-000074D8 F501                       		DC.B	EV,1
-000074DA F001 0150 17               		DC.B	FVR,1,1,50H,17H
-000074DF 9B0A                       		DC.B	09BH,0Ah
-000074E1 =000074E1                  TA50	EQU		*
-000074E1 A304 EC02                  		DC.B	0A3H,4,PVADD,2
-000074E5 F700 06                    		DC.B	CMREPT,0,6
-000074E8 FFF8                       		JDW		TA50
-000074EA EE                         		DC.B	CMEND
-000074EB =000074EB                  TABA51	EQU		*
-000074EB F501                       		DC.B	EV,1
-000074ED F002 0120 10F3 E7          		DC.B	FVR,2,1,20H,10H,CMNOIS,NOIS7
-000074F4 C40A                       		DC.B	0C4H,0AH
-000074F6 =000074F6                  TA51	EQU		*
-000074F6 C202 EC01                  		DC.B	0C2H,02H,PVADD,1
-000074FA F700 0C                    		DC.B	CMREPT,0,12
-000074FD FFF8                       		JDW		TA51
-000074FF EE                         		DC.B	CMEND
-00007500                            
-00007500                            ;------------< Voice Data >-------------;
-00007500 =00007500                  TIMBA5	EQU		*
-00007500 38                         		CNF		0,7
-00007501 0F0F 0F0F                  		MD		15,0,15,0,15,0,15,0
-00007505 1F1F 1F0E                  		RSAR	0,31,0,31,0,31,0,14
-00007509 0000 000A                  		D1R		0,0,0,10
-0000750D 0000 0019                  		D2R		0,0,0,25
-00007511 0F0F 0F1F                  		RRL		15,0,15,0,15,0,15,1
-00007519                            
-0000751A 00                         		even
-0000751A                            
-0000751A                            ;=======================================;
-0000751A                            ;				   SA6					;
-0000751A                            ;=======================================;
-0000751A                            SA6:
-0000751A 0000                       		TDW		TIMBA6,SA6				; Voice Top Address
-0000751C 0101                       		DC.B	1,1						; Base,Use Channel Total
-0000751E                            
-0000751E 8005                       		DC.B	80H,5					; Flag,Channel
-00007520 0000                       		TDW		TABA60,SA6				; FM 1ch Table Pointer
-00007522 0004                       		DC.B	00H,004H				; Bias,Volm
-00007524                            
-00007524                            ;------------< Table Data >-------------;
-00007524 =00007524                  TABA60	EQU		*
-00007524 EF00                       		DC.B	FEV,0
-00007526 =00007526                  TBA6	EQU		*
-00007526 A00E                       		DC.B	0A0h,14
-00007528 EE                         		DC.B	CMEND
-00007529                            
-00007529                            ;------------< Voice Data >-------------;
-00007529 =00007529                  TIMBA6	EQU		*
-00007529 28                         		CNF		0,5
-0000752A 0370 3100                  		MD		3,0,0,7,1,3,0,0
-0000752E 1F1F 5F5F                  		RSAR	0,31,0,31,1,31,1,31
-00007532 0303 0302                  		D1R		3,3,3,2
-00007536 0102 0203                  		D2R		1,2,2,3
-0000753A AF2F 2F5F                  		RRL		15,10,15,2,15,2,15,5
-00007542                            
-00007542                            		even
-00007542                            
-00007542                            ;=======================================;
-00007542                            ;				   SA7					;
-00007542                            ;=======================================;
-00007542                            SA7:
-00007542 0000                       		TDW		TIMBA7,SA7				; Voice Top Address
-00007544 0101                       		DC.B	1,1						; Base,Use Channel Total
-00007546                            
-00007546 80C0                       		DC.B	80H,0C0H				; Flag,Channel
-00007548 0000                       		TDW		TABA70,SA7				; FM 1ch Table Pointer
-0000754A 0000                       		DC.B	00H,000H				; Bias,Volm
-0000754C                            
-0000754C                            ;------------< Table Data >-------------;
-0000754C =0000754C                  TABA70	EQU		*
-0000754C F3E7                       		DC.B	CMNOIS,NOIS7
-0000754E F001 0107 02               		DC.B	FVR,1,1,7,2
-00007553 FF00 01                    		DC.B	EXCOM,S_PSE,ON
-00007556 =00007556                  TA70	EQU		*
-00007556 A004 E901 F700 20          		DC.B	0A0H,4,CMBIAS,1,CMREPT,0,20H
-0000755D FFF8                       		JDW		TA70
-0000755F 14                         		DC.B	20
-00007560 FF00 00                    		DC.B	EXCOM,S_PSE,OFF
-00007563 EE                         		DC.B	CMEND
-00007564                            
-00007564                            ;------------< Voice Data >-------------;
-00007564 =00007564                  TIMBA7	EQU		*
-00007564                            
-00007564                            		even
-00007564                            
-00007564                            ;=======================================;
-00007564                            ;				   SA8					;
-00007564                            ;=======================================;
-00007564                            SA8:
-00007564 0000                       		TDW		TIMBA8,SA8				; Voice Top Address
-00007566 0102                       		DC.B	1,2						; Base,Use Channel Total
-00007568                            
-00007568 8004                       		DC.B	80H,4					; Flag,Channel
-0000756A 0000                       		TDW		TABA81,SA8				; FM 1ch Table Pointer
-0000756C F208                       		DC.B	0F2H,008H				; Bias,Volm
-0000756E                            
-0000756E 8005                       		DC.B	80H,5					; Flag,Channel
-00007570 0000                       		TDW		TABA80,SA8				; FM 1ch Table Pointer
-00007572 F208                       		DC.B	0F2H,008H				; Bias,Volm
-00007574                            
-00007574                            ;------------< Table Data >-------------;
-00007574 =00007574                  TABA80	EQU		*
-00007574 EF00                       		DC.B	FEV,0
-00007576 F6                         		DC.B	CMJUMP
-00007577 0000                       		JDW		TA80
-00007579 =00007579                  TABA81	EQU		*
-00007579 EF00                       		DC.B	FEV,0
-0000757B =0000757B                  TA80	EQU		*
-0000757B B002 E7AE 01E7 E9FF        		DC.B	0B0H,2,CMTAB,0AEh,1,CMTAB,CMBIAS,-1
-00007583 F700 20                    		DC.B	CMREPT,0,20H
-00007586 FFF4                       		JDW		TA80
-00007588 E920                       		DC.B	CMBIAS,20H
-0000758A =0000758A                  TA81	EQU		*
-0000758A 9002 8001                  		DC.B	090H,2,NL,1
-0000758E F700 05                    		DC.B	CMREPT,0,5
-00007591 FFF8                       		JDW		TA81
-00007593 EE                         		DC.B	CMEND
-00007594                            
-00007594                            ;------------< Voice Data >-------------;
-00007594 =00007594                  TIMBA8	EQU		*
-00007594                            ;-----------< Voice Data 0 >------------;
-00007594 3B                         		CNF		3,7
-00007595 3C39 3031                  		MD		12,3,9,3,0,3,1,3
-00007599 DF1F 1FDF                  		RSAR	3,31,0,31,0,31,3,31
-0000759D 0405 0401                  		D1R		4,5,4,1
-000075A1 0404 0402                  		D2R		4,4,4,2
-000075A5 FF0F 1FAF                  		RRL		15,15,15,0,15,1,15,10
-000075AD                            ;-----------< Voice Data 1 >------------;
-000075AD 3D                         		CNF		5,7
-000075AE 0102 0001                  		MD		1,0,2,0,0,0,1,0
-000075B2 1F0E 0E0E                  		RSAR	0,31,0,14,0,14,0,14
-000075B6 071F 1F1F                  		D1R		7,31,31,31
-000075BA 0000 0000                  		D2R		0,0,0,0
-000075BE 1F0F 0F0F                  		RRL		15,1,15,0,15,0,15,0
-000075C6                            
-000075C6                            		even
-000075C6                            
-000075C6                            ;=======================================;
-000075C6                            ;				   SA9					;
-000075C6                            ;=======================================;
-000075C6                            SA9:
-000075C6 0000                       		TDW		TIMBA9,SA9				; Voice Top Address
-000075C8 0101                       		DC.B	1,1						; Base,Use Channel Total
-000075CA                            
-000075CA 8005                       		DC.B	80H,5					; Flag,Channel
-000075CC 0000                       		TDW		TABA90,SA9				; FM 1ch Table Pointer
-000075CE 0006                       		DC.B	00H,006H				; Bias,Volm
-000075D0                            
-000075D0                            ;------------< Table Data >-------------;
-000075D0 =000075D0                  TABA90	EQU		*
-000075D0 EF00                       		DC.B	FEV,0
-000075D2 8001                       		DC.B	NL,1
-000075D4 F000 01D0 FF               		DC.B	FVR,0,1,0D0H,0FFH
-000075D9 C50F                       		DC.B	0C5H,0FH
-000075DB EE                         		DC.B	CMEND
-000075DC                            
-000075DC                            ;------------< Voice Data >-------------;
-000075DC =000075DC                  TIMBA9	EQU		*
-000075DC 38                         		CNF		0,7
-000075DD 0F0F 0F0F                  		MD		15,0,15,0,15,0,15,0
-000075E1 1F1F 1F0E                  		RSAR	0,31,0,31,0,31,0,14
-000075E5 0000 0011                  		D1R		0,0,0,11H
-000075E9 0000 0013                  		D2R		0,0,0,13H
-000075ED 0F0F 0F1F                  		RRL		15,0,15,0,15,0,15,1
-000075F5                            
-000075F6 00                         		even
-000075F6                            
-000075F6                            ;=======================================;
-000075F6                            ;				   SAA					;
-000075F6                            ;=======================================;
-000075F6                            SAA:
-000075F6 0000                       		TDW		TIMBAA,SAA				; Voice Top Address
-000075F8 0101                       		DC.B	1,1						; Base,Use Channel Total
-000075FA                            
-000075FA 80C0                       		DC.B	80H,0C0H				; Flag,Channel
-000075FC 0000                       		TDW		TABAA0,SAA				; FM 1ch Table Pointer
-000075FE 0001                       		DC.B	00H,001H				; Bias,Volm
-00007600                            
-00007600                            ;------------< Table Data >-------------;
-00007600 =00007600                  TABAA0	EQU		*
-00007600 F001 01F0 08F3 E7          		DC.B	FVR,1,1,0F0H,8,CMNOIS,NOIS7
-00007607 B004 CA04                  		DC.B	0B0H,4,0CAH,4
-0000760B =0000760B                  TAA0	EQU		*
-0000760B C001 EC01 F700 08          		DC.B	0C0H,1,PVADD,1,CMREPT,0,8
-00007612 FFF8                       		JDW		TAA0
-00007614 EE                         		DC.B	CMEND
-00007615                            
-00007615                            ;------------< Voice Data >-------------;
-00007615 =00007615                  TIMBAA	EQU		*
-00007615                            
-00007616 00                         		even
-00007616                            
-00007616                            ;=======================================;
-00007616                            ;				   SAB					;
-00007616                            ;=======================================;
-00007616                            SAB:
-00007616 0000                       		TDW		TIMBAB,SAB				; Voice Top Address
-00007618 0101                       		DC.B	1,1						; Base,Use Channel Total
-0000761A                            
-0000761A 80C0                       		DC.B	80H,0C0H				; Flag,Channel
-0000761C 0000                       		TDW		TABAB0,SAB				; FM 1ch Table Pointer
-0000761E 0000                       		DC.B	00H,000H				; Bias,Volm
-00007620                            
-00007620                            ;------------< Table Data >-------------;
-00007620 =00007620                  TABAB0	EQU		*
-00007620 F501                       		DC.B	EV,1
-00007622 F003 0120 08F3 E7          		DC.B	FVR,3,1,20H,8,CMNOIS,NOIS7
-00007629 A203 A604                  		DC.B	0A2H,3,0A6H,4
-0000762D =0000762D                  TAB0	EQU		*
-0000762D B209 E902 EC03 F700 02     		DC.B	0B2h,9,CMBIAS,2,PVADD,3,CMREPT,0,2
-00007636 FFF6                       		JDW		TAB0
-00007638 EE                         		DC.B	CMEND
-00007639                            
-00007639                            ;------------< Voice Data >-------------;
-00007639 =00007639                  TIMBAB	EQU		*
-00007639                            
-0000763A 00                         		even
-0000763A                            
-0000763A                            ;=======================================;
-0000763A                            ;				   SAC					;
-0000763A                            ;=======================================;
-0000763A                            SAC:
-0000763A 0000                       		TDW		TIMBAC,SAC				; Voice Top Address
-0000763C 0101                       		DC.B	1,1						; Base,Use Channel Total
-0000763E                            
-0000763E 8005                       		DC.B	80H,05H					; Flag,Channel
-00007640 0000                       		TDW		TABAC0,SAC				; FM 1ch Table Pointer
-00007642 0002                       		DC.B	000H,002H				; Bias,Volm
-00007644                            
-00007644                            ;------------< Table Data >-------------;
-00007644 =00007644                  TABAC0	EQU		*
-00007644 EF00                       		DC.B	FEV,0
-00007646 8D2C                       		DC.B	08dH,02cH
-00007648 EE                         		DC.B	CMEND
-00007649                            
-00007649                            ;------------< Voice Data >-------------;
-00007649 =00007649                  TIMBAC	EQU		*
-00007649 3C                         		CNF		4,7
-0000764A 0200 0101                  		MD		2,0,0,0,1,0,1,0
-0000764E 1F1F 1F1F                  		RSAR	0,31,0,31,0,31,0,31
-00007652 000E 1910                  		D1R		0,14,25,16
-00007656 000C 000F                  		D2R		0,12,0,15
-0000765A 0FEF FFFF                  		RRL		15,0,15,14,15,15,15,15
-00007662                            
-00007662                            		even
-00007662                            
-00007662                            ;=======================================;
-00007662                            ;				   SAD					;
-00007662                            ;=======================================;
-00007662                            SAD:
-00007662 0000                       		TDW		TIMBAD,SAD				; Voice Top Address
-00007664 0101                       		DC.B	1,1						; Base,Use Channel Total
-00007666                            
-00007666 80C0                       		DC.B	80H,0C0H				; Flag,Channel
-00007668 0000                       		TDW		TABAD0,SAD				; FM 1ch Table Pointer
-0000766A 0000                       		DC.B	00H,000H				; Bias,Volm
-0000766C                            
-0000766C                            ;------------< Table Data >-------------;
-0000766C =0000766C                  TABAD0	EQU		*
-0000766C F502                       		DC.B	EV,2
-0000766E F001 01F0 08F3 E7          		DC.B	FVR,1,1,0F0H,8,CMNOIS,NOIS7
-00007675 =00007675                  TAD0	EQU		*
-00007675 B004 8002                  		DC.B	0B0H,4,NL,2
-00007679 F700 03                    		DC.B	CMREPT,0,3
-0000767C FFF8                       		JDW		TAD0
-0000767E EE                         		DC.B	CMEND
-0000767F                            
-0000767F                            ;------------< Voice Data >-------------;
-0000767F =0000767F                  TIMBAD	EQU		*
-0000767F                            
-00007680 00                         		even
-00007680                            
-00007680                            ;=======================================;
-00007680                            ;				   SAE					;
-00007680                            ;=======================================;
-00007680                            SAE:
-00007680 0000                       		TDW		TIMBAE,SAE				; Voice Top Address
-00007682 0101                       		DC.B	1,1						; Base,Use Channel Total
-00007684                            
-00007684 80C0                       		DC.B	80H,0C0H				; Flag,Channel
-00007686 0000                       		TDW		TABAE0,SAE				; FM 1ch Table Pointer
-00007688 0004                       		DC.B	00H,004H				; Bias,Volm
-0000768A                            
-0000768A                            ;------------< Table Data >-------------;
-0000768A =0000768A                  TABAE0	EQU		*
-0000768A =0000768A                  TBAE	EQU		*
-0000768A B818 B6                    		DC.B	GN4,L2,FN4
-0000768D F6                         		DC.B	CMJUMP
-0000768E FFFB                       		JDW		TBAE
-00007690                            
-00007690                            ;------------< Voice Data >-------------;
-00007690 =00007690                  TIMBAE	EQU		*
-00007690 28                         		CNF		0,5
-00007691 0370 3100                  		MD		3,0,0,7,1,3,0,0
-00007695 1F1F 5F5F                  		RSAR	0,31,0,31,1,31,1,31
-00007699 0303 0302                  		D1R		3,3,3,2
-0000769D 0102 0203                  		D2R		1,2,2,3
-000076A1 AF2F 2F5F                  		RRL		15,10,15,2,15,2,15,5
-000076A9                            
-000076AA 00                         		even
-000076AA                            
-000076AA                            ;=======================================;
-000076AA                            ;				   SAF					;
-000076AA                            ;=======================================;
-000076AA                            SAF:
-000076AA 0000                       		TDW		TIMBAF,SAF				; Voice Top Address
-000076AC 0101                       		DC.B	1,1						; Base,Use Channel Total
-000076AE                            
-000076AE 80C0                       		DC.B	080H,0C0H				; Flag,Channel
-000076B0 0000                       		TDW		TABAF0,SAF				; FM 1ch Table Pointer
-000076B2 0000                       		DC.B	00H,000H				; Bias,Volm
+0000744C BC01                       		DC.B	BN4,1
+0000744E F2                         		DC.B	SFEND
+0000744F                            
+0000744F                            ;------------< Voice Data >-------------;
+0000744F =0000744F                  TIMBA2	EQU		*
+0000744F                            	smpsVcAlgorithm     $02
+0000744F                            	smpsVcFeedback      $00
+0000744F                            	smpsVcUnusedBits    $00
+0000744F                            	smpsVcDetune        $00, $00, $00, $00
+0000744F                            	smpsVcCoarseFreq    $02, $00, $00, $00
+0000744F                            	smpsVcRateScale     $00, $00, $00, $00
+0000744F                            	smpsVcAttackRate    $1F, $00, $00, $10
+0000744F                            	smpsVcAmpMod        $00, $00, $00, $00
+0000744F                            	smpsVcDecayRate1    $1F, $00, $00, $00
+0000744F                            	smpsVcDecayRate2    $04, $00, $00, $03
+0000744F                            	smpsVcDecayLevel    $00, $00, $00, $00
+0000744F                            	smpsVcReleaseRate   $09, $00, $00, $02
+0000744F 0200 0000 0210 0000 1F00+  	smpsVcTotalLevel    $00, $7F, $7F, $5D
+00007468                            
+00007468                            		even
+00007468                            
+00007468                            ;=======================================;
+00007468                            ;				   SA3					;
+00007468                            ;=======================================;
+00007468                            SA3:
+00007468 0000                       		TDW		TIMBA3,SA3				; Voice Top Address
+0000746A 0101                       		DC.B	1,1						; Base,Use Channel Total
+0000746C                            
+0000746C 8005                       		DC.B	80H,005H				; Flag,Channel
+0000746E 0000                       		TDW		TABA30,SA3				; FM 1ch Table Pointer
+00007470 2402                       		DC.B	24H,002H				; Bias,Volm
+00007472                            
+00007472                            ;------------< Table Data >-------------;
+00007472 =00007472                  TABA30	EQU		*
+00007472 EF00                       		DC.B	FEV,0
+00007474 F068 30                    		DC.B	LFO,68H,30H
+00007477 =00007477                  TABA31	EQU		*
+00007477 F001 02F8 FF               		DC.B	FVR,1,2,0F8H,0FFH
+0000747C AD2A                       		DC.B	0ADH,2AH
+0000747E EE                         		DC.B	CMEND
+0000747F                            
+0000747F                            ;------------< Voice Data >-------------;
+0000747F =0000747F                  TIMBA3	EQU		*
+0000747F 3C                         		CNF		4,7
+00007480 0201 0201                  		MD		2,0,1,0,2,0,1,0
+00007484 1F0B 1F0B                  		RSAR	0,31,0,0BH,0,31,0,0BH
+00007488 0008 0008                  		D1R		0,8,0,8
+0000748C 010E 010E                  		D2R		1,0EH,1,0EH
+00007490 0F1F 0F1F                  		RRL		15,0,15,1,15,0,15,1
+00007498                            
+00007498                            		even
+00007498                            
+00007498                            ;=======================================;
+00007498                            ;				   SA4					;
+00007498                            ;=======================================;
+00007498                            SA4:
+00007498 0000                       		TDW		TIMBA4,SA4				; Voice Top Address
+0000749A 0101                       		DC.B	1,1						; Base,Use Channel Total
+0000749C                            
+0000749C 8005                       		DC.B	80H,5					; Flag,Channel
+0000749E 0000                       		TDW		TABA40,SA4				; FM 1ch Table Pointer
+000074A0 F400                       		DC.B	0F4H,000H				; Bias,Volm
+000074A2                            
+000074A2                            ;------------< Table Data >-------------;
+000074A2 =000074A2                  TABA40	EQU		*
+000074A2 EF00                       		DC.B	FEV,0
+000074A4 =000074A4                  TA40	EQU		*
+000074A4 A060                       		DC.B	0A0H,60h
+000074A6 EE                         		DC.B	CMEND
+000074A7                            
+000074A7                            ;------------< Voice Data >-------------;
+000074A7 =000074A7                  TIMBA4	EQU		*
+000074A7 3B                         		CNF		3,7
+000074A8 5231 5151                  		MD		2,5,1,3,1,5,1,5
+000074AC 0C0C 1212                  		RSAR	0,0CH,0,0CH,0,12H,0,12H
+000074B0 0E00 0E0C                  		D1R		0EH,0,0EH,0CH
+000074B4 0000 000E                  		D2R		0,0,0,0EH
+000074B8 4F0F 5F3F                  		RRL		15,4,15,0,15,5,15,3
+000074C0                            
+000074C0                            		even
+000074C0                            
+000074C0                            ;=======================================;
+000074C0                            ;				   SA5					;
+000074C0                            ;=======================================;
+000074C0                            SA5:
+000074C0 0000                       		TDW		TIMBA5,SA5				; Voice Top Address
+000074C2 0102                       		DC.B	1,2						; Base,Use Channel Total
+000074C4                            
+000074C4 80A0                       		DC.B	80H,0A0H				; Flag,Channel
+000074C6 0000                       		TDW		TABA50,SA5				; FM 1ch Table Pointer
+000074C8 F400                       		DC.B	0F4H,000H				; Bias,Volm
+000074CA                            
+000074CA 80C0                       		DC.B	80H,0C0H				; Flag,Channel
+000074CC 0000                       		TDW		TABA51,SA5				; FM 1ch Table Pointer
+000074CE F400                       		DC.B	0F4H,000H				; Bias,Volm
+000074D0                            
+000074D0                            ;------------< Table Data >-------------;
+000074D0 =000074D0                  TABA50	EQU		*
+000074D0 F501                       		DC.B	EV,1
+000074D2 F001 0150 17               		DC.B	FVR,1,1,50H,17H
+000074D7 9B0A                       		DC.B	09BH,0Ah
+000074D9 =000074D9                  TA50	EQU		*
+000074D9 A304 EC02                  		DC.B	0A3H,4,PVADD,2
+000074DD F700 06                    		DC.B	CMREPT,0,6
+000074E0 FFF8                       		JDW		TA50
+000074E2 EE                         		DC.B	CMEND
+000074E3 =000074E3                  TABA51	EQU		*
+000074E3 F501                       		DC.B	EV,1
+000074E5 F002 0120 10F3 E7          		DC.B	FVR,2,1,20H,10H,CMNOIS,NOIS7
+000074EC C40A                       		DC.B	0C4H,0AH
+000074EE =000074EE                  TA51	EQU		*
+000074EE C202 EC01                  		DC.B	0C2H,02H,PVADD,1
+000074F2 F700 0C                    		DC.B	CMREPT,0,12
+000074F5 FFF8                       		JDW		TA51
+000074F7 EE                         		DC.B	CMEND
+000074F8                            
+000074F8                            ;------------< Voice Data >-------------;
+000074F8 =000074F8                  TIMBA5	EQU		*
+000074F8 38                         		CNF		0,7
+000074F9 0F0F 0F0F                  		MD		15,0,15,0,15,0,15,0
+000074FD 1F1F 1F0E                  		RSAR	0,31,0,31,0,31,0,14
+00007501 0000 000A                  		D1R		0,0,0,10
+00007505 0000 0019                  		D2R		0,0,0,25
+00007509 0F0F 0F1F                  		RRL		15,0,15,0,15,0,15,1
+00007511                            
+00007512 00                         		even
+00007512                            
+00007512                            ;=======================================;
+00007512                            ;				   SA6					;
+00007512                            ;=======================================;
+00007512                            SA6:
+00007512 0000                       		TDW		TIMBA6,SA6				; Voice Top Address
+00007514 0101                       		DC.B	1,1						; Base,Use Channel Total
+00007516                            
+00007516 8005                       		DC.B	80H,5					; Flag,Channel
+00007518 0000                       		TDW		TABA60,SA6				; FM 1ch Table Pointer
+0000751A 0004                       		DC.B	00H,004H				; Bias,Volm
+0000751C                            
+0000751C                            ;------------< Table Data >-------------;
+0000751C =0000751C                  TABA60	EQU		*
+0000751C EF00                       		DC.B	FEV,0
+0000751E =0000751E                  TBA6	EQU		*
+0000751E A00E                       		DC.B	0A0h,14
+00007520 EE                         		DC.B	CMEND
+00007521                            
+00007521                            ;------------< Voice Data >-------------;
+00007521 =00007521                  TIMBA6	EQU		*
+00007521 28                         		CNF		0,5
+00007522 0370 3100                  		MD		3,0,0,7,1,3,0,0
+00007526 1F1F 5F5F                  		RSAR	0,31,0,31,1,31,1,31
+0000752A 0303 0302                  		D1R		3,3,3,2
+0000752E 0102 0203                  		D2R		1,2,2,3
+00007532 AF2F 2F5F                  		RRL		15,10,15,2,15,2,15,5
+0000753A                            
+0000753A                            		even
+0000753A                            
+0000753A                            ;=======================================;
+0000753A                            ;				   SA7					;
+0000753A                            ;=======================================;
+0000753A                            SA7:
+0000753A 0000                       		TDW		TIMBA7,SA7				; Voice Top Address
+0000753C 0101                       		DC.B	1,1						; Base,Use Channel Total
+0000753E                            
+0000753E 80C0                       		DC.B	80H,0C0H				; Flag,Channel
+00007540 0000                       		TDW		TABA70,SA7				; FM 1ch Table Pointer
+00007542 0000                       		DC.B	00H,000H				; Bias,Volm
+00007544                            
+00007544                            ;------------< Table Data >-------------;
+00007544 =00007544                  TABA70	EQU		*
+00007544 F3E7                       		DC.B	CMNOIS,NOIS7
+00007546 F001 0107 02               		DC.B	FVR,1,1,7,2
+0000754B FF00 01                    		DC.B	EXCOM,S_PSE,ON
+0000754E =0000754E                  TA70	EQU		*
+0000754E A004 E901 F700 20          		DC.B	0A0H,4,CMBIAS,1,CMREPT,0,20H
+00007555 FFF8                       		JDW		TA70
+00007557 14                         		DC.B	20
+00007558 FF00 00                    		DC.B	EXCOM,S_PSE,OFF
+0000755B EE                         		DC.B	CMEND
+0000755C                            
+0000755C                            ;------------< Voice Data >-------------;
+0000755C =0000755C                  TIMBA7	EQU		*
+0000755C                            
+0000755C                            		even
+0000755C                            
+0000755C                            ;=======================================;
+0000755C                            ;				   SA8					;
+0000755C                            ;=======================================;
+0000755C                            SA8:
+0000755C 0000                       		TDW		TIMBA8,SA8				; Voice Top Address
+0000755E 0102                       		DC.B	1,2						; Base,Use Channel Total
+00007560                            
+00007560 8004                       		DC.B	80H,4					; Flag,Channel
+00007562 0000                       		TDW		TABA81,SA8				; FM 1ch Table Pointer
+00007564 F208                       		DC.B	0F2H,008H				; Bias,Volm
+00007566                            
+00007566 8005                       		DC.B	80H,5					; Flag,Channel
+00007568 0000                       		TDW		TABA80,SA8				; FM 1ch Table Pointer
+0000756A F208                       		DC.B	0F2H,008H				; Bias,Volm
+0000756C                            
+0000756C                            ;------------< Table Data >-------------;
+0000756C =0000756C                  TABA80	EQU		*
+0000756C EF00                       		DC.B	FEV,0
+0000756E F6                         		DC.B	CMJUMP
+0000756F 0000                       		JDW		TA80
+00007571 =00007571                  TABA81	EQU		*
+00007571 EF00                       		DC.B	FEV,0
+00007573 =00007573                  TA80	EQU		*
+00007573 B002 E7AE 01E7 E9FF        		DC.B	0B0H,2,CMTAB,0AEh,1,CMTAB,CMBIAS,-1
+0000757B F700 20                    		DC.B	CMREPT,0,20H
+0000757E FFF4                       		JDW		TA80
+00007580 E920                       		DC.B	CMBIAS,20H
+00007582 =00007582                  TA81	EQU		*
+00007582 9002 8001                  		DC.B	090H,2,NL,1
+00007586 F700 05                    		DC.B	CMREPT,0,5
+00007589 FFF8                       		JDW		TA81
+0000758B EE                         		DC.B	CMEND
+0000758C                            
+0000758C                            ;------------< Voice Data >-------------;
+0000758C =0000758C                  TIMBA8	EQU		*
+0000758C                            ;-----------< Voice Data 0 >------------;
+0000758C 3B                         		CNF		3,7
+0000758D 3C39 3031                  		MD		12,3,9,3,0,3,1,3
+00007591 DF1F 1FDF                  		RSAR	3,31,0,31,0,31,3,31
+00007595 0405 0401                  		D1R		4,5,4,1
+00007599 0404 0402                  		D2R		4,4,4,2
+0000759D FF0F 1FAF                  		RRL		15,15,15,0,15,1,15,10
+000075A5                            ;-----------< Voice Data 1 >------------;
+000075A5 3D                         		CNF		5,7
+000075A6 0102 0001                  		MD		1,0,2,0,0,0,1,0
+000075AA 1F0E 0E0E                  		RSAR	0,31,0,14,0,14,0,14
+000075AE 071F 1F1F                  		D1R		7,31,31,31
+000075B2 0000 0000                  		D2R		0,0,0,0
+000075B6 1F0F 0F0F                  		RRL		15,1,15,0,15,0,15,0
+000075BE                            
+000075BE                            		even
+000075BE                            
+000075BE                            ;=======================================;
+000075BE                            ;				   SA9					;
+000075BE                            ;=======================================;
+000075BE                            SA9:
+000075BE 0000                       		TDW		TIMBA9,SA9				; Voice Top Address
+000075C0 0101                       		DC.B	1,1						; Base,Use Channel Total
+000075C2                            
+000075C2 8005                       		DC.B	80H,5					; Flag,Channel
+000075C4 0000                       		TDW		TABA90,SA9				; FM 1ch Table Pointer
+000075C6 0006                       		DC.B	00H,006H				; Bias,Volm
+000075C8                            
+000075C8                            ;------------< Table Data >-------------;
+000075C8 =000075C8                  TABA90	EQU		*
+000075C8 EF00                       		DC.B	FEV,0
+000075CA 8001                       		DC.B	NL,1
+000075CC F000 01D0 FF               		DC.B	FVR,0,1,0D0H,0FFH
+000075D1 C50F                       		DC.B	0C5H,0FH
+000075D3 EE                         		DC.B	CMEND
+000075D4                            
+000075D4                            ;------------< Voice Data >-------------;
+000075D4 =000075D4                  TIMBA9	EQU		*
+000075D4 38                         		CNF		0,7
+000075D5 0F0F 0F0F                  		MD		15,0,15,0,15,0,15,0
+000075D9 1F1F 1F0E                  		RSAR	0,31,0,31,0,31,0,14
+000075DD 0000 0011                  		D1R		0,0,0,11H
+000075E1 0000 0013                  		D2R		0,0,0,13H
+000075E5 0F0F 0F1F                  		RRL		15,0,15,0,15,0,15,1
+000075ED                            
+000075EE 00                         		even
+000075EE                            
+000075EE                            ;=======================================;
+000075EE                            ;				   SAA					;
+000075EE                            ;=======================================;
+000075EE                            SAA:
+000075EE 0000                       		TDW		TIMBAA,SAA				; Voice Top Address
+000075F0 0101                       		DC.B	1,1						; Base,Use Channel Total
+000075F2                            
+000075F2 80C0                       		DC.B	80H,0C0H				; Flag,Channel
+000075F4 0000                       		TDW		TABAA0,SAA				; FM 1ch Table Pointer
+000075F6 0001                       		DC.B	00H,001H				; Bias,Volm
+000075F8                            
+000075F8                            ;------------< Table Data >-------------;
+000075F8 =000075F8                  TABAA0	EQU		*
+000075F8 F001 01F0 08F3 E7          		DC.B	FVR,1,1,0F0H,8,CMNOIS,NOIS7
+000075FF B004 CA04                  		DC.B	0B0H,4,0CAH,4
+00007603 =00007603                  TAA0	EQU		*
+00007603 C001 EC01 F700 08          		DC.B	0C0H,1,PVADD,1,CMREPT,0,8
+0000760A FFF8                       		JDW		TAA0
+0000760C EE                         		DC.B	CMEND
+0000760D                            
+0000760D                            ;------------< Voice Data >-------------;
+0000760D =0000760D                  TIMBAA	EQU		*
+0000760D                            
+0000760E 00                         		even
+0000760E                            
+0000760E                            ;=======================================;
+0000760E                            ;				   SAB					;
+0000760E                            ;=======================================;
+0000760E                            SAB:
+0000760E 0000                       		TDW		TIMBAB,SAB				; Voice Top Address
+00007610 0101                       		DC.B	1,1						; Base,Use Channel Total
+00007612                            
+00007612 80C0                       		DC.B	80H,0C0H				; Flag,Channel
+00007614 0000                       		TDW		TABAB0,SAB				; FM 1ch Table Pointer
+00007616 0000                       		DC.B	00H,000H				; Bias,Volm
+00007618                            
+00007618                            ;------------< Table Data >-------------;
+00007618 =00007618                  TABAB0	EQU		*
+00007618 F501                       		DC.B	EV,1
+0000761A F003 0120 08F3 E7          		DC.B	FVR,3,1,20H,8,CMNOIS,NOIS7
+00007621 A203 A604                  		DC.B	0A2H,3,0A6H,4
+00007625 =00007625                  TAB0	EQU		*
+00007625 B209 E902 EC03 F700 02     		DC.B	0B2h,9,CMBIAS,2,PVADD,3,CMREPT,0,2
+0000762E FFF6                       		JDW		TAB0
+00007630 EE                         		DC.B	CMEND
+00007631                            
+00007631                            ;------------< Voice Data >-------------;
+00007631 =00007631                  TIMBAB	EQU		*
+00007631                            
+00007632 00                         		even
+00007632                            
+00007632                            ;=======================================;
+00007632                            ;				   SAC					;
+00007632                            ;=======================================;
+00007632                            SAC:
+00007632 0000                       		TDW		TIMBAC,SAC				; Voice Top Address
+00007634 0101                       		DC.B	1,1						; Base,Use Channel Total
+00007636                            
+00007636 8005                       		DC.B	80H,05H					; Flag,Channel
+00007638 0000                       		TDW		TABAC0,SAC				; FM 1ch Table Pointer
+0000763A 0002                       		DC.B	000H,002H				; Bias,Volm
+0000763C                            
+0000763C                            ;------------< Table Data >-------------;
+0000763C =0000763C                  TABAC0	EQU		*
+0000763C EF00                       		DC.B	FEV,0
+0000763E 8D2C                       		DC.B	08dH,02cH
+00007640 EE                         		DC.B	CMEND
+00007641                            
+00007641                            ;------------< Voice Data >-------------;
+00007641 =00007641                  TIMBAC	EQU		*
+00007641 3C                         		CNF		4,7
+00007642 0200 0101                  		MD		2,0,0,0,1,0,1,0
+00007646 1F1F 1F1F                  		RSAR	0,31,0,31,0,31,0,31
+0000764A 000E 1910                  		D1R		0,14,25,16
+0000764E 000C 000F                  		D2R		0,12,0,15
+00007652 0FEF FFFF                  		RRL		15,0,15,14,15,15,15,15
+0000765A                            
+0000765A                            		even
+0000765A                            
+0000765A                            ;=======================================;
+0000765A                            ;				   SAD					;
+0000765A                            ;=======================================;
+0000765A                            SAD:
+0000765A 0000                       		TDW		TIMBAD,SAD				; Voice Top Address
+0000765C 0101                       		DC.B	1,1						; Base,Use Channel Total
+0000765E                            
+0000765E 80C0                       		DC.B	80H,0C0H				; Flag,Channel
+00007660 0000                       		TDW		TABAD0,SAD				; FM 1ch Table Pointer
+00007662 0000                       		DC.B	00H,000H				; Bias,Volm
+00007664                            
+00007664                            ;------------< Table Data >-------------;
+00007664 =00007664                  TABAD0	EQU		*
+00007664 F502                       		DC.B	EV,2
+00007666 F001 01F0 08F3 E7          		DC.B	FVR,1,1,0F0H,8,CMNOIS,NOIS7
+0000766D =0000766D                  TAD0	EQU		*
+0000766D B004 8002                  		DC.B	0B0H,4,NL,2
+00007671 F700 03                    		DC.B	CMREPT,0,3
+00007674 FFF8                       		JDW		TAD0
+00007676 EE                         		DC.B	CMEND
+00007677                            
+00007677                            ;------------< Voice Data >-------------;
+00007677 =00007677                  TIMBAD	EQU		*
+00007677                            
+00007678 00                         		even
+00007678                            
+00007678                            ;=======================================;
+00007678                            ;				   SAE					;
+00007678                            ;=======================================;
+00007678                            SAE:
+00007678 0000                       		TDW		TIMBAE,SAE				; Voice Top Address
+0000767A 0101                       		DC.B	1,1						; Base,Use Channel Total
+0000767C                            
+0000767C 80C0                       		DC.B	80H,0C0H				; Flag,Channel
+0000767E 0000                       		TDW		TABAE0,SAE				; FM 1ch Table Pointer
+00007680 0004                       		DC.B	00H,004H				; Bias,Volm
+00007682                            
+00007682                            ;------------< Table Data >-------------;
+00007682 =00007682                  TABAE0	EQU		*
+00007682 =00007682                  TBAE	EQU		*
+00007682 B818 B6                    		DC.B	GN4,L2,FN4
+00007685 F6                         		DC.B	CMJUMP
+00007686 FFFB                       		JDW		TBAE
+00007688                            
+00007688                            ;------------< Voice Data >-------------;
+00007688 =00007688                  TIMBAE	EQU		*
+00007688 28                         		CNF		0,5
+00007689 0370 3100                  		MD		3,0,0,7,1,3,0,0
+0000768D 1F1F 5F5F                  		RSAR	0,31,0,31,1,31,1,31
+00007691 0303 0302                  		D1R		3,3,3,2
+00007695 0102 0203                  		D2R		1,2,2,3
+00007699 AF2F 2F5F                  		RRL		15,10,15,2,15,2,15,5
+000076A1                            
+000076A2 00                         		even
+000076A2                            
+000076A2                            ;=======================================;
+000076A2                            ;				   SAF					;
+000076A2                            ;=======================================;
+000076A2                            SAF:
+000076A2 0000                       		TDW		TIMBAF,SAF				; Voice Top Address
+000076A4 0101                       		DC.B	1,1						; Base,Use Channel Total
+000076A6                            
+000076A6 80C0                       		DC.B	080H,0C0H				; Flag,Channel
+000076A8 0000                       		TDW		TABAF0,SAF				; FM 1ch Table Pointer
+000076AA 0000                       		DC.B	00H,000H				; Bias,Volm
+000076AC                            
+000076AC                            ;------------< Table Data >-------------;
+000076AC =000076AC                  TABAF0	EQU		*
+000076AC F3E3                       		DC.B	CMNOIS,NOIS3
+000076AE =000076AE                  TAF0	EQU		*
+000076AE B818 B6                    		DC.B	GN4,L2,FN4
+000076B1 F6                         		DC.B	CMJUMP
+000076B2 FFFB                       		JDW		TAF0
 000076B4                            
-000076B4                            ;------------< Table Data >-------------;
-000076B4 =000076B4                  TABAF0	EQU		*
-000076B4 F3E3                       		DC.B	CMNOIS,NOIS3
-000076B6 =000076B6                  TAF0	EQU		*
-000076B6 B818 B6                    		DC.B	GN4,L2,FN4
-000076B9 F6                         		DC.B	CMJUMP
-000076BA FFFB                       		JDW		TAF0
-000076BC                            
-000076BC                            ;------------< Voice Data >-------------;
-000076BC =000076BC                  TIMBAF	EQU		*
-000076BC 3D                         		CNF		5,7
-000076BD 0011 1111                  		MD		0,0,1,1,1,1,1,1
-000076C1 DF0D 0D0D                  		RSAR	3,31,0,0DH,0,0DH,0,0DH
-000076C5 0110 1010                  		D1R		1,10H,10H,10H
-000076C9 0112 1212                  		D2R		1,12H,12H,12H
-000076CD 0F1F 1F1F                  		RRL		15,0,15,1,15,1,15,1
-000076D5                            
-000076D5                            ; vim: set ft=asm68k sw=4 ts=4 noet:
-000076D5                            ; vim: set ft=asm68k sw=4 ts=4 noet:
-000076D6 00                         		even
-000076D6                            
-000076D6                            
-000076D6                            		
-000076D6                            	ALIGN	$2000
+000076B4                            ;------------< Voice Data >-------------;
+000076B4 =000076B4                  TIMBAF	EQU		*
+000076B4 3D                         		CNF		5,7
+000076B5 0011 1111                  		MD		0,0,1,1,1,1,1,1
+000076B9 DF0D 0D0D                  		RSAR	3,31,0,0DH,0,0DH,0,0DH
+000076BD 0110 1010                  		D1R		1,10H,10H,10H
+000076C1 0112 1212                  		D2R		1,12H,12H,12H
+000076C5 0F1F 1F1F                  		RRL		15,0,15,1,15,1,15,1
+000076CD                            
+000076CD                            ; vim: set ft=asm68k sw=4 ts=4 noet:
+000076CD                            ; vim: set ft=asm68k sw=4 ts=4 noet:
+000076CE 00                         		even
+000076CE                            
+000076CE                            
+000076CE                            		
+000076CE                            	ALIGN	$2000
 00008000                            		include	"ErrorHandler.asm"
 00008000                            
 00008000                            ; ===============================================================

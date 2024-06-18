@@ -104,6 +104,123 @@ RRL		MACRO	R1,DL1,R2,DL2,R3,DL3,R4,DL4
 		DC.B	\R3+\DL3*10H,\R4+\DL4*10H
 		ENDM
 
+; ---------------------------------------------------------------------------------------------
+; Macros for FM instruments
+; Voices - Feedback
+smpsVcFeedback macro val
+vcFeedback set \val
+	endm
+
+; Voices - Algorithm
+smpsVcAlgorithm macro val
+vcAlgorithm set \val
+	endm
+
+smpsVcUnusedBits macro val
+vcUnusedBits set \val
+	endm
+
+; Voices - Detune
+smpsVcDetune macro op1,op2,op3,op4
+vcDT1 set \op1
+vcDT2 set \op2
+vcDT3 set \op3
+vcDT4 set \op4
+	endm
+
+; Voices - Coarse-Frequency
+smpsVcCoarseFreq macro op1,op2,op3,op4
+vcCF1 set \op1
+vcCF2 set \op2
+vcCF3 set \op3
+vcCF4 set \op4
+	endm
+
+; Voices - Rate Scale
+smpsVcRateScale macro op1,op2,op3,op4
+vcRS1 set \op1
+vcRS2 set \op2
+vcRS3 set \op3
+vcRS4 set \op4
+	endm
+
+; Voices - Attack Rate
+smpsVcAttackRate macro op1,op2,op3,op4
+vcAR1 set \op1
+vcAR2 set \op2
+vcAR3 set \op3
+vcAR4 set \op4
+	endm
+
+; Voices - Amplitude Modulation
+smpsVcAmpMod macro op1,op2,op3,op4
+vcAM1 set \op1
+vcAM2 set \op2
+vcAM3 set \op3
+vcAM4 set \op4
+	endm
+
+; Voices - First Decay Rate
+smpsVcDecayRate1 macro op1,op2,op3,op4
+vcD1R1 set \op1
+vcD1R2 set \op2
+vcD1R3 set \op3
+vcD1R4 set \op4
+	endm
+
+; Voices - Second Decay Rate
+smpsVcDecayRate2 macro op1,op2,op3,op4
+vcD2R1 set \op1
+vcD2R2 set \op2
+vcD2R3 set \op3
+vcD2R4 set \op4
+	endm
+
+; Voices - Decay Level
+smpsVcDecayLevel macro op1,op2,op3,op4
+vcDL1 set \op1
+vcDL2 set \op2
+vcDL3 set \op3
+vcDL4 set \op4
+	endm
+
+; Voices - Release Rate
+smpsVcReleaseRate macro op1,op2,op3,op4
+vcRR1 set \op1
+vcRR2 set \op2
+vcRR3 set \op3
+vcRR4 set \op4
+	endm
+
+; Voices - Total Level
+smpsVcTotalLevel macro op1,op2,op3,op4
+vcTL1 set \op1
+vcTL2 set \op2
+vcTL3 set \op3
+vcTL4 set \op4
+	dc.b	(vcUnusedBits<<6)+(vcFeedback<<3)+vcAlgorithm
+;   0     1     2     3     4     5     6     7
+;%1000,%1000,%1000,%1000,%1010,%1110,%1110,%1111
+vcTLMask4 set ((vcAlgorithm=7)<<7)
+vcTLMask3 set ((vcAlgorithm>=4)<<7)
+vcTLMask2 set ((vcAlgorithm>=5)<<7)
+vcTLMask1 set $80
+;	dc.b	(vcDT4<<4)+vcCF4 ,(vcDT3<<4)+vcCF3 ,(vcDT2<<4)+vcCF2 ,(vcDT1<<4)+vcCF1
+;	dc.b	(vcRS4<<6)+vcAR4 ,(vcRS3<<6)+vcAR3 ,(vcRS2<<6)+vcAR2 ,(vcRS1<<6)+vcAR1
+;	dc.b	(vcAM4<<5)+vcD1R4,(vcAM3<<5)+vcD1R3,(vcAM2<<5)+vcD1R2,(vcAM1<<5)+vcD1R1
+;	dc.b	vcD2R4           ,vcD2R3           ,vcD2R2           ,vcD2R1
+;	dc.b	(vcDL4<<4)+vcRR4 ,(vcDL3<<4)+vcRR3 ,(vcDL2<<4)+vcRR2 ,(vcDL1<<4)+vcRR1
+;	dc.b	vcTL4|vcTLMask4  ,vcTL3|vcTLMask3  ,vcTL2|vcTLMask2  ,vcTL1|vcTLMask1
+	dc.b	(vcDT4<<4)+vcCF4,(vcDT3<<4)+vcCF3,(vcDT2<<4)+vcCF2,(vcDT1<<4)+vcCF1
+	dc.b	(vcRS4<<6)+vcAR4,(vcRS3<<6)+vcAR3,(vcRS2<<6)+vcAR2,(vcRS1<<6)+vcAR1
+	dc.b	(vcAM4<<5)+vcD1R4,(vcAM3<<5)+vcD1R3,(vcAM2<<5)+vcD1R2,(vcAM1<<5)+vcD1R1
+	dc.b	vcD2R4,vcD2R3,vcD2R2,vcD2R1
+	dc.b	(vcDL4<<4)+vcRR4,(vcDL3<<4)+vcRR3,(vcDL2<<4)+vcRR2,(vcDL1<<4)+vcRR1
+	dc.b	vcTL4|vcTLMask4,vcTL3|vcTLMask3,vcTL2|vcTLMask2,vcTL1|vcTLMask1
+	endm
+
+
+
 ;=======================================;
 ;			  END OF FILE				;
 ;=======================================;
