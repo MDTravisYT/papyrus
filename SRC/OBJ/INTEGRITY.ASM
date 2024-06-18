@@ -62,5 +62,4 @@ INTEGRITY:
 		addi.w	#1,D1
 	@apply:
 		add.w	D1,OBJ.X(A0)
-		JSR		_OBJECTDISPLAY
-		RTS
+		JMP		_OBJECTDISPLAY

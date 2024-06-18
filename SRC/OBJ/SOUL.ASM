@@ -53,8 +53,7 @@ SOUL:
 		rol.l	#8,d1
 		rol.l	#8,d1
 		add.w	D1,OBJ.Y(A0)
-		JSR		_OBJECTDISPLAY
-		RTS
+		JMP		_OBJECTDISPLAY
 		
 MAP_SOUL:
 		INCBIN	"SRC/OBJ/SOUL.MAP"
