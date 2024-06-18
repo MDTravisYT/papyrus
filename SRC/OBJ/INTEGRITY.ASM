@@ -1,3 +1,5 @@
+INTEG_UPHOLD	=	OBJ.FIELD_3F
+
 INTEGRITY:
 		MOVEQ	#0,	D0
 		MOVE.B	OBJ.ACTION(A0),	D0
@@ -21,10 +23,19 @@ INTEGRITY:
 		
 	@fall:
 		JSR		OBJECTFALL
+		MOVE.B	JOYPAD,	D0
+		btst	#0,	INTEG_UPHOLD(A0)
+		bne.s	@chkfloor
+		btst	#bitUp,D0
+		bne.s	@chkfloor
+		move.w	#0,	OBJ.YSPEED(A0)	;	clear upwards movement if up is no longer held
+		bset	#0,	INTEG_UPHOLD(A0)
+	@chkfloor:
 		cmpi.w	#$A8,	OBJ.Y(A0)	;	bottom of playfield
 		blo.s	@contfall
 		ADDQ.B	#2,			OBJ.ACTION(A0)
 		move.w	#$A8,	OBJ.Y(A0)
+		bclr	#0,	INTEG_UPHOLD(A0)
 	@contfall:
 		
 	@ground:
