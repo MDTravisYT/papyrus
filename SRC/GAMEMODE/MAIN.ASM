@@ -37,6 +37,7 @@ MAIN:
 		MOVE.L	#$48080002,	TEXTLOG
 		MOVE.L	#$48080002,	NEWLINE_MEMO
 		MOVE.W	#$0,	TEXTPROG
+		MOVE.L	#TST,	TEXTLOC
 		
 	@loop:
 		MOVE.B	#1,	(VBLANKCMD).W
@@ -46,7 +47,7 @@ MAIN:
 		
 		BTST	#0,	TIMER+1
 		BEQ.S	@skipDialogue
-		LEA		TST,	A0
+		MOVE.L	TEXTLOC,	A0
 		ADD.W	TEXTPROG,	A0
 		CMPI.B	#1,	(A0)
 		BNE.S	@no_newline
@@ -85,7 +86,7 @@ SKIP_BLIP:
 	DC.B	' ',$FF
 
 TST:
-	DC.B	'Boner.',1
+	DC.B	'Boner...',1
 	dc.b	'This should a new line!',1
 	dc.b	'ooooo',$FF
 	TSTEND:
