@@ -38,6 +38,7 @@ MAIN:
 		MOVE.L	#$48080002,	NEWLINE_MEMO
 		MOVE.W	#$0,	TEXTPROG
 		MOVE.L	#TST,	TEXTLOC
+		move.w	#0,	TIMER
 		
 	@loop:
 		MOVE.B	#1,	(VBLANKCMD).W
@@ -45,8 +46,8 @@ MAIN:
 		JSR		RUNOBJECTS
 		JSR		PROCESSSPRITES
 		
-		BTST	#0,	TIMER+1
-		BEQ.S	@skipDialogue
+		tst.b	TIMER+1
+		bne.W	@skipDialogue
 		MOVE.L	TEXTLOC,	A0
 		ADD.W	TEXTPROG,	A0
 		CMPI.B	#1,	(A0)
@@ -65,9 +66,17 @@ MAIN:
 		ADD.B	(A0)+,	D0
 		MOVE.W	D0,	($C00000)
 		add.l	#$20000,TEXTLOG
+		move.b	#2,	TIMER+1
 		add.w	#1,	TEXTPROG
 		cmpi.b	#' ',	D0
 		beq.s	@skipDialogue
+		cmpi.b	#'.',	D0	;	TODO: optimize this into a table
+		beq.s	@extnd
+		cmpi.b	#'!',	D0
+		bne.s	@sound
+	@extnd:
+		move.b	#8,	TIMER+1
+	@sound:
 		move.b	#$A2,	D0
 		jsr		PlaySound
 	@skipDialogue:
@@ -84,6 +93,8 @@ TXTART:	INCBIN		"ART/FONT.UNC"
 
 SKIP_BLIP:
 	DC.B	' ',$FF
+SLOW_BLIP:
+	DC.B	'.!?',$FF
 
 TST:
 	DC.B	'Boner...',1
