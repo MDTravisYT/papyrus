@@ -9,6 +9,15 @@ MAIN:
 		MOVE.W	(A0)+,	(A1)
 		DBF		D0,	@LOADGFX
 		
+		move.l	#VRAMWRITE,	(VDPCTRL)
+		LEA		TXTART,		A0
+		LEA		VDPDATA,	A1
+		WRITEVRAM	$2000
+		MOVE.W	#(TXTART_END-TXTART)/2-1,		D0
+	@LOADGFX2:
+		MOVE.W	(A0)+,	(A1)
+		DBF		D0,	@LOADGFX2
+		
 		LEA		BATTLEPAL,	A0
 		LEA		PALFADEBUFFER,	A1
 		MOVE.B	#16,	D0
@@ -26,7 +35,7 @@ MAIN:
 		JSR		PALFADEIN
 		
 		MOVE.L	#$48080002,	TEXTLOG
-		MOVE.W	#10*2,	TIMER
+		MOVE.W	#$0,	TEXTPROG
 		
 	@loop:
 		MOVE.B	#1,	(VBLANKCMD).W
@@ -34,23 +43,32 @@ MAIN:
 		JSR		RUNOBJECTS
 		JSR		PROCESSSPRITES
 		
-		TST.W	TIMER
-		BEQ.S	@skipDialogue
 		BTST	#0,	TIMER+1
 		BEQ.S	@skipDialogue
 		LEA		TST,	A0
 		ADD.W	TEXTPROG,	A0
+		CMPI.B	#1,	(A0)
+		BNE.S	@no_newline
+		MOVE.L	#$49080002,	TEXTLOG
+		ADDI.W	#1,	TEXTPROG
+		bra.w	@loop
+	@no_newline:
+		CMPI.B	#$FF,	(A0)
+		BNE.S	@noEnd
+		bra.w	@loop
+	@noEnd:
 		MOVE.L	TEXTLOG,	(VDPCTRL)
-		MOVE.B	#10-1,	D1
-		MOVE.W	#$0,	D0
+		MOVE.W	#$100,	D0
 		ADD.B	(A0)+,	D0
 		MOVE.W	D0,	($C00000)
 		add.l	#$20000,TEXTLOG
 		add.w	#1,	TEXTPROG
+		cmpi.b	#' ',	D0
+		beq.s	@skipDialogue
 		move.b	#$A2,	D0
 		jsr		PlaySound
 	@skipDialogue:
-		bra.s	@loop
+		bra.w	@loop
 		rts
 		
 BATTLEPAL:	INCBIN		"PAL/BATTLE.PAL"
@@ -58,7 +76,10 @@ BATTLEMAP:	INCBIN		"MAP/BATTLE.MAP"
 BOARDMAP:	INCBIN		"MAP/BOARD.MAP"
 BATTLEART:	INCBIN		"ART/BATTLE.UNC"
 	BATTLEART_END:
+TXTART:	INCBIN		"ART/FONT.UNC"
+	TXTART_END:
 
 TST:
-	DC.B	1,2,3,4,5,6,7,8,9,10
+	DC.B	'Boner.',1,'This should a new line!',$FF
+	TSTEND:
 	even
