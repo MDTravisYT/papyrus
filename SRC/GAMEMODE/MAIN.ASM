@@ -72,7 +72,11 @@ MAIN:
 		beq.s	@skipDialogue
 		cmpi.b	#'.',	D0	;	TODO: optimize this into a table
 		beq.s	@extnd
+		cmpi.b	#',',	D0
+		beq.s	@extnd
 		cmpi.b	#'!',	D0
+		beq.s	@extnd
+		cmpi.b	#'?',	D0
 		bne.s	@sound
 	@extnd:
 		move.b	#8,	TIMER+1
@@ -94,7 +98,10 @@ TXTART:	INCBIN		"ART/FONT.UNC"
 SKIP_BLIP:
 	DC.B	' ',$FF
 SLOW_BLIP:
-	DC.B	'.!?',$FF
+	DC.B	'.,!?',$FF
+	
+BLANKTXT:
+	DC.B	$FF
 
 TST:
 	DC.B	'You see a trousle of bones',1

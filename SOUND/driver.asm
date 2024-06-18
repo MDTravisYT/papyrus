@@ -70,13 +70,13 @@ ptr_musend
 ; ---------------------------------------------------------------------------
 ; SoundTypes:
 SoundPriorities:
-		dc.b     $90,$90,$90,$90,$90,$90,$90,$90,$90,$90,$90,$90,$90,$90,$90	; $81
-		dc.b $90,$90,$90,$90,$90,$90,$90,$90,$90,$90,$90,$90,$90,$90,$90,$90	; $90
-		dc.b $80,$70,$70,$70,$70,$70,$70,$70,$70,$70,$68,$70,$70,$70,$60,$70	; $A0
-		dc.b $70,$60,$70,$60,$70,$70,$70,$70,$70,$70,$70,$70,$70,$70,$70,$7F	; $B0
-		dc.b $60,$70,$70,$70,$70,$70,$70,$70,$70,$70,$70,$70,$70,$70,$70,$70	; $C0
+		dc.b     $80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80	; $81
+		dc.b $80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80	; $80
+		dc.b $80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$68,$80,$80,$80,$60,$80	; $A0
+		dc.b $80,$60,$80,$60,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80	; $B0
+		dc.b $60,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80	; $C0
 		dc.b $80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80,$80	; $D0
-		dc.b $90,$90,$90,$90,$90                                            	; $E0
+		dc.b $80,$80,$80,$80,$80                                            	; $E0
 
 ; ---------------------------------------------------------------------------
 ; Subroutine to update music more than once per frame
@@ -814,7 +814,7 @@ Sound_PlayBGM:
 ; loc_7216E:
 @sfxpsgchannel:
 		lsr.b	#3,d0		; Convert to index
-; loc_72170:
+; loc_72180:
 @gotchannelindex:
 		lea	SFX_BGMChannelRAM(pc),a0
 		movea.l	(a0,d0.w),a0
@@ -1324,7 +1324,7 @@ StopAllSound:
 		movea.l	a6,a0
 		; DANGER! This should be clearing all variables and track data, but misses the last $10 bytes of v_spcsfx_psg3_track.
 		; Remove the '-$10' to fix this.
-		move.w	#((v_spcsfx_track_ram_end-v_startofvariables-$10)/4)-1,d0	; Clear $390 bytes: all variables and most track data
+		move.w	#((v_spcsfx_track_ram_end-v_startofvariables-$10)/4)-1,d0	; Clear $380 bytes: all variables and most track data
 ; loc_725B6:
 @clearramloop:
 		clr.l	(a0)+
@@ -1523,7 +1523,7 @@ FMNoteOff:
 		bne.s	locret_72714	; Return if yes
 		btst	#2,(a5)		; Is SFX overriding? (TrackPlaybackControl)
 		bne.s	locret_72714	; Return if yes
-; loc_7270A:
+; loc_7280A:
 SendFMNoteOff:
 		moveq	#$28,d0		; Note on/off register
 		move.b	TrackVoiceControl(a5),d1 ; Note off to this channel
@@ -1630,7 +1630,7 @@ WriteFMII:
 ; notes to wrap-around (the note below the lowest note will be the highest
 ; note). It's important to keep this in mind when porting buggy songs.
 ; ---------------------------------------------------------------------------
-; word_72790: FM_Notes:
+; word_72780: FM_Notes:
 FMFrequencies:
 		dc.w $025E,$0284,$02AB,$02D3,$02FE,$032D,$035C,$038F,$03C5,$03FF,$043C,$047C
 		dc.w $0A5E,$0A84,$0AAB,$0AD3,$0AFE,$0B2D,$0B5C,$0B8F,$0BC5,$0BFF,$0C3C,$0C7C
@@ -1677,7 +1677,7 @@ PSGDoNext:
 		jsr	CoordFlag(pc)
 		bra.s	@noteloop
 ; ===========================================================================
-; loc_72890:
+; loc_72880:
 @gotnote:
 		tst.b	d5		; Is it a note?
 		bpl.s	@gotduration	; Branch if not
@@ -1741,7 +1741,7 @@ PSGUpdateFreq:
 		cmpi.b	#$E0,d0		; Is it a noise channel?
 		bne.s	@notnoise	; Branch if not
 		move.b	#$C0,d0		; Use PSG 3 channel bits
-; loc_72904:
+; loc_72804:
 @notnoise:
 		move.w	d6,d1
 		andi.b	#$F,d1		; Low nibble of frequency
@@ -2263,7 +2263,7 @@ FMInstrumentOperatorTable:
 		dc.b  $68		; Amplitude modulation/first decay rate operator 3
 		dc.b  $64		; Amplitude modulation/first decay rate operator 2
 		dc.b  $6C		; Amplitude modulation/first decay rate operator 4
-		dc.b  $70		; Secondary decay rate operator 1
+		dc.b  $80		; Secondary decay rate operator 1
 		dc.b  $78		; Secondary decay rate operator 3
 		dc.b  $74		; Secondary decay rate operator 2
 		dc.b  $7C		; Secondary decay rate operator 4
