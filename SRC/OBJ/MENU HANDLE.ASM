@@ -17,6 +17,10 @@ MENU_HANDLE:
 		MOVE.B	#4,			OBJ.RENDERFLAGS(A0)
 		MOVE.B	#2,			OBJ.PRIORITY(A0)
 		MOVE.B	#2,			OBJ.FRAME(A0)
+	;	2	=	FIGHT
+	;	3	=	ACT
+	;	4	=	ITEM
+	;	5	=	MERCY
 
 	@do:
 		MOVEQ	#0,	D0
@@ -36,4 +40,12 @@ MENU_HANDLE:
 		jsr		PlaySound
 	@apply:
 		add.b	D1,OBJ.FRAME(A0)
+		cmpi.b	#6,	OBJ.FRAME(A0)
+		bne.s	@contchk
+		move.b	#2,	OBJ.FRAME(A0)
+	@contchk:
+		cmpi.b	#1,	OBJ.FRAME(A0)
+		bne.s	@allgood
+		move.b	#5,	OBJ.FRAME(A0)
+	@allgood:
 		jmp		_OBJECTDISPLAY
