@@ -103,16 +103,24 @@ SLOW_BLIP:
 	
 BLANKTXT:
 	DC.B	$FF
-
+	
 TST:
 	DC.B	'You see a trousle of bones',1
 	dc.b	'blocking your way. Very boney.'
 	DC.B	$FF
-	TSTEND:
 	even
 
 TST2:
 	DC.B	'NYEH HEH HEH!'
 	DC.B	$FF
-	TST2END:
+	even
+
+TST3:
+	DC.B	"YOU'RE BLUE NOW.",1,"THAT'S MY ATTACK!",1,"NYEH HEH HEH HEH HEH HEH HEH HEH HEH!!!"
+	DC.B	$FF
+	even
+	
+
+TXTERR:
+	DC.B	'Unexpected move set'
 	even
