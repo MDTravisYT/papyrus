@@ -39,7 +39,7 @@ MAIN:
 		MOVE.W	#$0,	TEXTPROG			;	memorize how far into a script it's read
 		MOVE.L	#TST,	TEXTLOC				;	where in ROM the script is read
 		MOVE.W	#0,		TIMER				;	reset timer (makes the dialogue begin later if set other than 0)
-		MOVE.B	#$A3,	TEXTSND				;	sound byte
+		MOVE.B	#$A2,	TEXTSND				;	sound byte
 		
 	@loop:
 		MOVE.B	#1,	(VBLANKCMD).W
@@ -109,4 +109,10 @@ TST:
 	dc.b	'blocking your way. Very boney.'
 	DC.B	$FF
 	TSTEND:
+	even
+
+TST2:
+	DC.B	'NYEH HEH HEH!'
+	DC.B	$FF
+	TST2END:
 	even
