@@ -34,11 +34,12 @@ MAIN:
 		
 		JSR		PALFADEIN
 		
-		MOVE.L	#$48080002,	TEXTLOG
-		MOVE.L	#$48080002,	NEWLINE_MEMO
-		MOVE.W	#$0,	TEXTPROG
-		MOVE.L	#TST,	TEXTLOC
-		move.w	#0,	TIMER
+		MOVE.L	#$48080002,	TEXTLOG			;	where on screen the text should print
+		MOVE.L	#$48080002,	NEWLINE_MEMO	;	memorize where a new line starts
+		MOVE.W	#$0,	TEXTPROG			;	memorize how far into a script it's read
+		MOVE.L	#TST,	TEXTLOC				;	where in ROM the script is read
+		MOVE.W	#0,		TIMER				;	reset timer (makes the dialogue begin later if set other than 0)
+		MOVE.B	#$A3,	TEXTSND				;	sound byte
 		
 	@loop:
 		MOVE.B	#1,	(VBLANKCMD).W
@@ -81,7 +82,7 @@ MAIN:
 	@extnd:
 		move.b	#8,	TIMER+1
 	@sound:
-		move.b	#$A2,	D0
+		move.b	TEXTSND,	D0
 		jsr		PlaySound
 	@skipDialogue:
 		bra.w	@loop

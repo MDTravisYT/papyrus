@@ -123,28 +123,35 @@ SA3:
 		TDW		TIMBA3,SA3				; Voice Top Address
 		DC.B	1,1						; Base,Use Channel Total
 
-		DC.B	80H,005H				; Flag,Channel
+		DC.B	80H,5					; Flag,Channel
 		TDW		TABA30,SA3				; FM 1ch Table Pointer
-		DC.B	24H,002H				; Bias,Volm
+		DC.B	00H,000H				; Bias,Volm
 
 ;------------< Table Data >-------------;
 TABA30	EQU		*
 		DC.B	FEV,0
-		DC.B	LFO,68H,30H
-TABA31	EQU		*
-		DC.B	FVR,1,2,0F8H,0FFH
-		DC.B	0ADH,2AH
-		DC.B	CMEND
+		DC.B	BN4,1
+		DC.B	SFEND
 
 ;------------< Voice Data >-------------;
 TIMBA3	EQU		*
-		CNF		4,7
-		MD		2,0,1,0,2,0,1,0
-		RSAR	0,31,0,0BH,0,31,0,0BH
-		D1R		0,8,0,8
-		D2R		1,0EH,1,0EH
-		RRL		15,0,15,1,15,0,15,1
-		TL		27,50,40,0
+;	Voice $00
+;	$02
+;	$02, $51, $20, $01, 	$1E, $1E, $1E, $1E, 	$10, $0A, $14, $13
+;	$01, $00, $00, $00, 	$FF, $FF, $FF, $FF, 	$24, $0E, $1F, $80
+	smpsVcAlgorithm     $02
+	smpsVcFeedback      $00
+	smpsVcUnusedBits    $00
+	smpsVcDetune        $00, $02, $05, $00
+	smpsVcCoarseFreq    $01, $00, $01, $02
+	smpsVcRateScale     $00, $00, $00, $00
+	smpsVcAttackRate    $1E, $1E, $1E, $1E
+	smpsVcAmpMod        $00, $00, $00, $00
+	smpsVcDecayRate1    $13, $14, $0A, $10
+	smpsVcDecayRate2    $00, $00, $00, $01
+	smpsVcDecayLevel    $0F, $0F, $0F, $0F
+	smpsVcReleaseRate   $0F, $0F, $0F, $0F
+	smpsVcTotalLevel    $80, $1F, $0E, $24
 
 		even
 
