@@ -97,8 +97,8 @@ SLOW_BLIP:
 	DC.B	'.!?',$FF
 
 TST:
-	DC.B	'Boner...',1
-	dc.b	'This should a new line!',1
-	dc.b	'ooooo',$FF
+	DC.B	'You see a trousle of bones',1
+	dc.b	'blocking your way. Very boney.'
+	DC.B	$FF
 	TSTEND:
 	even
