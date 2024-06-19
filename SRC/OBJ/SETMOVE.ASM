@@ -1,5 +1,9 @@
+HIMOVE	=	2*2	;	anything above this errors
+
 SETMOVE:
 		MOVEQ	#0,	D0
+		CMPI.B	#HIMOVE,	MOVENUM
+		BEQ.W	MoveErr
 		MOVE.B	MOVENUM,OBJ.ACTION(A0)
 		MOVE.B	OBJ.ACTION(A0),	D0
 		MOVE.W	@INDEX(PC,D0.W),	D1
@@ -8,7 +12,7 @@ SETMOVE:
 	@INDEX:
 		DC.W	Move1-@INDEX
 		DC.W	Move2-@INDEX
-		DC.W	MoveErr-@INDEX
+		@INDEX_END:
 		
 	Move1:
 	
@@ -142,7 +146,7 @@ SETMOVE:
 			MOVE.W	#$0,	TEXTPROG			;	memorize how far into a script it's read
 			MOVE.L	#TXTERR,	TEXTLOC				;	where in ROM the script is read
 			MOVE.W	#0,		TIMER				;	reset timer (makes the dialogue begin later if set other than 0)
-			MOVE.B	#$A3,	TEXTSND				;	sound byte
+			MOVE.B	#$A1,	TEXTSND				;	sound byte
 			ADDI.B	#2,	OBJ.SUBACTION(A0)
 		@R2:
 			RTS

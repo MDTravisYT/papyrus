@@ -1,3 +1,5 @@
+SOUL.MOVE		=	OBJ.FIELD_3E
+
 SOUL:
 		MOVEQ	#0,	D0
 		MOVE.B	OBJ.ACTION(A0),	D0
@@ -58,6 +60,11 @@ SOUL:
 		rol.l	#8,d1
 		rol.l	#8,d1
 		add.w	D1,OBJ.Y(A0)
+		bclr	#0,	SOUL.MOVE(A0)
+		
+		tst.l	D1
+		beq.s	@chkU
+		bset	#0,	SOUL.MOVE(A0)
 		
 	@chkU:
 		cmpi.w	#$78,OBJ.Y(A0)

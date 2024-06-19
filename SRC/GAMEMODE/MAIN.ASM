@@ -119,7 +119,6 @@ TST3:
 	DC.B	"YOU'RE BLUE NOW.",1,"THAT'S MY ATTACK!",1,"NYEH HEH HEH HEH HEH HEH HEH HEH HEH!!!"
 	DC.B	$FF
 	even
-	
 
 TXTERR:
 	DC.B	'Unexpected move set'

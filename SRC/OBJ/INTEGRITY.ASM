@@ -23,6 +23,7 @@ INTEGRITY:
 		
 	@fall:
 		JSR		OBJECTFALL
+		bset	#0,	SOUL.MOVE(A0)
 		MOVE.B	JOYPAD,	D0
 		btst	#0,	INTEG_UPHOLD(A0)
 		bne.s	@chkfloor
@@ -74,6 +75,15 @@ INTEGRITY:
 		rts
 	@apply:
 		add.w	D1,OBJ.X(A0)
+		
+		cmpi.b	#2,	OBJ.ACTION(A0)
+		beq.s	@chkWall
+		bclr	#0,	SOUL.MOVE(A0)
+		tst.l	D1
+		beq.s	@chkWall
+		bset	#0,	SOUL.MOVE(A0)
+		
+	@chkWall:
 		cmpi.w	#$D1,OBJ.X(A0)
 		ble.s	@contchk
 		move.w	#$D1,OBJ.X(A0)
