@@ -95,7 +95,7 @@ SA2:
 ;------------< Table Data >-------------;
 TABA20	EQU		*
 		DC.B	FEV,0
-		DC.B	BN4,1
+		DC.B	BN4,1,NL,8
 		DC.B	SFEND
 
 ;------------< Voice Data >-------------;
