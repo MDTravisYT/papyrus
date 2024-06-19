@@ -207,7 +207,43 @@ SUB81A_3	EQU	*
 ;					 PSG C0ch					;
 ;===============================================;
 TAB81C	EQU		*
-		DC.B	CMEND
+		DC.B	CMNOIS,NOIS7
+		DC.B	CMGATE,6
+		DC.B	0C6H-12*2,4	;	5
+		DC.B	0C6H		;	8
+		DC.B	0C6H-12*2	;	5
+		DC.B	0C6H-6		;	7
+		DC.B	0C6H-12*2	;	5
+		DC.B	0C6H		;	8
+		DC.B	0C6H-6		;	7
+		DC.B	0C6H-12		;	6
+		DC.B	0C6H-12*2	;	5
+		DC.B	0C6H		;	8
+		DC.B	0C6H-12*2	;	5
+		DC.B	0C6H-6		;	7
+		DC.B	0C6H-12*2	;	5
+		DC.B	0C6H		;	8
+		DC.B	0C6H,2		;	8
+		DC.B	0C6H-6		;	7
+		DC.B	0C6H-12,4	;	6
+		DC.B	CMREPT,	0,8
+		JDW		TAB81C
+		DC.B	0C6H-12*2	;	5
+		DC.B	0C6H		;	8
+		DC.B	0C6H-12*2	;	5
+		DC.B	0C6H-6		;	7
+		DC.B	0C6H-12*2,16;	5
+		DC.B	0C6H-12*2,4	;	5
+		DC.B	0C6H		;	8
+		DC.B	0C6H-12*2	;	5
+		DC.B	0C6H-6		;	7
+		DC.B	0C6H-12		;	6
+		DC.B	0C6H-12*2	;	5
+		DC.B	0C6H-12*3	;	4
+		DC.B	0C6H-6		;	7
+		
+		DC.B	CMJUMP
+		JDW		TAB81C
 ;===============================================;
 ;					 PCM DRUM					;
 ;===============================================;
