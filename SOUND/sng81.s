@@ -3,8 +3,8 @@
 ;						ORG. MDSNG111.S					;
 ;				'Sound-Source'							;
 ;				 for Mega Drive (68K)					;
-;						Ver  1.1 / 1990.9.1				;
-;									  By  H.Kubota		;
+;						Ver  1.1 / 20XX					;
+;								By  T.Fox,	MDTravis	;
 ;=======================================================;
 
 ;		public	S81
@@ -40,7 +40,7 @@ PB81A	EQU		-12				; PSG A0ch
 PB81C	EQU		0				; PSG C0ch
 ;==========< S81 VOLM >=========;
 FA810	EQU		$04				; FM 0ch
-FA811	EQU		$04				; FM 1ch
+FA811	EQU		$0C				; FM 1ch
 FA812	EQU		$04				; FM 2ch
 FA814	EQU		$04				; FM 4ch
 FA815	EQU		$04				; FM 5ch
@@ -54,6 +54,8 @@ PE81A	EQU		0				; PSG A0ch
 PE81C	EQU		4				; PSG C0ch
 ;==========< S81 VOICE >========;
 BASS81	EQU		0
+LEAD181	EQU		1
+LEAD281	EQU		2
 
 ;===============================================;
 ;												;
@@ -102,7 +104,7 @@ S81:
 TAB810	EQU		*
 		DC.B	FEV,0
 		DC.B	CN3,4,NL
-		DC.B	CMREPT,	0,8*5
+		DC.B	CMREPT,	0,8*6
 		JDW		TAB810
 		DC.B	CMCALL
 		JDW		SUB810_0
@@ -133,7 +135,44 @@ SUB810_2	EQU	*
 ;					 FM 1ch						;
 ;===============================================;
 TAB811	EQU		*
-		DC.B	CMEND
+		DC.B	FEV,1
+		DC.B	NL,64,NL
+		DC.B	NL,4,CN4,2,NL,GN4,NL,CN5,NL
+		DC.B	LFO,0,3,10,10,DN5,8,VROFF
+		DC.B	CN5,BN4,4,CN5,VRON,CS5,8,VROFF
+		DC.B	CN5,2,NL,GN4,NL,DS4,NL,CN4,NL
+		DC.B	DN4,4,DS4,2,NL,FS4,8
+		DC.B	GN4,2,NL,DS4,NL,CN4,NL,AN3,NL
+		DC.B	BN3,4,CN4,2,NL,DN4,8,CN4,2,NL,18
+		
+		DC.B	CN4,2,NL,GN4,NL,CN5,NL,VRON,DN5,8
+		DC.B	VROFF,GS5,1,AN5,AS5,6
+		DC.B	AN5,2,NL,GN5,NL,AN5,8
+		DC.B	AS5,2,NL,GN5,NL,DS5,NL,CN5,NL
+		DC.B	BN4,NL,CN5,NL,DN5,8
+		DC.B	DS5,2,NL,CN5,NL,GN4,NL,DS4,NL
+		DC.B	BN4,4,AN4,2,NL,BN4,1,CN5,BN4,CN5,BN4,4
+		DC.B	CN5,2,NL,18
+		
+		DC.B	FEV,2
+		DC.B	FN4,2,NL,GS4,NL,CN5,NL
+		DC.B	FN5,8,CN5
+		DC.B	BN4,2,NL,CN5,NL,DN5,1,DS5,DN5,6
+		DC.B	BN4,2,NL,GN4,NL,BN4,NL,DN5,NL
+		DC.B	DS5,6,DS5,1,FN5,DS5,DN5,NL,2
+		DC.B	CN5,NL,CN6,8,AS5,2,NL,GS5,NL
+		DC.B	GN5,6,GN5,1,GS5,GN5,FN5,NL,2
+		DC.B	GS5,NL,GN5,16,NL,4
+		
+		DC.B	FN4,2,NL,GS4,NL,CN5,NL
+		DC.B	FN5,8,CN5
+		DC.B	BN4,2,NL,CN5,NL,DN5,1,DS5,DN5,6
+		DC.B	BN4,2,NL,GN4,NL,BN4,NL,DN5,NL
+		DC.B	DS5,6,DS5,1,FN5,DS5,DN5,NL,2
+		DC.B	CN5,NL,CN6,8,NL,4,DN6,1,DS6,NL,2
+		DC.B	DN6,NL,CN6,NL,BN5,NL,GS5,NL,GN5,16
+		DC.B	CMJUMP
+		JDW		TAB811
 ;===============================================;
 ;					 FM 2ch						;
 ;===============================================;
@@ -155,7 +194,7 @@ TAB815	EQU		*
 TAB818	EQU		*
 		DC.B	CMCALL
 		JDW		SUB818_0
-		DC.B	CMREPT,	0,5
+		DC.B	CMREPT,	0,6
 		JDW		TAB818
 		DC.B	CMCALL
 		JDW		SUB818_1
@@ -193,7 +232,7 @@ SUB818_3	EQU	*
 TAB81A	EQU		*
 		DC.B	CMCALL
 		JDW		SUB81A_0
-		DC.B	CMREPT,	0,5
+		DC.B	CMREPT,	0,6
 		JDW		TAB81A
 		DC.B	CMCALL
 		JDW		SUB81A_1
@@ -256,7 +295,7 @@ TAB81C	EQU		*
 		DC.B	0C6H,2		;	8
 		DC.B	0C6H-6		;	7
 		DC.B	0C6H-12,4	;	6
-		DC.B	CMREPT,	0,8
+		DC.B	CMREPT,	0,9
 		JDW		TAB81C
 		DC.B	0C6H-12*2	;	5
 		DC.B	0C6H		;	8
@@ -299,5 +338,33 @@ TIMB81	EQU		*
 	smpsVcDecayLevel    $00, $00, $00, $00
 	smpsVcReleaseRate   $0F, $0F, $0F, $0F
 	smpsVcTotalLevel    $38, $23, $00, $2A
+;			<LEAD1>
+	smpsVcAlgorithm     $05
+	smpsVcFeedback      $07
+	smpsVcUnusedBits    $00
+	smpsVcDetune        $00, $00, $00, $00
+	smpsVcCoarseFreq    $02, $06, $03, $04
+	smpsVcRateScale     $00, $00, $00, $00
+	smpsVcAttackRate    $1F, $1F, $1F, $1F
+	smpsVcAmpMod        $00, $00, $00, $00
+	smpsVcDecayRate1    $00, $00, $00, $00
+	smpsVcDecayRate2    $00, $00, $00, $00
+	smpsVcDecayLevel    $00, $00, $00, $00
+	smpsVcReleaseRate   $0F, $0F, $0F, $0F
+	smpsVcTotalLevel    $03, $09, $00, $1B
+;			<LEAD2>
+	smpsVcAlgorithm     $05
+	smpsVcFeedback      $07
+	smpsVcUnusedBits    $00
+	smpsVcDetune        $00, $00, $00, $00
+	smpsVcCoarseFreq    $02, $04, $03, $05
+	smpsVcRateScale     $00, $00, $00, $00
+	smpsVcAttackRate    $1F, $1F, $1F, $1F
+	smpsVcAmpMod        $00, $00, $00, $00
+	smpsVcDecayRate1    $00, $00, $00, $00
+	smpsVcDecayRate2    $00, $00, $00, $00
+	smpsVcDecayLevel    $00, $00, $00, $00
+	smpsVcReleaseRate   $0F, $0F, $0F, $0F
+	smpsVcTotalLevel    $02, $0B, $00, $1A
 
 ; vim: set ft=asm68k sw=4 ts=4 noet:
