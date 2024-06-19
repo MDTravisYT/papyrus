@@ -128,7 +128,7 @@ SUB810_1	EQU	*
 		
 SUB810_2	EQU	*
 		DC.B	GS3,NL,GS3,NL,GS3,NL,27
-		DC.B	FN3,2,GN3,NL,FN3,NL,DS3,NL,DN3,NL
+		DC.B	FN3,2,GN3,NL,FN3,NL,DS3,NL,DN3,NL,1
 		DC.B	CMJUMP
 		JDW		TAB810
 ;===============================================;
