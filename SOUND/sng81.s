@@ -29,7 +29,7 @@ PSG81	EQU		3				; PSG Channel Total
 TP81	EQU		2				; Tempo
 DL81	EQU		3				; Delay
 ;==========< S81 BIAS >=========;
-FB810	EQU		12				; FM 0ch
+FB810	EQU		0				; FM 0ch
 FB811	EQU		0				; FM 1ch
 FB812	EQU		0				; FM 2ch
 FB814	EQU		0				; FM 4ch
@@ -39,12 +39,12 @@ PB818	EQU		-12				; PSG 80ch
 PB81A	EQU		-12				; PSG A0ch
 PB81C	EQU		0				; PSG C0ch
 ;==========< S81 VOLM >=========;
-FA810	EQU		$16				; FM 0ch
+FA810	EQU		$04				; FM 0ch
 FA811	EQU		$04				; FM 1ch
-FA812	EQU		$16				; FM 2ch
-FA814	EQU		$16				; FM 4ch
-FA815	EQU		$16				; FM 5ch
-FA816	EQU		$10				; FM 6ch (if don't use PCM drum)
+FA812	EQU		$04				; FM 2ch
+FA814	EQU		$04				; FM 4ch
+FA815	EQU		$04				; FM 5ch
+FA816	EQU		$04				; FM 6ch (if don't use PCM drum)
 PA818	EQU		$03				; PSG 80ch
 PA81A	EQU		$03				; PSG A0ch
 PA81C	EQU		$03				; PSG C0ch
@@ -52,6 +52,8 @@ PA81C	EQU		$03				; PSG C0ch
 PE818	EQU		0				; PSG 80ch
 PE81A	EQU		0				; PSG A0ch
 PE81C	EQU		4				; PSG C0ch
+;==========< S81 VOICE >========;
+BASS81	EQU		0
 
 ;===============================================;
 ;												;
@@ -98,7 +100,35 @@ S81:
 ;					 FM 0ch						;
 ;===============================================;
 TAB810	EQU		*
+		DC.B	FEV,0
+		DC.B	CN3,4,NL
+		DC.B	CMREPT,	0,8*5
+		JDW		TAB810
+		DC.B	CMCALL
+		JDW		SUB810_0
+		DC.B	CMCALL
+		JDW		SUB810_1
+		DC.B	CMCALL
+		JDW		SUB810_0
+		DC.B	CMCALL
+		JDW		SUB810_2
 		DC.B	CMEND
+		
+SUB810_0	EQU	*
+		DC.B	FN3,NL,CN3,NL,FN3,NL,CN3,NL
+		DC.B	GN3,NL,DN3,NL,GN3,NL,DN3,NL
+		DC.B	CMRET
+		
+SUB810_1	EQU	*
+		DC.B	GS3,NL,DS3,NL,GS3,NL,FN3,NL
+		DC.B	DS3,NL,AS2,NL,CS3,NL,GN3,NL
+		DC.B	CMRET
+		
+SUB810_2	EQU	*
+		DC.B	GS3,NL,GS3,NL,GS3,NL,27
+		DC.B	FN3,2,GN3,NL,FN3,NL,DS3,NL,DN3,NL
+		DC.B	CMJUMP
+		JDW		TAB810
 ;===============================================;
 ;					 FM 1ch						;
 ;===============================================;
@@ -255,5 +285,19 @@ TAB81D	EQU		*
 ;												;
 ;===============================================;
 TIMB81	EQU		*
+;			<BASS>
+	smpsVcAlgorithm     $04
+	smpsVcFeedback      $03
+	smpsVcUnusedBits    $00
+	smpsVcDetune        $00, $00, $00, $00
+	smpsVcCoarseFreq    $0E, $0E, $00, $01
+	smpsVcRateScale     $00, $00, $00, $00
+	smpsVcAttackRate    $1F, $1F, $1F, $1F
+	smpsVcAmpMod        $00, $00, $00, $00
+	smpsVcDecayRate1    $00, $00, $00, $00
+	smpsVcDecayRate2    $00, $00, $00, $00
+	smpsVcDecayLevel    $00, $00, $00, $00
+	smpsVcReleaseRate   $0F, $0F, $0F, $0F
+	smpsVcTotalLevel    $38, $23, $00, $2A
 
 ; vim: set ft=asm68k sw=4 ts=4 noet:
