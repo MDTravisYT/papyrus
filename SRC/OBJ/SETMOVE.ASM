@@ -26,7 +26,7 @@ SETMOVE:
 			DC.W	@R2-@MV1_INDEX
 		@R1:
 			MOVE.L	#MAP_PAPHEAD,	OBJ.MAP(A0)
-			MOVE.W	#$0,		OBJ.TILE(A0)
+			MOVE.W	#$200,		OBJ.TILE(A0)
 			MOVE.B	#4,			OBJ.RENDERFLAGS(A0)
 			MOVE.B	#2,			OBJ.PRIORITY(A0)
 		
@@ -77,6 +77,11 @@ SETMOVE:
 			COPYTILEMAP		BOARDMAP,	$8704,	35,	7
 			rts
 		@end:
+			TST.W	TEXTPROG
+			BEQ.S	@skip
+			LEA		ANIM_PAPHEAD,	A1
+			JSR		_OBJECTANIMATE
+		@skip:
 			JMP		_OBJECTDISPLAY
 
 	Move2:
@@ -89,6 +94,11 @@ SETMOVE:
 			DC.W	@R1-@MV2_INDEX
 			DC.W	@R2-@MV2_INDEX
 		@R1:
+			MOVE.L	#MAP_PAPHEAD,	OBJ.MAP(A0)
+			MOVE.W	#$200,		OBJ.TILE(A0)
+			MOVE.B	#4,			OBJ.RENDERFLAGS(A0)
+			MOVE.B	#2,			OBJ.PRIORITY(A0)
+		
 			COPYTILEMAP		BATTLEMAP,	$8084,	35,	25
 			MOVE.L	#$48140002,	TEXTLOG			;	where on screen the text should print
 			MOVE.L	#$48140002,	NEWLINE_MEMO	;	memorize where a new line starts
@@ -136,6 +146,11 @@ SETMOVE:
 			COPYTILEMAP		BOARDMAP,	$8704,	35,	7
 			rts
 		@end:
+			TST.W	TEXTPROG
+			BEQ.S	@skip
+			LEA		ANIM_PAPHEAD,	A1
+			JSR		_OBJECTANIMATE
+		@skip:
 			JMP		_OBJECTDISPLAY
 		
 	MoveErr:
@@ -159,4 +174,37 @@ SETMOVE:
 			RTS
 			
 ART_PAPHEAD:	INCBIN	"ART/PAPHEAD.UNC"
+	ART_PAPHEAD_END:
 MAP_PAPHEAD:	INCBIN	"SRC/OBJ/PAPHEAD.MAP"
+ANIM_PAPHEAD:
+		DC.W	@NORMAL-ANIM_PAPHEAD		;	0
+		DC.W	@WACKY-ANIM_PAPHEAD         ;	1
+		DC.W	@SWEAT-ANIM_PAPHEAD         ;	2
+		DC.W	@COOL-ANIM_PAPHEAD          ;	3
+		DC.W	@LAUGH-ANIM_PAPHEAD         ;	4
+		DC.W	@MAD-ANIM_PAPHEAD           ;	5
+		DC.W	@CRY-ANIM_PAPHEAD           ;	6
+		DC.W	@EVIL-ANIM_PAPHEAD          ;	7
+		DC.W	@DEJECTED-ANIM_PAPHEAD      ;	8
+		DC.W	@SIDE-ANIM_PAPHEAD          ;	9
+		
+	@NORMAL:
+		DC.B	3,0,1,-1
+    @WACKY:
+		DC.B	3,2,3,-1
+    @SWEAT:
+		DC.B	3,4,5,-1
+    @COOL:
+		DC.B	3,6,7,-1
+    @LAUGH:
+		DC.B	3,8,9,-1
+    @MAD:
+		DC.B	3,10,11,-1
+    @CRY:
+		DC.B	3,12,13,-1
+    @EVIL:
+		DC.B	3,14,15,-1
+    @DEJECTED:
+		DC.B	3,16,-1
+    @SIDE:
+		DC.B	3,17,18,-1
