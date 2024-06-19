@@ -25,6 +25,11 @@ SETMOVE:
 			DC.W	@R1-@MV1_INDEX
 			DC.W	@R2-@MV1_INDEX
 		@R1:
+			MOVE.L	#MAP_PAPHEAD,	OBJ.MAP(A0)
+			MOVE.W	#$0,		OBJ.TILE(A0)
+			MOVE.B	#4,			OBJ.RENDERFLAGS(A0)
+			MOVE.B	#2,			OBJ.PRIORITY(A0)
+		
 			COPYTILEMAP		BATTLEMAP,	$8084,	35,	25
 			MOVE.L	#$48140002,	TEXTLOG			;	where on screen the text should print
 			MOVE.L	#$48140002,	NEWLINE_MEMO	;	memorize where a new line starts
@@ -70,8 +75,9 @@ SETMOVE:
 			MOVE.W	#$0,	TEXTPROG
 			
 			COPYTILEMAP		BOARDMAP,	$8704,	35,	7
-		@end:
 			rts
+		@end:
+			JMP		_OBJECTDISPLAY
 
 	Move2:
 		MOVEQ	#0,	D0
@@ -128,8 +134,9 @@ SETMOVE:
 			MOVE.W	#$0,	TEXTPROG
 			
 			COPYTILEMAP		BOARDMAP,	$8704,	35,	7
-		@end:
 			rts
+		@end:
+			JMP		_OBJECTDISPLAY
 		
 	MoveErr:
 		MOVEQ	#0,	D0
@@ -150,3 +157,6 @@ SETMOVE:
 			ADDI.B	#2,	OBJ.SUBACTION(A0)
 		@R2:
 			RTS
+			
+ART_PAPHEAD:	INCBIN	"ART/PAPHEAD.UNC"
+MAP_PAPHEAD:	INCBIN	"SRC/OBJ/PAPHEAD.MAP"
