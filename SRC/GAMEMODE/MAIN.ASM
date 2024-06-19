@@ -60,6 +60,10 @@ MAIN:
 	@no_newline:
 		CMPI.B	#$FF,	(A0)
 		BNE.S	@noEnd
+		MOVE.L	#BLANKTXT,	TEXTLOC
+		MOVE.L	#$48080002,	TEXTLOG
+		MOVE.L	#$48080002,	NEWLINE_MEMO
+		MOVE.W	#$0,	TEXTPROG
 		bra.w	@loop
 	@noEnd:
 		MOVE.L	TEXTLOG,	(VDPCTRL)
