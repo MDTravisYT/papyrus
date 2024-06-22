@@ -76,8 +76,7 @@
 		DC.L	$0007FFFF				;	ROM END
 		DC.L	$00FF0000				;	RAM START
 		DC.L	$00FFFFFF				;	RAM END
-		DC.B	'                '
-		DC.B	'                '
-		DC.B	'                '
-		DC.B	'                '
+time:	INCBIN	"time.txt"
+		DC.B	$FF
+	ALIGN	$1F0
 		DC.B	'JU              '		;	REGION

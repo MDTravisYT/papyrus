@@ -92,4 +92,5 @@ INTEGRITY:
 		bge.s	@allgood
 		move.w	#$6F,OBJ.X(A0)
 	@allgood:
+		JSR		_OBJECTCOLLIDE
 		JMP		_OBJECTDISPLAY

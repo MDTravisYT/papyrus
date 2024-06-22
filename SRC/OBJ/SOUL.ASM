@@ -14,7 +14,7 @@ SOUL:
 		
 	@init:
 		ADDQ.B	#2,			OBJ.ACTION(A0)
-		MOVE.B	#4,		OBJ.YRAD(A0)
+		MOVE.B	#4,			OBJ.YRAD(A0)
 		MOVE.B	#4,			OBJ.XRAD(A0)
 		MOVE.L	#MAP_SOUL,	OBJ.MAP(A0)
 		MOVE.W	#$0,		OBJ.TILE(A0)
@@ -83,6 +83,7 @@ SOUL:
 		bge.s	@allgood
 		move.w	#$6F,OBJ.X(A0)
 	@allgood:
+		JSR		_OBJECTCOLLIDE
 		JMP		_OBJECTDISPLAY
 		
 MAP_SOUL:
