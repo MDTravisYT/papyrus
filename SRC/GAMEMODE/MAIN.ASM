@@ -352,8 +352,30 @@ TXT_DIE4:	;	game resets after this
 	DC.B	"THE ENTRYPOINT???"
 	DC.B	$FF
 	even
+	
+;	--< BLUE >--
+
+TXT_BLUE1:
+	DC.B	"YOU'RE BLUE",1
+	DC.B	"NOW."
+	DC.B	$FF
+	even
+TXT_BLUE2:
+	DC.B	"THAT'S MY",1
+	DC.B	"ATTACK!"
+	DC.B	$FF
+	even
+TXT_BLUE3:
+	DC.B	"NYEH HE HEH",1
+	DC.B	"HEH HEH HEH",1
+	DC.B	"HEH HEH!!!"
+	DC.B	$FF
+	even
 
 TST3:
+	DC.B	'PLACEHOLDER.'
+	DC.B	$FF
+	even
 
 TXTERR:
 	DC.B	'The programmer had a nap.',1

@@ -45,6 +45,15 @@ TEXTSETUP:	MACRO	LOG,LOC,SND,VRAM
 		MOVE.B	#SND,	TEXTSND				;	sound byte
 		MOVE.W	#VRAM,	TXTVRAM				;	VRAM offset
 		ENDM
+TEXTSETUP_BLUE:	MACRO	LOG,LOC,SND,VRAM
+		COPYTILEMAP		BOARDMAP,	$8700,	39,	7
+		MOVE.L	#LOG,	TEXTLOG				;	where on screen the text should print
+		MOVE.L	#LOG,	NEWLINE_MEMO		;	memorize where a new line starts
+		MOVE.W	#0,		TEXTPROG			;	memorize how far into a script it's read
+		MOVE.L	#LOC,	TEXTLOC				;	where in ROM the script is read
+		MOVE.B	#SND,	TEXTSND				;	sound byte
+		MOVE.W	#VRAM,	TXTVRAM				;	VRAM offset
+		ENDM
 		
 STOPTXT:	MACRO
 		MOVE.L	#BLANKTXT,	TEXTLOC

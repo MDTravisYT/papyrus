@@ -98,7 +98,7 @@ SOUL:
 		move.b	#bgm_Fade,D0
 		JSR		PlaySound
 		ADDQ.B	#2,			OBJ.ACTION(A0)
-		BRA.S	@ret
+		BRA.W	@ret
 	@CONT:
 		MOVE.W	#152,	OBJ.X(A0)
 		MOVE.W	#204,	OBJ.Y(A0)
@@ -116,6 +116,10 @@ SOUL:
 		MOVE.B	#2,	OBJ.ID(A0)
 		MOVE.B	#0,	OBJ.ACTION(A0)
 		BSET	#1,BLUEMODE
+		ADDI.B	#2,	MOVENUM
+		MOVE.B	#5,	(OBJSLOT01)+OBJ.ID
+		MOVE.B	#0,	(OBJSLOT01)+OBJ.ACTION
+		MOVE.B	#60,	TIMER
 		move.b	#$A4,D0
 		JMP		PlaySound
 	@ret:
