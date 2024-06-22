@@ -32,22 +32,22 @@ _eh_default			equ	0 ;_eh_show_sr_usp
 ; ---------------------------------------------------------------
 
 BusError:
-	__ErrorMessage "BUS ERROR", _eh_default|_eh_address_error
+	__ErrorMessage "Something's amiss... %<endl>it's a Bus error!", _eh_default|_eh_address_error
 
 AddressError:
-	__ErrorMessage "ADDRESS ERROR", _eh_default|_eh_address_error
+	__ErrorMessage "Something's amiss... %<endl>it's an Address error!", _eh_default|_eh_address_error
 
 IllegalInstr:
-	__ErrorMessage "ILLEGAL INSTRUCTION", _eh_default
+	__ErrorMessage "Illegal instruction. %<endl>You have been charged 0G.", _eh_default
 
 ZeroDivide:
-	__ErrorMessage "ZERO DIVIDE", _eh_default
+	__ErrorMessage "And thus, the world imploded. %<endl>Zero division encountered.", _eh_default
 
 ChkInstr:
-	__ErrorMessage "CHK INSTRUCTION", _eh_default
+	__ErrorMessage "Chk instruction encountered. %<endl>It's cold in here.", _eh_default
 
 TrapvInstr:
-	__ErrorMessage "TRAPV INSTRUCTION", _eh_default
+	__ErrorMessage "TrapV instruction encountered. %<endl>It's cold in here.", _eh_default
 
 PrivilegeViol:
 	__ErrorMessage "PRIVILEGE VIOLATION", _eh_default
@@ -56,10 +56,10 @@ Trace:
 	__ErrorMessage "TRACE", _eh_default
 
 Line1010Emu:
-	__ErrorMessage "LINE 1010 EMULATOR", _eh_default
+	__ErrorMessage "Oops, line 1010 emulator.", _eh_default
 
 Line1111Emu:
-	__ErrorMessage "LINE 1111 EMULATOR", _eh_default
+	__ErrorMessage "Oops, line 1111 emulator.", _eh_default
 
 ErrorExcept:
 	__ErrorMessage "ERROR EXCEPTION", _eh_default
