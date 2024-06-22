@@ -2,6 +2,11 @@ SOUL.MOVE		=	OBJ.FIELD_3E
 SOUL.INV		=	OBJ.FIELD_3D
 
 SOUL:
+		BTST	#0,BLUEMODE
+		BEQ.S	@RED
+		MOVE.B	#2,	OBJ.ID(A0)
+		RTS
+	@RED:
 		MOVEQ	#0,	D0
 		MOVE.B	OBJ.ACTION(A0),	D0
 		MOVE.W	@INDEX(PC,D0.W),	D1
@@ -23,6 +28,8 @@ SOUL:
 		MOVE.B	#2,			OBJ.PRIORITY(A0)
 
 	@do:
+		tst.b	TIMER
+		beq.w	@timeOver
 		tst.b	SOUL.INV(A0)
 		beq.s	@skipInv
 		sub.b	#1,	SOUL.INV(A0)
@@ -46,20 +53,8 @@ SOUL:
 		subi.w	#1,D1
 	@righttst:
 		btst	#bitR,D0
-		beq.s	@bluetst
-		addi.w	#1,D1
-	@bluetst:
-		btst	#bitStart,D0
 		beq.s	@apply
-		MOVE.W	#152,	OBJ.X(A0)
-		MOVE.W	#204,	OBJ.Y(A0)
-		MOVE.B	#0,	OBJ.ACTION(A0)
-		MOVE.B	#0,	OBJ.FRAME(A0)
-		MOVE.B	#3,	OBJ.ID(A0)
-		MOVE.B	#$A2,	TEXTSND
-		ADDI.B	#2,	MOVENUM
-		COPYTILEMAP		BATTLEMAP,	$8084,	35,	25
-		rts
+		addi.w	#1,D1
 	@apply:
 		add.w	D1,OBJ.X(A0)
 		rol.l	#8,d1
@@ -93,6 +88,17 @@ SOUL:
 		bne.s	@noDisplay
 		JMP		_OBJECTDISPLAY
 	@noDisplay:
+		rts
+		
+	@timeOver:
+		MOVE.W	#152,	OBJ.X(A0)
+		MOVE.W	#204,	OBJ.Y(A0)
+		MOVE.B	#0,	OBJ.ACTION(A0)
+		MOVE.B	#0,	OBJ.FRAME(A0)
+		MOVE.B	#3,	OBJ.ID(A0)
+		MOVE.B	#$A2,	TEXTSND
+		ADDI.B	#2,	MOVENUM
+		COPYTILEMAP		BATTLEMAP,	$8084,	35,	25
 		rts
 		
 MAP_SOUL:

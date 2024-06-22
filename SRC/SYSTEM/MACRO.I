@@ -34,3 +34,19 @@ resetZ80:	macro
 resetZ80a:	macro
 		move.w	#0,(Z80_RESET).l
 		endm
+		
+TEXTSETUP:	MACRO	LOG,LOC,SND,VRAM
+		COPYTILEMAP		BATTLEMAP,	$8084,	35,	25
+		MOVE.L	#LOG,	TEXTLOG				;	where on screen the text should print
+		MOVE.L	#LOG,	NEWLINE_MEMO		;	memorize where a new line starts
+		MOVE.W	#0,		TEXTPROG			;	memorize how far into a script it's read
+		MOVE.L	#LOC,	TEXTLOC				;	where in ROM the script is read
+		MOVE.W	#0,		TIMER				;	reset timer (makes the dialogue begin later if set other than 0)
+		MOVE.B	#SND,	TEXTSND				;	sound byte
+		MOVE.W	#VRAM,	TXTVRAM				;	VRAM offset
+		ENDM
+		
+STOPTXT:	MACRO
+		MOVE.L	#BLANKTXT,	TEXTLOC
+		MOVE.W	#0,			TEXTPROG
+		ENDM
