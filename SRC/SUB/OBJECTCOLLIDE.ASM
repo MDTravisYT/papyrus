@@ -65,6 +65,8 @@ _OBJECTCOLLIDE:
 		BHI.W	@NEXTOBJ
 		
 	@HURT:
+		MOVEQ	#0,	D0
+		MOVEQ	#0,	D1
 		MOVE.B	OBJ.COLLISION(A1),D0
 		BTST	#7,	D0
 		BEQ.S	@CONT
@@ -73,6 +75,7 @@ _OBJECTCOLLIDE:
 	@CONT:
 		AND.B	#%01111111,	D0
 		MOVE.B	HP,		D1
+		and		#0,		CCR
 		SBCD	D0,		D1
 		move.b	D1,		HP
 		move.b	#30,SOUL.INV(A0)
