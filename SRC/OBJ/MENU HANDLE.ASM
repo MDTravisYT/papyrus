@@ -28,7 +28,7 @@ MENU_HANDLE:
 		lea		(OBJSLOT01),	A1
 		MOVEQ	#0,	D0
 		MOVEQ	#0,	D1
-		move.w	#$40,	d0
+		move.w	#$400,	d0
 	@loop:
 		move.l	d1,(a1)+
 		dbf		d0,	@loop

@@ -15,6 +15,7 @@ SOUL:
 	@INDEX:
 		DC.W	@init-@INDEX
 		DC.W	@do-@INDEX
+		DC.W	@BLUEIFY-@INDEX
 	;	DC.W	@delete-@INDEX
 	;	DC.W	@delete-@INDEX
 		
@@ -91,6 +92,14 @@ SOUL:
 		rts
 		
 	@timeOver:
+		CMPI.B	#2, MOVENUM
+		BNE.S	@CONT
+		MOVE.B	#200,	SOUL.INV(A0)
+		move.b	#bgm_Fade,D0
+		JSR		PlaySound
+		ADDQ.B	#2,			OBJ.ACTION(A0)
+		BRA.S	@ret
+	@CONT:
 		MOVE.W	#152,	OBJ.X(A0)
 		MOVE.W	#204,	OBJ.Y(A0)
 		MOVE.B	#0,	OBJ.ACTION(A0)
@@ -100,6 +109,19 @@ SOUL:
 		ADDI.B	#2,	MOVENUM
 		COPYTILEMAP		BATTLEMAP,	$8084,	35,	25
 		rts
+	@BLUEIFY:
+		tst.b	SOUL.INV(A0)
+		bne.s	@ret
+		MOVE.W	#$2000,		OBJ.TILE(A0)
+		MOVE.B	#2,	OBJ.ID(A0)
+		MOVE.B	#0,	OBJ.ACTION(A0)
+		BSET	#1,BLUEMODE
+		move.b	#$A4,D0
+		JMP		PlaySound
+	@ret:
+		sub.b	#1,	SOUL.INV(A0)
+		JSR		_OBJECTDISPLAY
+		bra.w	@skipInv
 		
 MAP_SOUL:
 		INCBIN	"SRC/OBJ/SOUL.MAP"
