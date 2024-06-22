@@ -52,12 +52,19 @@ MAIN:
 		MOVE.L	#TXT_ENCOUNTER,	TEXTLOC				;	where in ROM the script is read
 		MOVE.W	#0,		TIMER				;	reset timer (makes the dialogue begin later if set other than 0)
 		MOVE.B	#$A2,	TEXTSND				;	sound byte
+		MOVE.B	#20,	HP
 		
 	@loop:
 		MOVE.B	#1,	(VBLANKCMD).W
 		jsr		VSYNC
 		JSR		RUNOBJECTS
 		JSR		PROCESSSPRITES
+		
+		cmpi.b	#0,HP
+		bne.s	@noDie
+		jmp		START
+		
+	@noDie:
 		
 		tst.b	TIMER+1
 		bne.W	@skipDialogue

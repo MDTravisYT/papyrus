@@ -65,6 +65,8 @@ _OBJECTCOLLIDE:
 		BHI.W	@NEXTOBJ
 		
 	@HURT:
+		MOVE.B	OBJ.COLLISION(A1),D0
+		sub.b	D0,HP
 		move.b	#30,SOUL.INV(A0)
 		move.b	TEXTSND,	D0
 		jmp		PlaySound
