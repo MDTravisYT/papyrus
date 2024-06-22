@@ -52,7 +52,11 @@ MAIN:
 		MOVE.L	#TXT_ENCOUNTER,	TEXTLOC				;	where in ROM the script is read
 		MOVE.W	#0,		TIMER				;	reset timer (makes the dialogue begin later if set other than 0)
 		MOVE.B	#$A2,	TEXTSND				;	sound byte
-		MOVE.B	#20,	HP
+		MOVEQ	#0,		D1
+		MOVE.B	#$20,	D0
+		and		#0,		CCR
+		ABCD	D0,		D1
+		MOVE.B	D1,		HP
 		
 	@loop:
 		MOVE.B	#1,	(VBLANKCMD).W
