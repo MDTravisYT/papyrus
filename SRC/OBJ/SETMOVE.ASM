@@ -34,7 +34,7 @@ SETMOVE:
 			MOVE.L	#$48140002,	TEXTLOG			;	where on screen the text should print
 			MOVE.L	#$48140002,	NEWLINE_MEMO	;	memorize where a new line starts
 			MOVE.W	#$0,	TEXTPROG			;	memorize how far into a script it's read
-			MOVE.L	#TST2,	TEXTLOC				;	where in ROM the script is read
+			MOVE.L	#TXT_CHECK2,	TEXTLOC				;	where in ROM the script is read
 			MOVE.W	#0,		TIMER				;	reset timer (makes the dialogue begin later if set other than 0)
 			MOVE.B	#$A3,	TEXTSND				;	sound byte
 			ADDI.B	#2,	OBJ.SUBACTION(A0)

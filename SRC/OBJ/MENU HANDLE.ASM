@@ -88,6 +88,37 @@ MENU_HANDLE:
 		
 	@FIGHT:
 	@ACT:
+		MOVEQ	#0,	D0
+		MOVE.B	OBJ.SUBACTION(A0),	D0
+		MOVE.W	@ACT_INDEX(PC,D0.W),	D1
+		JMP		@ACT_INDEX(PC,D1.W)
+		
+		@ACT_INDEX:
+			DC.W	@R1-@ACT_INDEX
+			DC.W	@R2-@ACT_INDEX
+		
+		@R1:
+			COPYTILEMAP		BATTLEMAP,	$8084,	35,	25
+			MOVE.L	#$48080002,	TEXTLOG			;	where on screen the text should print
+			MOVE.L	#$48080002,	NEWLINE_MEMO	;	memorize where a new line starts
+			MOVE.W	#$0,	TEXTPROG			;	memorize how far into a script it's read
+			MOVE.L	#TXT_CHECK1,	TEXTLOC				;	where in ROM the script is read
+			MOVE.W	#0,		TIMER				;	reset timer (makes the dialogue begin later if set other than 0)
+			MOVE.B	#$A3,	TEXTSND				;	sound byte	
+			ADDI.B	#2,	OBJ.SUBACTION(A0)
+		@R2:
+			MOVEQ	#0,	D0
+			MOVEQ	#0,	D1
+			MOVE.B	JOYPADPRESS,	D0
+			andi.b	#btnA+btnB+btnC,D0
+			beq.w	@act_end
+			MOVE.B	#3,	OBJ.ID(A0)
+			MOVE.B	#0,	OBJ.ACTION(A0)
+			MOVE.B	#0,	OBJ.SUBACTION(A0)
+			COPYTILEMAP		BATTLEMAP,	$8084,	35,	25
+		@act_end:
+			RTS
+			
 	@ITEM:
 	@MERCY:
 		MOVE.B	#5,	OBJ.ID(A0)
