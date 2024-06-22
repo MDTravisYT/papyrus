@@ -1,7 +1,7 @@
 MAIN:
 		JSR		CLEARSCREEN
 		
-		move.l	#VRAMWRITE,	(VDPCTRL)
+		move.l	#VRAMWRITE,	(VDPCTRL)	;	TODO: Optimize this into a list
 		LEA		BATTLEART,		A0
 		LEA		VDPDATA,	A1
 		MOVE.W	#(BATTLEART_END-BATTLEART)/2-1,		D0
@@ -19,13 +19,22 @@ MAIN:
 		DBF		D0,	@LOADGFX2
 		
 		move.l	#VRAMWRITE,	(VDPCTRL)
+		LEA		ART_TXTPAP,		A0
+		LEA		VDPDATA,	A1
+		WRITEVRAM	$3000
+		MOVE.W	#(ART_TXTPAP_END-ART_TXTPAP)/2-1,		D0
+	@LOADGFX3:
+		MOVE.W	(A0)+,	(A1)
+		DBF		D0,	@LOADGFX3
+		
+		move.l	#VRAMWRITE,	(VDPCTRL)
 		LEA		ART_PAPHEAD,		A0
 		LEA		VDPDATA,	A1
 		WRITEVRAM	$4000
 		MOVE.W	#(ART_PAPHEAD_END-ART_PAPHEAD)/2-1,		D0
-	@LOADGFX3:
+	@LOADGFX4:
 		MOVE.W	(A0)+,	(A1)
-		DBF		D0,	@LOADGFX3
+		DBF		D0,	@LOADGFX4
 		
 		LEA		BATTLEPAL,	A0
 		LEA		PALFADEBUFFER,	A1
@@ -46,12 +55,6 @@ MAIN:
 		
 		JSR		PALFADEIN
 		
-		MOVE.L	#$48080002,	TEXTLOG			;	where on screen the text should print
-		MOVE.L	#$48080002,	NEWLINE_MEMO	;	memorize where a new line starts
-		MOVE.W	#$0,	TEXTPROG			;	memorize how far into a script it's read
-		MOVE.L	#TXT_ENCOUNTER,	TEXTLOC				;	where in ROM the script is read
-		MOVE.W	#0,		TIMER				;	reset timer (makes the dialogue begin later if set other than 0)
-		MOVE.B	#$A2,	TEXTSND				;	sound byte
 		MOVEQ	#0,		D1
 		MOVE.B	#$20,	D0
 		and		#0,		CCR
@@ -90,7 +93,7 @@ MAIN:
 		bra.w	@loop
 	@noEnd:
 		MOVE.L	TEXTLOG,	(VDPCTRL)
-		MOVE.W	#$100,	D0
+		MOVE.W	TXTVRAM,	D0
 		ADD.B	(A0)+,	D0
 		MOVE.W	D0,	($C00000)
 		add.l	#$20000,TEXTLOG
@@ -122,6 +125,8 @@ BATTLEART:	INCBIN		"ART/BATTLE.UNC"
 	BATTLEART_END:
 TXTART:	INCBIN		"ART/FONT.UNC"
 	TXTART_END:
+ART_TXTPAP:	INCBIN		"ART/FONTPAP.UNC"
+	ART_TXTPAP_END:
 
 ;	--< INTERNAL >--
 ;	Stuff that shouldn't be seen in the final gameplay.

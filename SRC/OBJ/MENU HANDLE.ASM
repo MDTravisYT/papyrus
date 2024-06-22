@@ -19,10 +19,13 @@ MENU_HANDLE:
 		MOVE.B	#2,			OBJ.PRIORITY(A0)
 		MOVE.B	#2,			OBJ.FRAME(A0)
 		
-		MOVE.L	#$48080002,	TEXTLOG
-		MOVE.L	#time,	TEXTLOC
-		MOVE.L	#$48080002,	NEWLINE_MEMO
-		MOVE.W	#$0,	TEXTPROG
+		MOVE.L	#$48080002,	TEXTLOG			;	where on screen the text should print
+		MOVE.L	#$48080002,	NEWLINE_MEMO	;	memorize where a new line starts
+		MOVE.W	#$0,	TEXTPROG			;	memorize how far into a script it's read
+		MOVE.L	#TXT_ENCOUNTER,	TEXTLOC				;	where in ROM the script is read
+		MOVE.W	#0,		TIMER				;	reset timer (makes the dialogue begin later if set other than 0)
+		MOVE.B	#$A2,	TEXTSND				;	sound byte
+		MOVE.W	#$100,	TXTVRAM				;	VRAM offset
 	;	2	=	FIGHT
 	;	3	=	ACT
 	;	4	=	ITEM

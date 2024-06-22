@@ -1,6 +1,11 @@
 HIMOVE	=	2*2	;	anything above this errors
 
 SETMOVE:
+		MOVE.L	#MAP_PAPHEAD,	OBJ.MAP(A0)
+		MOVE.W	#$200,		OBJ.TILE(A0)
+		MOVE.B	#4,			OBJ.RENDERFLAGS(A0)
+		MOVE.B	#2,			OBJ.PRIORITY(A0)
+
 		MOVEQ	#0,	D0
 		CMPI.B	#HIMOVE,	MOVENUM
 		BEQ.W	MoveErr
@@ -25,11 +30,6 @@ SETMOVE:
 			DC.W	@R1-@MV1_INDEX
 			DC.W	@R2-@MV1_INDEX
 		@R1:
-			MOVE.L	#MAP_PAPHEAD,	OBJ.MAP(A0)
-			MOVE.W	#$200,		OBJ.TILE(A0)
-			MOVE.B	#4,			OBJ.RENDERFLAGS(A0)
-			MOVE.B	#2,			OBJ.PRIORITY(A0)
-		
 			COPYTILEMAP		BATTLEMAP,	$8084,	35,	25
 			MOVE.L	#$48140002,	TEXTLOG			;	where on screen the text should print
 			MOVE.L	#$48140002,	NEWLINE_MEMO	;	memorize where a new line starts
@@ -37,6 +37,7 @@ SETMOVE:
 			MOVE.L	#TXT_CHECK2,	TEXTLOC				;	where in ROM the script is read
 			MOVE.W	#0,		TIMER				;	reset timer (makes the dialogue begin later if set other than 0)
 			MOVE.B	#$A3,	TEXTSND				;	sound byte
+			MOVE.W	#$180,	TXTVRAM				;	VRAM offset
 			ADDI.B	#2,	OBJ.SUBACTION(A0)
 		@R2:
 			MOVEQ	#0,	D0
@@ -82,11 +83,6 @@ SETMOVE:
 			DC.W	@R1-@MV2_INDEX
 			DC.W	@R2-@MV2_INDEX
 		@R1:
-			MOVE.L	#MAP_PAPHEAD,	OBJ.MAP(A0)
-			MOVE.W	#$200,		OBJ.TILE(A0)
-			MOVE.B	#4,			OBJ.RENDERFLAGS(A0)
-			MOVE.B	#2,			OBJ.PRIORITY(A0)
-		
 			COPYTILEMAP		BATTLEMAP,	$8084,	35,	25
 			MOVE.L	#$48140002,	TEXTLOG			;	where on screen the text should print
 			MOVE.L	#$48140002,	NEWLINE_MEMO	;	memorize where a new line starts
@@ -94,6 +90,7 @@ SETMOVE:
 			MOVE.L	#TST3,	TEXTLOC				;	where in ROM the script is read
 			MOVE.W	#0,		TIMER				;	reset timer (makes the dialogue begin later if set other than 0)
 			MOVE.B	#$A3,	TEXTSND				;	sound byte
+			MOVE.W	#$180,	TXTVRAM				;	VRAM offset
 			ADDI.B	#2,	OBJ.SUBACTION(A0)
 		@R2:
 			MOVEQ	#0,	D0
