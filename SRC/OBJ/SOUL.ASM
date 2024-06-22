@@ -1,4 +1,5 @@
 SOUL.MOVE		=	OBJ.FIELD_3E
+SOUL.INV		=	OBJ.FIELD_3D
 
 SOUL:
 		MOVEQ	#0,	D0
@@ -22,6 +23,10 @@ SOUL:
 		MOVE.B	#2,			OBJ.PRIORITY(A0)
 
 	@do:
+		tst.b	SOUL.INV(A0)
+		beq.s	@skipInv
+		sub.b	#1,	SOUL.INV(A0)
+	@skipInv:
 		MOVEQ	#0,	D0
 		MOVEQ	#0,	D1
 		MOVE.B	JOYPAD,	D0
@@ -84,7 +89,11 @@ SOUL:
 		move.w	#$6F,OBJ.X(A0)
 	@allgood:
 		JSR		_OBJECTCOLLIDE
+		btst	#1, SOUL.INV(A0)
+		bne.s	@noDisplay
 		JMP		_OBJECTDISPLAY
+	@noDisplay:
+		rts
 		
 MAP_SOUL:
 		INCBIN	"SRC/OBJ/SOUL.MAP"

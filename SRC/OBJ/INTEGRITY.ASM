@@ -1,7 +1,11 @@
 INTEG_UPHOLD	=	OBJ.FIELD_3F
 
 INTEGRITY:
-		MOVEQ	#0,	D0
+		tst.b	SOUL.INV(A0)
+		beq.s	@skipInv
+		sub.b	#1,	SOUL.INV(A0)
+	@skipInv:
+		MOVEQ	#0,	D0		
 		MOVE.B	OBJ.ACTION(A0),	D0
 		MOVE.W	@INDEX(PC,D0.W),	D1
 		JMP		@INDEX(PC,D1.W)
@@ -93,4 +97,8 @@ INTEGRITY:
 		move.w	#$6F,OBJ.X(A0)
 	@allgood:
 		JSR		_OBJECTCOLLIDE
+		btst	#1, SOUL.INV(A0)
+		bne.s	@noDisplay
 		JMP		_OBJECTDISPLAY
+	@noDisplay:
+		rts

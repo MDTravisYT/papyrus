@@ -1,4 +1,6 @@
 _OBJECTCOLLIDE:
+		TST.B	SOUL.INV(A0)
+		BNE.W	@DONT
 		MOVEQ	#0,	D4
 		MOVE.B	OBJ.XRAD(A0),D4
 		SUBQ.B	#3,	D4
@@ -63,5 +65,9 @@ _OBJECTCOLLIDE:
 		BHI.W	@NEXTOBJ
 		
 	@HURT:
+		move.b	#30,SOUL.INV(A0)
 		move.b	TEXTSND,	D0
 		jmp		PlaySound
+		
+	@DONT:
+		RTS

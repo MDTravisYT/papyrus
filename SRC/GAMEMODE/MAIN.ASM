@@ -41,6 +41,9 @@ MAIN:
 		MOVE.W	#152,	OBJ.X(A0)
 		MOVE.W	#204,	OBJ.Y(A0)
 		
+		move.b	#$81,	D0
+		jsr		PlaySound
+		
 		JSR		PALFADEIN
 		
 		MOVE.L	#$48080002,	TEXTLOG			;	where on screen the text should print
