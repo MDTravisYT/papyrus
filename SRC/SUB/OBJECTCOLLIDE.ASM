@@ -28,34 +28,6 @@ _OBJECTCOLLIDE:
 		MOVEQ	#0,D0
 		RTS
 		
-	@COLSIZES:
-		;		width	height
-		dc.b 	$14,	$14		;	$01
-		dc.b 	 $C,	$14     ;	$02
-		dc.b 	$14,	 $C     ;	$03
-		dc.b 	  4,	$10     ;	$04
-		dc.b 	 $C,	$12     ;	$05
-		dc.b 	$10,	$10     ;	$06
-		dc.b 	  6,	  6     ;	$07
-		dc.b 	$18,	 $C     ;	$08
-		dc.b 	 $C,	$10     ;	$09
-		dc.b 	$10,	 $C     ;	$0A
-		dc.b 	  8,	  8     ;	$0B
-		dc.b 	$14,	$10     ;	$0C
-		dc.b 	$14,	  8     ;	$0D
-		dc.b 	 $E,	 $E     ;	$0E
-		dc.b 	$18,	$18     ;	$0F
-		dc.b 	$28,	$10     ;	$10
-		dc.b 	$10,	$18     ;	$11
-		dc.b 	 $C,	$20     ;	$12
-		dc.b 	$20,	$70     ;	$13
-		dc.b 	$40,	$20     ;	$14
-		dc.b 	$80,	$20     ;	$15
-		dc.b 	$20,	$20     ;	$16
-		dc.b 	  8,	  8     ;	$17
-		dc.b 	  4,	  4     ;	$18
-		dc.b 	$20,	  8     ;	$19
-		
 	@HASCOLLISION:
 		ANDI.W	#$3F,D0
 		ADD.W	D0,D0
