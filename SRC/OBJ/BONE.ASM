@@ -31,6 +31,9 @@ BONE:
 
 	@do:
 		sub.w	#1,	OBJ.X(A0)
+		moveq	#0,	D0
+		move.b	OBJ.XSPEED(A0), D0
+		sub.w	D0, OBJ.X(A0)
 		JMP		_OBJECTDISPLAY
 	
 MAP_BONE:
