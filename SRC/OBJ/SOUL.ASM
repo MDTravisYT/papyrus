@@ -107,7 +107,7 @@ SOUL:
 		MOVE.B	#3,	OBJ.ID(A0)
 		MOVE.B	#$A2,	TEXTSND
 		ADDI.B	#2,	MOVENUM
-		COPYTILEMAP		BATTLEMAP,	$8084,	35,	25
+		TEXTSETUP	$48080002,TXT_NEUTRAL1,$A2,$100
 		rts
 	@BLUEIFY:
 		tst.b	SOUL.INV(A0)
@@ -117,9 +117,16 @@ SOUL:
 		MOVE.B	#0,	OBJ.ACTION(A0)
 		BSET	#1,BLUEMODE
 		ADDI.B	#2,	MOVENUM
-		MOVE.B	#5,	(OBJSLOT01)+OBJ.ID
-		MOVE.B	#0,	(OBJSLOT01)+OBJ.ACTION
-		MOVE.B	#60,	TIMER
+		
+		lea		(OBJSLOT01),	A1
+		MOVEQ	#0,	D0
+		MOVEQ	#0,	D1
+		move.w	#$400,	d0
+	@loop:
+		move.l	d1,(a1)+
+		dbf		d0,	@loop
+		LEA		BoneSpawn3,A1
+		JSR		SpawnObjList
 		move.b	#$A4,D0
 		JMP		PlaySound
 	@ret:

@@ -19,7 +19,7 @@ MENU_HANDLE:
 		MOVE.B	#2,			OBJ.PRIORITY(A0)
 		MOVE.B	#2,			OBJ.FRAME(A0)
 		
-		TEXTSETUP	$48080002,TXT_ENCOUNTER,$A2,$100
+	;	TEXTSETUP	$48080002,TXT_ENCOUNTER,$A2,$100
 	;	2	=	FIGHT
 	;	3	=	ACT
 	;	4	=	ITEM
@@ -84,6 +84,9 @@ MENU_HANDLE:
 		DC.W	@MERCY-@MENUDEX
 		
 	@FIGHT:
+			TEXTSETUP	$48080002,TST2,$A1,$100
+			SUBI.B	#2,	OBJ.ACTION(A0)
+			RTS
 	@ACT:
 		MOVEQ	#0,	D0
 		MOVE.B	OBJ.SUBACTION(A0),	D0
@@ -96,12 +99,7 @@ MENU_HANDLE:
 		
 		@R1:
 			COPYTILEMAP		BATTLEMAP,	$8084,	35,	25
-			MOVE.L	#$48080002,	TEXTLOG			;	where on screen the text should print
-			MOVE.L	#$48080002,	NEWLINE_MEMO	;	memorize where a new line starts
-			MOVE.W	#$0,	TEXTPROG			;	memorize how far into a script it's read
-			MOVE.L	#TXT_CHECK1,	TEXTLOC				;	where in ROM the script is read
-			MOVE.W	#0,		TIMER				;	reset timer (makes the dialogue begin later if set other than 0)
-			MOVE.B	#$A3,	TEXTSND				;	sound byte	
+			TEXTSETUP	$48080002,TXT_CHECK1,$A2,$100
 			ADDI.B	#2,	OBJ.SUBACTION(A0)
 		@R2:
 			MOVEQ	#0,	D0
@@ -117,6 +115,9 @@ MENU_HANDLE:
 			RTS
 			
 	@ITEM:
+			TEXTSETUP	$48080002,TST2,$A1,$100
+			SUBI.B	#2,	OBJ.ACTION(A0)
+			RTS
 	@MERCY:
 		MOVE.B	#5,	OBJ.ID(A0)
 		MOVE.B	#0,	OBJ.ACTION(A0)

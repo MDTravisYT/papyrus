@@ -60,6 +60,7 @@ MAIN:
 		and		#0,		CCR
 		ABCD	D0,		D1
 		MOVE.B	D1,		HP
+		TEXTSETUP	$48080002,TXT_ENCOUNTER,$A2,$100
 		
 	@loop:
 		MOVE.B	#1,	(VBLANKCMD).W
@@ -356,19 +357,28 @@ TXT_DIE4:	;	game resets after this
 ;	--< BLUE >--
 
 TXT_BLUE1:
-	DC.B	"YOU'RE BLUE",1
+	DC.B	"YOU'RE BLUE ",1
 	DC.B	"NOW."
 	DC.B	$FF
 	even
 TXT_BLUE2:
-	DC.B	"THAT'S MY",1
+	DC.B	"THAT'S MY ",1
 	DC.B	"ATTACK!"
 	DC.B	$FF
 	even
 TXT_BLUE3:
-	DC.B	"NYEH HE HEH",1
-	DC.B	"HEH HEH HEH",1
+	DC.B	"NYEH HE HEH ",1
+	DC.B	"HEH HEH HEH ",1
 	DC.B	"HEH HEH!!!"
+	DC.B	$FF
+	even
+TXT_BLUE_IDLE:
+	DC.B	"You're blue now."
+	DC.B	$FF
+	even
+
+TST2:
+	DC.B	'Not implemented.'
 	DC.B	$FF
 	even
 

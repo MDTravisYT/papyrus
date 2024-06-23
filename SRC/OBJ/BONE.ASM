@@ -30,10 +30,17 @@ BONE:
 		ADD.B	D0,			OBJ.YRAD(A0)
 
 	@do:
+		MOVE.B	OBJ.XSPEED(A0),D0
+		BTST	#7,	D0
+		BNE.S	@rev
+		AND.B	#%01111111,	D0
 		sub.w	#1,	OBJ.X(A0)
-		moveq	#0,	D0
-		move.b	OBJ.XSPEED(A0), D0
 		sub.w	D0, OBJ.X(A0)
+		JMP		_OBJECTDISPLAY
+	@rev:
+		AND.B	#%01111111,	D0
+		add.w	#1,	OBJ.X(A0)
+		add.w	D0, OBJ.X(A0)
 		JMP		_OBJECTDISPLAY
 	
 MAP_BONE:
