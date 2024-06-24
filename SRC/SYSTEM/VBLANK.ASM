@@ -98,6 +98,7 @@ REFRESH_VDP_BUFFERS:
         move.w  #$83,(VDPBUFFER2).w
         move.w  (VDPBUFFER2).w,(a5)
         lea     (VDPCTRL).l,a5
+		rts
 
 loc_EDC:
         move.l  #$940193C0,(a5)
