@@ -77,7 +77,7 @@ _OBJECTCOLLIDE:
 		SBCD	D0,		D1
 		move.b	D1,		HP
 		move.b	#30,SOUL.INV(A0)
-		move.b	TEXTSND,	D0
+		move.b	#$A6,	D0
 		jmp		PlaySound
 		
 	@DONT:
