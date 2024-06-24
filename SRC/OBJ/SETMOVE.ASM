@@ -244,3 +244,4 @@ ANIM_PAPHEAD:
 		DC.B	3,16,-1
     @SIDE:
 		DC.B	3,17,18,-1
+		even

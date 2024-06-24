@@ -1,0 +1,95 @@
+DAMAGE_PROG	=	OBJ.FIELD_3F
+
+DAMAGE:
+		MOVEQ	#0,	D0
+		MOVE.B	OBJ.ACTION(A0),	D0
+		MOVE.W	@INDEX(PC,D0.W),	D1
+		JMP		@INDEX(PC,D1.W)
+		
+	@INDEX:
+		DC.W	@init-@INDEX
+		DC.W	@do-@INDEX
+		
+	@init:
+		ADDQ.B	#2,			OBJ.ACTION(A0)
+		MOVE.B	#4,			OBJ.YRAD(A0)
+		MOVE.B	#4,			OBJ.XRAD(A0)
+		MOVE.L	#MAP_SOUL,	OBJ.MAP(A0)
+		MOVE.W	#$0,		OBJ.TILE(A0)
+		MOVE.B	#4,			OBJ.RENDERFLAGS(A0)
+		MOVE.B	#2,			OBJ.PRIORITY(A0)
+
+	@do:
+		MOVEQ	#0,	D0
+		LEA		DAMAGE_POS_TBL,	A1
+		MOVE.B	DAMAGE_PROG(A0),D0
+		ADD.W	D0,A1
+		MOVE.W	(A1),	D0
+		CMP.W	#$FF,	D0
+		BNE.S	@CONT
+		JMP		_OBJECTDELETE
+	@CONT:
+		MOVE.L	#VRAMWRITE,	(VDPCTRL)
+		LEA		VDPDATA,	A2
+		WRITEVRAM	$FC20
+		MOVE.L	#12,	D1
+	@SCROLL:
+		MOVE.W	(A1),	(A2)
+		MOVE.W	(A1),	(A2)
+		MOVE.L	#0,		(A2)
+		MOVE.L	#0,		(A2)
+		MOVE.L	#0,		(A2)
+		MOVE.L	#0,		(A2)
+		MOVE.L	#0,		(A2)
+		MOVE.L	#0,		(A2)
+		MOVE.L	#0,		(A2)
+		DBF		D1,	@SCROLL
+
+		ADD.W	#160,	D0
+		MOVE.W	D0,		OBJ.X(A0)
+		ADD.B	#2,	DAMAGE_PROG(A0)
+		JMP		_OBJECTDISPLAY
+		
+DAMAGE_POS_TBL:
+	DC.W	-8
+	DC.W	-8
+	DC.W	8
+	DC.W	8
+	DC.W	-7
+	DC.W	-7
+	DC.W	7
+	DC.W	7
+	DC.W	-6
+	DC.W	-6
+	DC.W	6
+	DC.W	6
+	DC.W	-5
+	DC.W	-5
+	DC.W	5
+	DC.W	5
+	DC.W	-4
+	DC.W	-4
+	DC.W	4
+	DC.W	4
+	DC.W	-3
+	DC.W	-3
+	DC.W	3
+	DC.W	3
+	DC.W	-2
+	DC.W	-2
+	DC.W	2
+	DC.W	2
+	DC.W	-1
+	DC.W	-1
+	DC.W	1
+	DC.W	1
+	DC.W	0
+	DC.W	0
+	DC.W	0
+	DC.W	0
+	DC.W	0
+	DC.W	0
+	DC.W	0
+	DC.W	0
+	DC.W	$FF
+	even

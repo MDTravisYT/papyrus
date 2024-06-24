@@ -1,0 +1,8 @@
+_OBJECTDELETE:
+		MOVEA.L	A0,	A1
+		MOVEQ	#0,	D1
+		MOVEQ	#$F,	D0
+	@LOOP:
+		MOVE.L	D1,(A1)+
+		DBF		D0,	@LOOP
+		RTS
