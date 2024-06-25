@@ -8,7 +8,13 @@ RUNOBJECTS:                             ; ...
                 BEQ.S   @EMPTYSLOT
                 ADD.W   D0,D0
                 ADD.W   D0,D0
+				TST.B	GAMEMODE
+				BEQ.S	@SPLASH_INDEX
                 MOVEA.L OBJECTINDEX-4(PC,D0.W),A1 ; NO ZERO OFFSET - START AT 1
+				BRA.S	@SKIP_SPLASH
+			@SPLASH_INDEX:
+				MOVEA.L SPLASHINDEX-4(PC,D0.W),A1 ; NO ZERO OFFSET - START AT 1
+			@SKIP_SPLASH:
                 JSR     (A1)
                 MOVEQ   #0,D0
 
@@ -27,6 +33,24 @@ OBJECTINDEX:
 		DC.L	BONE	  ;	04
 		DC.L	SETMOVE  ;	05
 		DC.L	DAMAGE  ;	06
+		DC.L	OBJNULL  ;	07
+		DC.L	OBJNULL  ;	08
+		DC.L	OBJNULL  ;	09
+		DC.L	OBJNULL  ;	0A
+		DC.L	OBJNULL  ;	0B
+		DC.L	OBJNULL  ;	0C
+		DC.L	OBJNULL  ;	0D
+		DC.L	OBJNULL  ;	0E
+		DC.L	OBJNULL  ;	0F
+		DC.L	OBJNULL  ;	10
+		
+SPLASHINDEX:
+		DC.L	OBJNULL	;	01
+		DC.L	OBJNULL  ;	02
+		DC.L	OBJNULL  ;	03
+		DC.L	OBJNULL	  ;	04
+		DC.L	OBJNULL  ;	05
+		DC.L	OBJNULL  ;	06
 		DC.L	OBJNULL  ;	07
 		DC.L	OBJNULL  ;	08
 		DC.L	OBJNULL  ;	09

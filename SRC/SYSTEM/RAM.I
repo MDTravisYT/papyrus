@@ -30,13 +30,14 @@ z80_dac_status:		equ $A01FFD
 z80_dac_sample:		equ $A01FFF
 SEGATMSS		=	$A14000
 
-PLANE_A			=	$8000
-PLANE_B			=	$A000
+PLANE_A			=	$C000
+PLANE_B			=	$E000
 PLANE_W			=	$C000
 
 VDPDATA			=	$C00000
 VDPCTRL			=	$C00004
 psg_input:		equ $C00011
+VDPDEBUG:		=	 $C0001C
 VRAMWRITE       =	$40000000
 VSRAMWRITE      =	$40000010
 VRAMDMA         =	$40000080
