@@ -28,14 +28,29 @@ TESTBG:
 		LEA		OBJSLOT01,	A1
 		LEA		OBJSLOT02,	A3
 		
-		ADD.W	#1,		(A0)
-		SUB.W	#1,		(A1)
+		MOVE.W	#1,		(A0)
+		ADD.W	#1,		(A1)
+		MOVE.W	(A1),	D2
+		ADD.W	D2,	(A0)
 		
 		LEA		HSCROLLTABLE+$20,	A2
 		MOVE.L	#120,	D6
 	@SCROLL:
-		MOVE.W	(A0),	(A2)+
-		MOVE.W	(A1),	(A2)+
+		MOVE.W	(A0),	D0
+		
+		JSR		CALCSINE
+		
+		ROR.W	#2,	D0
+		ROR.W	#2,	D1
+		
+		MOVE.W	D0,		(A2)
+		ADD.W	D2,	(A2)
+		ADD.W	D2,	(A2)+
+		MOVE.W	D1,		(A2)
+		SUB.W	D2,	(A2)
+		SUB.W	D2,	(A2)+
+		
+		ADD.W	#1,		(A0)
 
 		DBF		D6,	@SCROLL
 		
