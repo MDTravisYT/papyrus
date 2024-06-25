@@ -1,7 +1,10 @@
 CALCSINE:
-		andi.w  #$FF,d6
-		add.w   d6,d6
-		move.w  SineData(pc,d6.w),d6
+		andi.w  #$FF,d0
+		add.w   d0,d0
+		addi.w  #$80,d0
+		move.w  SineData(pc,d0.w),d1
+		subi.w  #$80,d0
+		move.w  SineData(pc,d0.w),d0
 		rts
 		
 SineData:       
