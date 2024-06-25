@@ -29,20 +29,18 @@ DAMAGE:
 		BNE.S	@CONT
 		JMP		_OBJECTDELETE
 	@CONT:
-		MOVE.L	#VRAMWRITE,	(VDPCTRL)
-		LEA		VDPDATA,	A2
-		WRITEVRAM	$FC20
+		LEA		HSCROLLTABLE+$20,	A2
 		MOVE.L	#12,	D1
 	@SCROLL:
-		MOVE.W	(A1),	(A2)
-		MOVE.W	(A1),	(A2)
-		MOVE.L	#0,		(A2)
-		MOVE.L	#0,		(A2)
-		MOVE.L	#0,		(A2)
-		MOVE.L	#0,		(A2)
-		MOVE.L	#0,		(A2)
-		MOVE.L	#0,		(A2)
-		MOVE.L	#0,		(A2)
+		MOVE.W	(A1),	(A2)+
+		MOVE.W	(A1),	(A2)+
+		MOVE.L	#0,		(A2)+
+		MOVE.L	#0,		(A2)+
+		MOVE.L	#0,		(A2)+
+		MOVE.L	#0,		(A2)+
+		MOVE.L	#0,		(A2)+
+		MOVE.L	#0,		(A2)+
+		MOVE.L	#0,		(A2)+
 		DBF		D1,	@SCROLL
 
 		ADD.W	#160,	D0
